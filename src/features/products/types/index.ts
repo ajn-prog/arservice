@@ -13,6 +13,7 @@ export type Brand = {
 } & BaseEntity;
 
 export type Product = {
+  date_entry: Date;
   code: string;
   name: string;
   brand: Brand;

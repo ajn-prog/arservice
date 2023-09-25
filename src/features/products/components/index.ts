@@ -7,3 +7,4 @@ export * from './BrandUpdateForm';
 export * from './UnitTable';
 export * from './UnitCreateForm';
 export * from './UnitUpdateForm';
+export * from './ProductTable';

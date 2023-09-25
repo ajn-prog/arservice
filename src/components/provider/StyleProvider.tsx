@@ -28,6 +28,13 @@ const theme: MantineThemeOverride = {
     ],
   },
   primaryColor: 'primary',
+  components: {
+    Button: {
+      classNames: {
+        label: 'font-normal',
+      },
+    },
+  },
 };
 
 type Props = {
