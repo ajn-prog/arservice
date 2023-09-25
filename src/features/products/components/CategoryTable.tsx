@@ -59,17 +59,11 @@ export const CategoryTable: React.FC<Props> = ({ toolbar }) => {
           <td>{dayjs(category.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon
-                title="Hapus Kategori"
-                className="hover:bg-gray-100 active:bg-gray-200 text-red-500 rounded-full p-1"
-              >
-                <IconTrash size={18} />
-              </ActionIcon>
-              <ActionIcon
-                title="Update Kategori"
-                className="hover:bg-gray-100 active:bg-gray-200 text-gray-700 rounded-full p-1"
-              >
+              <ActionIcon title="Update Kategori" color="primary" radius="lg">
                 <IconEdit size={18} />
+              </ActionIcon>
+              <ActionIcon title="Hapus Kategori" color="red" radius="lg">
+                <IconTrash size={18} />
               </ActionIcon>
             </div>
           </td>
