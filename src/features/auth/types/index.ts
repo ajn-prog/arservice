@@ -1,7 +1,9 @@
 export type Creds = {
-  id: string | number;
   name: string;
-  username: string;
-  role: 'admin' | 'customer';
-  status: boolean;
+  phone: string;
+  email: string;
+  role: 'Superadmin' | 'Admin';
+  agency: string;
+  is_from_arkan: number;
+  display_picture: string;
 };

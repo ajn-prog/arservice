@@ -1,68 +1,107 @@
-import { ActionIcon } from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { ActionIcon, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconEdit, IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
 
 import { Table } from '@/components/elements';
-import { dayjs } from '@/lib/dayjs';
-import { Metadata } from '@/types/api';
 
-import { Category } from '../types';
+import { useDeleteCategory, useCategories } from '../api';
+import { Category, CategoryQuery } from '../types';
 
-const categories: Category[] = Array(12)
-  .fill(0)
-  .map((_, i) => ({
-    id: i,
-    name: `Kategori ${i + 1}`,
-  }));
+import { CategoryUpdateForm } from '.';
 
 type Props = {
   toolbar?: React.ReactNode;
 };
 
+const initialParams: CategoryQuery = {
+  page: 1,
+  limit: 5,
+  search: '',
+};
+
 export const CategoryTable: React.FC<Props> = ({ toolbar }) => {
-  const [metadata, setMetadata] = useState<Metadata>({
-    limit: 5,
-    page: 1,
-    total: categories.length,
-    count: 5 <= (categories?.length ?? 0) ? 5 : categories?.length ?? 0 % 5,
-  });
+  const [params, setParams] = useState(initialParams);
+  const { data, isLoading } = useCategories({ params });
+  const deleteMutation = useDeleteCategory();
 
-  function handlePage(page: number) {
-    const count =
-      page * metadata.limit <= metadata.total ? metadata.limit : metadata.total % metadata.limit;
-
-    setMetadata({
-      ...metadata,
-      count,
-      page,
-    });
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Kategori',
+        children: <Text size="sm">Apakah anda yakin untuk menghapus kategori ini?</Text>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Kategori berhasil dihapus',
+                  color: 'green',
+                  icon: <IconCheck />,
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
   }
 
-  const data = useMemo(() => {
-    const start = metadata.limit * (metadata.page - 1);
-    const end = start + metadata.count;
-
-    return (categories ?? []).slice(start, end);
-  }, [metadata]);
+  function handleUpdate(category: Category) {
+    return () => {
+      modals.open({
+        title: 'Update Kategori',
+        children: (
+          <CategoryUpdateForm
+            category={category}
+            onSuccess={() => modals.closeAll()}
+            onCancel={() => modals.closeAll()}
+          />
+        ),
+      });
+    };
+  }
 
   return (
     <Table
       title="Tabel Data Kategori"
       toolbar={toolbar}
-      header={['Nama', 'Modified At', '']}
-      items={data}
-      onPageChange={handlePage}
-      metadata={metadata}
+      loading={isLoading}
+      header={['Nama', '']}
+      items={data?.data}
+      onPageChange={(page) => {
+        setParams({ ...params, page });
+      }}
+      metadata={{
+        count: data?.data.length || 10,
+        limit: params.limit || 10,
+        page: params.page || 10,
+        total: data?.total || 10,
+      }}
       renderItem={(category) => (
         <tr key={category.id}>
           <td>{category.name}</td>
-          <td>{dayjs(category.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon title="Update Kategori" color="primary" radius="lg">
+              <ActionIcon
+                title="Update Kategori"
+                color="primary"
+                radius="lg"
+                onClick={handleUpdate(category)}
+              >
                 <IconEdit size={18} />
               </ActionIcon>
-              <ActionIcon title="Hapus Kategori" color="red" radius="lg">
+              <ActionIcon
+                title="Hapus Kategori"
+                color="red"
+                radius="lg"
+                onClick={handleRemove(category.id)}
+              >
                 <IconTrash size={18} />
               </ActionIcon>
             </div>

@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
+import { GeneralResponse } from '@/types/api';
 import storage from '@/utils/storage';
 
 import { Creds } from '../types';
@@ -8,7 +9,7 @@ import { Creds } from '../types';
 export const CREDS_KEY = 'creds';
 
 export async function getCreds() {
-  const res = await axios.get<Creds>('/auth/me');
+  const res = await axios.get<GeneralResponse<Creds>>('/auth/userProfile');
 
   return res.data;
 }

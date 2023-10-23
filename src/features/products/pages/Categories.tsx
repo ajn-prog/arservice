@@ -7,7 +7,12 @@ export const Categories: React.FC = () => {
   function handleAdd() {
     modals.open({
       title: 'Tambah Kategori',
-      children: <CategoryCreateForm onCancel={() => modals.closeAll()} />,
+      children: (
+        <CategoryCreateForm
+          onSuccess={() => modals.closeAll()}
+          onCancel={() => modals.closeAll()}
+        />
+      ),
     });
   }
 

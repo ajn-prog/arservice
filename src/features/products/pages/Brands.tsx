@@ -7,7 +7,9 @@ export const Brands: React.FC = () => {
   function handleAdd() {
     modals.open({
       title: 'Tambah Brand',
-      children: <BrandCreateForm onCancel={() => modals.closeAll()} />,
+      children: (
+        <BrandCreateForm onSuccess={() => modals.closeAll()} onCancel={() => modals.closeAll()} />
+      ),
     });
   }
 

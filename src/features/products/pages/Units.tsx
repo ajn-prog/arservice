@@ -7,7 +7,9 @@ export const Units: React.FC = () => {
   function handleAdd() {
     modals.open({
       title: 'Tambah Unit',
-      children: <UnitCreateForm onCancel={() => modals.closeAll()} />,
+      children: (
+        <UnitCreateForm onSuccess={() => modals.closeAll()} onCancel={() => modals.closeAll()} />
+      ),
     });
   }
 

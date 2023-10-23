@@ -1,11 +1,11 @@
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { IconAt, IconLock } from '@tabler/icons-react';
+import { IconLock, IconMail } from '@tabler/icons-react';
 
 import { useLogin } from '../api';
 
 export const LoginForm: React.FC = () => {
-  const form = useForm({ initialValues: { username: '', password: '' } });
+  const form = useForm({ initialValues: { email: '', password: '' } });
   const loginMutation = useLogin();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,10 +24,10 @@ export const LoginForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
       <div className="mb-4">
         <TextInput
-          name="username"
-          placeholder="Username"
-          icon={<IconAt size={14} />}
-          {...form.getInputProps('username')}
+          name="email"
+          placeholder="Email"
+          icon={<IconMail size={14} />}
+          {...form.getInputProps('email')}
         />
       </div>
       <div className="mb-8">

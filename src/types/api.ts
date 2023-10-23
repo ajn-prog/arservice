@@ -1,6 +1,7 @@
 export type GeneralResponse<T = undefined> = {
-  message: string;
-  result: T;
+  code: number;
+  status: string;
+  data: T;
 };
 
 export type ResultResponse<T> = {
@@ -8,8 +9,9 @@ export type ResultResponse<T> = {
 };
 
 export type ErrorResponse = {
-  message: string;
-  errors?: { [key: string]: string };
+  code: number;
+  status: string;
+  errors?: { [key: string]: string[] };
 };
 
 export type Metadata = {
@@ -26,7 +28,15 @@ export type Pagination = {
   limit?: number;
 };
 
-export type PaginatedResult<T> = {
-  metadata: Metadata;
-  result: T[];
-};
+export type PaginatedResult<T> = GeneralResponse<{
+  current_page: number;
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: number;
+  next_page_url: string | null;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+  data: T[];
+}>;

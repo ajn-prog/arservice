@@ -1,68 +1,107 @@
-import { ActionIcon } from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { ActionIcon, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconEdit, IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
 
 import { Table } from '@/components/elements';
-import { dayjs } from '@/lib/dayjs';
-import { Metadata } from '@/types/api';
 
-import { Brand } from '../types';
+import { useDeleteBrand, useBrands } from '../api';
+import { Brand, BrandQuery } from '../types';
 
-const brands: Brand[] = Array(12)
-  .fill(0)
-  .map((_, i) => ({
-    id: i,
-    name: `Brand ${i + 1}`,
-  }));
+import { BrandUpdateForm } from '.';
 
 type Props = {
   toolbar?: React.ReactNode;
 };
 
+const initialParams: BrandQuery = {
+  page: 1,
+  limit: 5,
+  search: '',
+};
+
 export const BrandTable: React.FC<Props> = ({ toolbar }) => {
-  const [metadata, setMetadata] = useState<Metadata>({
-    limit: 5,
-    page: 1,
-    total: brands.length,
-    count: 5 <= (brands?.length ?? 0) ? 5 : brands?.length ?? 0 % 5,
-  });
+  const [params, setParams] = useState(initialParams);
+  const { data, isLoading } = useBrands({ params });
+  const deleteMutation = useDeleteBrand();
 
-  function handlePage(page: number) {
-    const count =
-      page * metadata.limit <= metadata.total ? metadata.limit : metadata.total % metadata.limit;
-
-    setMetadata({
-      ...metadata,
-      count,
-      page,
-    });
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Brand',
+        children: <Text size="sm">Apakah anda yakin untuk menghapus Brand ini?</Text>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Brand berhasil dihapus',
+                  color: 'green',
+                  icon: <IconCheck />,
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
   }
 
-  const data = useMemo(() => {
-    const start = metadata.limit * (metadata.page - 1);
-    const end = start + metadata.count;
-
-    return (brands ?? []).slice(start, end);
-  }, [metadata]);
+  function handleUpdate(brand: Brand) {
+    return () => {
+      modals.open({
+        title: 'Update Brand',
+        children: (
+          <BrandUpdateForm
+            brand={brand}
+            onSuccess={() => modals.closeAll()}
+            onCancel={() => modals.closeAll()}
+          />
+        ),
+      });
+    };
+  }
 
   return (
     <Table
       title="Tabel Data Brand"
       toolbar={toolbar}
-      header={['Nama', 'Modified At', '']}
-      items={data}
-      onPageChange={handlePage}
-      metadata={metadata}
+      loading={isLoading}
+      header={['Nama', '']}
+      items={data?.data}
+      onPageChange={(page) => {
+        setParams({ ...params, page });
+      }}
+      metadata={{
+        count: data?.data.length || 10,
+        limit: params.limit || 10,
+        page: params.page || 10,
+        total: data?.total || 10,
+      }}
       renderItem={(brand) => (
         <tr key={brand.id}>
           <td>{brand.name}</td>
-          <td>{dayjs(brand.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon title="Update Brand" color="primary" radius="lg">
+              <ActionIcon
+                title="Update Brand"
+                color="primary"
+                radius="lg"
+                onClick={handleUpdate(brand)}
+              >
                 <IconEdit size={18} />
               </ActionIcon>
-              <ActionIcon title="Hapus Brand" color="red" radius="lg">
+              <ActionIcon
+                title="Hapus Brand"
+                color="red"
+                radius="lg"
+                onClick={handleRemove(brand.id)}
+              >
                 <IconTrash size={18} />
               </ActionIcon>
             </div>

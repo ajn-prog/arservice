@@ -1,68 +1,107 @@
-import { ActionIcon } from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { ActionIcon, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconEdit, IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
 
 import { Table } from '@/components/elements';
-import { dayjs } from '@/lib/dayjs';
-import { Metadata } from '@/types/api';
 
-import { Unit } from '../types';
+import { useDeleteUnit, useUnits } from '../api';
+import { Unit, UnitQuery } from '../types';
 
-const units: Unit[] = Array(12)
-  .fill(0)
-  .map((_, i) => ({
-    id: i,
-    name: `Unit ${i + 1}`,
-  }));
+import { UnitUpdateForm } from '.';
 
 type Props = {
   toolbar?: React.ReactNode;
 };
 
+const initialParams: UnitQuery = {
+  page: 1,
+  limit: 5,
+  search: '',
+};
+
 export const UnitTable: React.FC<Props> = ({ toolbar }) => {
-  const [metadata, setMetadata] = useState<Metadata>({
-    limit: 5,
-    page: 1,
-    total: units.length,
-    count: 5 <= (units?.length ?? 0) ? 5 : units?.length ?? 0 % 5,
-  });
+  const [params, setParams] = useState(initialParams);
+  const { data, isLoading } = useUnits({ params });
+  const deleteMutation = useDeleteUnit();
 
-  function handlePage(page: number) {
-    const count =
-      page * metadata.limit <= metadata.total ? metadata.limit : metadata.total % metadata.limit;
-
-    setMetadata({
-      ...metadata,
-      count,
-      page,
-    });
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Unit',
+        children: <Text size="sm">Apakah anda yakin untuk menghapus Unit ini?</Text>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Unit berhasil dihapus',
+                  color: 'green',
+                  icon: <IconCheck />,
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
   }
 
-  const data = useMemo(() => {
-    const start = metadata.limit * (metadata.page - 1);
-    const end = start + metadata.count;
-
-    return (units ?? []).slice(start, end);
-  }, [metadata]);
+  function handleUpdate(unit: Unit) {
+    return () => {
+      modals.open({
+        title: 'Update Unit',
+        children: (
+          <UnitUpdateForm
+            unit={unit}
+            onSuccess={() => modals.closeAll()}
+            onCancel={() => modals.closeAll()}
+          />
+        ),
+      });
+    };
+  }
 
   return (
     <Table
       title="Tabel Data Unit"
       toolbar={toolbar}
-      header={['Nama', 'Modified At', '']}
-      items={data}
-      onPageChange={handlePage}
-      metadata={metadata}
+      loading={isLoading}
+      header={['Nama', '']}
+      items={data?.data}
+      onPageChange={(page) => {
+        setParams({ ...params, page });
+      }}
+      metadata={{
+        count: data?.data.length || 10,
+        limit: params.limit || 10,
+        page: params.page || 10,
+        total: data?.total || 10,
+      }}
       renderItem={(unit) => (
         <tr key={unit.id}>
           <td>{unit.name}</td>
-          <td>{dayjs(unit.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon title="Update Unit" color="primary" radius="lg">
+              <ActionIcon
+                title="Update Unit"
+                color="primary"
+                radius="lg"
+                onClick={handleUpdate(unit)}
+              >
                 <IconEdit size={18} />
               </ActionIcon>
-              <ActionIcon title="Hapus Unit" color="red" radius="lg">
+              <ActionIcon
+                title="Hapus Unit"
+                color="red"
+                radius="lg"
+                onClick={handleRemove(unit.id)}
+              >
                 <IconTrash size={18} />
               </ActionIcon>
             </div>

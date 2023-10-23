@@ -1,36 +1,44 @@
-import { Button, TextInput, Textarea } from '@mantine/core';
+import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
 
-import { Brand } from '../types';
+import { useUpdateBrand } from '../api';
+import { Brand, BrandDTO } from '../types';
 
 type Props = {
+  brand: Brand;
   onSuccess?: (result: Brand) => void;
   onCancel?: () => void;
 };
 
-export const BrandUpdateForm: React.FC<Props> = ({ onCancel }) => {
-  const form = useForm();
+export const BrandUpdateForm: React.FC<Props> = ({ brand, onSuccess, onCancel }) => {
+  const { mutateAsync } = useUpdateBrand();
+  const form = useForm<BrandDTO>({
+    initialValues: {
+      name: brand.name,
+    },
+  });
 
   const handleSubmit = form.onSubmit(async (values) => {
-    console.log(values);
-    // await mutateAsync(
-    //   { data: values },
-    //   {
-    //     onError({ response }) {
-    //       form.setErrors((response?.data as any).errors);
-    //     },
-    //     onSuccess({ result }) {
-    //       notifications.show({
-    //         message: 'Brand berhasil dibuat',
-    //         color: 'green',
-    //         icon: <IconCheck />,
-    //       });
-    //       if (onSuccess) {
-    //         onSuccess(result);
-    //       }
-    //     },
-    //   }
-    // );
+    await mutateAsync(
+      { id: brand.id, data: values },
+      {
+        onError({ response }) {
+          form.setErrors((response?.data as any).errors);
+        },
+        onSuccess({ data }) {
+          notifications.show({
+            message: 'Brand berhasil diubah',
+            color: 'green',
+            icon: <IconCheck />,
+          });
+          if (onSuccess) {
+            onSuccess(data);
+          }
+        },
+      }
+    );
   });
 
   return (
@@ -41,11 +49,6 @@ export const BrandUpdateForm: React.FC<Props> = ({ onCancel }) => {
           label="Nama"
           placeholder="Masukan Nama"
           required
-        />
-        <Textarea
-          {...form.getInputProps('description')}
-          label="Deskripsi"
-          placeholder="Masukan Deskripsi"
         />
       </div>
 
