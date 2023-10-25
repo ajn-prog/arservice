@@ -22,19 +22,19 @@ export const Products: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-4">
           <Link
             to="/product/create/unit"
-            className="bg-blue-50 hover:bg-blue-100 active:translate-y-px transition-all border border-blue-500 text-blue-600 p-4 rounded-md text-center flex items-center justify-center"
+            className="bg-primary-50 hover:bg-primary-100 active:translate-y-px transition-all border border-primary-500 text-primary-600 p-4 rounded-md text-center flex items-center justify-center"
           >
             Unit
           </Link>
           <Link
             to="/product/create/accessory"
-            className="bg-blue-50 hover:bg-blue-100 active:translate-y-px transition-all border border-blue-500 text-blue-600 p-4 rounded-md text-center flex items-center justify-center"
+            className="bg-primary-50 hover:bg-primary-100 active:translate-y-px transition-all border border-primary-500 text-primary-600 p-4 rounded-md text-center flex items-center justify-center"
           >
             Accessories
           </Link>
           <Link
             to="/product/create/service"
-            className="bg-blue-50 hover:bg-blue-100 active:translate-y-px transition-all border border-blue-500 text-blue-600 p-4 rounded-md text-center flex items-center justify-center"
+            className="bg-primary-50 hover:bg-primary-100 active:translate-y-px transition-all border border-primary-500 text-primary-600 p-4 rounded-md text-center flex items-center justify-center"
           >
             Service / Sparepart
           </Link>
