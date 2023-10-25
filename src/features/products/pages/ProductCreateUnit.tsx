@@ -14,7 +14,9 @@ export const ProductCreateUnit: React.FC = () => {
 
       <Card shadow="lg">
         <Card.Section p="lg" withBorder>
-          <h2 className="font-semibold text-base">Tambah Data Produk</h2>
+          <h2 className="font-semibold text-base">
+            Tambah Data Produk <span className="text-primary-600">(Unit)</span>
+          </h2>
         </Card.Section>
 
         <Card.Section p="lg">
