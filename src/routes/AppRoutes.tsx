@@ -11,7 +11,7 @@ const { Categories } = lazyImport(() => import('@/features/products'), 'Categori
 const { Brands } = lazyImport(() => import('@/features/products'), 'Brands');
 const { Units } = lazyImport(() => import('@/features/products'), 'Units');
 const { Products } = lazyImport(() => import('@/features/products'), 'Products');
-const { ProductCreate } = lazyImport(() => import('@/features/products'), 'ProductCreate');
+const { ProductCreateUnit } = lazyImport(() => import('@/features/products'), 'ProductCreateUnit');
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/brand" element={<Brands />} />
         <Route path="/unit" element={<Units />} />
         <Route path="/product" element={<Products />} />
-        <Route path="/product/create" element={<ProductCreate />} />
+        <Route path="/product/create/unit" element={<ProductCreateUnit />} />
 
         <Route path="*" element={<UnderDevelopment />} />
       </Route>

@@ -8,3 +8,4 @@ export * from './UnitTable';
 export * from './UnitCreateForm';
 export * from './UnitUpdateForm';
 export * from './ProductTable';
+export * from './ProductUnitForm';
