@@ -19,7 +19,7 @@ export const Products: React.FC = () => {
       </section>
 
       <Modal title="Pilih Jenis Produk" centered opened={open} onClose={() => setOpen(false)}>
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-3 gap-4 text-sm">
           <Link
             to="/product/create/unit"
             className="bg-primary-50 hover:bg-primary-100 active:translate-y-px transition-all border border-primary-500 text-primary-600 p-4 rounded-md text-center flex items-center justify-center"
