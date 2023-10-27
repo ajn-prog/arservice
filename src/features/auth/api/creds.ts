@@ -11,7 +11,7 @@ export const CREDS_KEY = 'creds';
 export async function getCreds() {
   const res = await axios.get<GeneralResponse<Creds>>('/auth/userProfile');
 
-  return res.data;
+  return res.data.data;
 }
 
 export async function loadCreds() {
