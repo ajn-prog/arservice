@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { PaginatedResult } from '@/types/api';
 
-import { Product, ProductQuery } from '../types';
+import { Product, ProductQuery } from '../../types';
 
 type ProductRequest = {
   params?: ProductQuery;

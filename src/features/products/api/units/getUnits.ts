@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { PaginatedResult } from '@/types/api';
 
-import { Unit, UnitQuery } from '../types';
+import { Unit, UnitQuery } from '../../types';
 
 type UnitRequest = {
   params?: UnitQuery;

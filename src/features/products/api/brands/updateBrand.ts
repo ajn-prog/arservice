@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Brand, BrandDTO } from '../types';
+import { Brand, BrandDTO } from '../../types';
 
 export type BrandUpdateDTO = {
   id: number;

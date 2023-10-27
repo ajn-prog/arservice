@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Category, CategoryDTO } from '../types';
+import { Category, CategoryDTO } from '../../types';
 
 export type CategoryUpdateDTO = {
   id: number;

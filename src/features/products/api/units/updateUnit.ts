@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Unit, UnitDTO } from '../types';
+import { Unit, UnitDTO } from '../../types';
 
 export type UnitUpdateDTO = {
   id: number;

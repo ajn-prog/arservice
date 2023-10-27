@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { PaginatedResult } from '@/types/api';
 
-import { Category, CategoryQuery } from '../types';
+import { Category, CategoryQuery } from '../../types';
 
 type CategoryRequest = {
   params?: CategoryQuery;

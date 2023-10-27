@@ -4,24 +4,24 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Brand } from '../types';
+import { Brand, BrandDTO } from '../../types';
 
 type BrandRequest = {
-  id: number;
+  data: BrandDTO;
 };
 
-export async function deleteBrand({ id }: BrandRequest) {
-  const res = await axios.delete<GeneralResponse<Brand>>(`/ar-service/admin/brand/${id}`);
+export async function createBrand({ data }: BrandRequest) {
+  const res = await axios.post<GeneralResponse<Brand>>('/ar-service/admin/brand', data);
 
   return res.data;
 }
 
-type UseDeleteBrandOptions = {
-  config?: MutationConfig<typeof deleteBrand>;
+type UseCreateBrandOptions = {
+  config?: MutationConfig<typeof createBrand>;
 };
 
-export function useDeleteBrand({ config }: UseDeleteBrandOptions = {}) {
-  return useMutation(deleteBrand, {
+export function useCreateBrand({ config }: UseCreateBrandOptions = {}) {
+  return useMutation(createBrand, {
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['brands']);

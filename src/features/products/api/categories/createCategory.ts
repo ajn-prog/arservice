@@ -4,24 +4,24 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Category } from '../types';
+import { Category, CategoryDTO } from '../../types';
 
 type CategoryRequest = {
-  id: number;
+  data: CategoryDTO;
 };
 
-export async function deleteCategory({ id }: CategoryRequest) {
-  const res = await axios.delete<GeneralResponse<Category>>(`/ar-service/admin/category/${id}`);
+export async function createCategory({ data }: CategoryRequest) {
+  const res = await axios.post<GeneralResponse<Category>>('/ar-service/admin/category', data);
 
   return res.data;
 }
 
-type UseDeleteCategoryOptions = {
-  config?: MutationConfig<typeof deleteCategory>;
+type UseCreateCategoryOptions = {
+  config?: MutationConfig<typeof createCategory>;
 };
 
-export function useDeleteCategory({ config }: UseDeleteCategoryOptions = {}) {
-  return useMutation(deleteCategory, {
+export function useCreateCategory({ config }: UseCreateCategoryOptions = {}) {
+  return useMutation(createCategory, {
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['categories']);

@@ -14,6 +14,10 @@ export type Product = {
   unit: Unit;
 } & BaseEntity;
 
+export type ProductDTO = {
+  name: string;
+};
+
 export type ProductQuery = {
   search?: string;
 } & Pagination;

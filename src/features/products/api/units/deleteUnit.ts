@@ -4,24 +4,24 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Unit, UnitDTO } from '../types';
+import { Unit } from '../../types';
 
 type UnitRequest = {
-  data: UnitDTO;
+  id: number;
 };
 
-export async function createUnit({ data }: UnitRequest) {
-  const res = await axios.post<GeneralResponse<Unit>>('/ar-service/admin/unit', data);
+export async function deleteUnit({ id }: UnitRequest) {
+  const res = await axios.delete<GeneralResponse<Unit>>(`/ar-service/admin/unit/${id}`);
 
   return res.data;
 }
 
-type UseCreateUnitOptions = {
-  config?: MutationConfig<typeof createUnit>;
+type UseDeleteUnitOptions = {
+  config?: MutationConfig<typeof deleteUnit>;
 };
 
-export function useCreateUnit({ config }: UseCreateUnitOptions = {}) {
-  return useMutation(createUnit, {
+export function useDeleteUnit({ config }: UseDeleteUnitOptions = {}) {
+  return useMutation(deleteUnit, {
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['units']);

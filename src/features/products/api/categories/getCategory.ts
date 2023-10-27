@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Category } from '../types';
+import { Category } from '../../types';
 
 type CategoryRequest = {
   id: number | string;

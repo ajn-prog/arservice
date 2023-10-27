@@ -4,7 +4,7 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Brand } from '../types';
+import { Brand } from '../../types';
 
 type BrandRequest = {
   id: number;
