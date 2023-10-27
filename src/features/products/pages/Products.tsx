@@ -2,10 +2,14 @@ import { Button, Modal } from '@mantine/core';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useProducts } from '../api';
 import { ProductTable } from '../components';
 
 export const Products: React.FC = () => {
   const [open, setOpen] = useState(false);
+  const { data } = useProducts();
+
+  console.log(data);
 
   return (
     <main>
