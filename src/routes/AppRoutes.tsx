@@ -7,6 +7,9 @@ const { Login } = lazyImport(() => import('@/features/auth'), 'Login');
 const { Dashboard } = lazyImport(() => import('@/features/misc'), 'Dashboard');
 const { UnderDevelopment } = lazyImport(() => import('@/features/misc'), 'UnderDevelopment');
 
+const { Agencies } = lazyImport(() => import('@/features/agencies'), 'Agencies');
+const { AgencyCreate } = lazyImport(() => import('@/features/agencies'), 'AgencyCreate');
+
 const { Categories } = lazyImport(() => import('@/features/products'), 'Categories');
 const { Brands } = lazyImport(() => import('@/features/products'), 'Brands');
 const { Units } = lazyImport(() => import('@/features/products'), 'Units');
@@ -34,6 +37,9 @@ export const AppRoutes: React.FC = () => {
         <Route path="/product/create/unit" element={<ProductCreateUnit />} />
         <Route path="/product/create/accessory" element={<ProductCreateAccessory />} />
         <Route path="/product/create/service" element={<ProductCreateService />} />
+
+        <Route path="/agency" element={<Agencies />} />
+        <Route path="/agency/create" element={<AgencyCreate />} />
 
         <Route path="*" element={<UnderDevelopment />} />
       </Route>

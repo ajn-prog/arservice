@@ -1,14 +1,14 @@
 import { Button, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import { Unit } from '../types';
+import { Agency } from '../types';
 
 type Props = {
-  onSuccess?: (result: Unit) => void;
+  onSuccess?: (result: Agency) => void;
   onCancel?: () => void;
 };
 
-export const UnitUpdateForm: React.FC<Props> = ({ onCancel }) => {
+export const AgencyCreateForm: React.FC<Props> = ({ onCancel }) => {
   const form = useForm();
 
   const handleSubmit = form.onSubmit(async (values) => {
@@ -21,7 +21,7 @@ export const UnitUpdateForm: React.FC<Props> = ({ onCancel }) => {
     //     },
     //     onSuccess({ result }) {
     //       notifications.show({
-    //         message: 'Unit berhasil dibuat',
+    //         message: 'Agency berhasil dibuat',
     //         color: 'green',
     //         icon: <IconCheck />,
     //       });
