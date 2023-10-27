@@ -34,6 +34,13 @@ const theme: MantineThemeOverride = {
         label: 'font-normal',
       },
     },
+    Modal: {
+      styles: {
+        title: {
+          fontWeight: 'bold',
+        },
+      },
+    },
   },
 };
 
