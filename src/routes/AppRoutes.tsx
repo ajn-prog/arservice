@@ -12,6 +12,12 @@ const { AgencyCreate } = lazyImport(() => import('@/features/agencies'), 'Agency
 
 const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
 
+const { Guides } = lazyImport(() => import('@/features/guides'), 'Guides');
+const { ProductGuides } = lazyImport(() => import('@/features/guides'), 'ProductGuides');
+const { GuideCreate } = lazyImport(() => import('@/features/guides'), 'GuideCreate');
+const { GuideDetail } = lazyImport(() => import('@/features/guides'), 'GuideDetail');
+const { GuideUpdate } = lazyImport(() => import('@/features/guides'), 'GuideUpdate');
+
 const { Categories } = lazyImport(() => import('@/features/products'), 'Categories');
 const { Brands } = lazyImport(() => import('@/features/products'), 'Brands');
 const { Units } = lazyImport(() => import('@/features/products'), 'Units');
@@ -42,6 +48,12 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="/agency" element={<Agencies />} />
         <Route path="/agency/create" element={<AgencyCreate />} />
+
+        <Route path="/guide" element={<Guides />} />
+        <Route path="/guide/:productId" element={<ProductGuides />} />
+        <Route path="/guide/:productId/create" element={<GuideCreate />} />
+        <Route path="/guide/:productId/:guideId" element={<GuideDetail />} />
+        <Route path="/guide/:productId/:guideId/update" element={<GuideUpdate />} />
 
         <Route path="/tender" element={<Tenders />} />
 
