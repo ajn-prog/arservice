@@ -51,7 +51,7 @@ export const AgencyTable: React.FC<Props> = ({ toolbar }) => {
 
   return (
     <Table
-      title="Tabel Data Agency"
+      title="Tabel Data Instansi"
       toolbar={toolbar}
       header={['Instansi', 'Kelas', 'Alamat', 'Provinsi/Area', 'Created At', '']}
       items={data}
