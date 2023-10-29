@@ -10,6 +10,8 @@ const { UnderDevelopment } = lazyImport(() => import('@/features/misc'), 'UnderD
 const { Agencies } = lazyImport(() => import('@/features/agencies'), 'Agencies');
 const { AgencyCreate } = lazyImport(() => import('@/features/agencies'), 'AgencyCreate');
 
+const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
+
 const { Categories } = lazyImport(() => import('@/features/products'), 'Categories');
 const { Brands } = lazyImport(() => import('@/features/products'), 'Brands');
 const { Units } = lazyImport(() => import('@/features/products'), 'Units');
@@ -40,6 +42,8 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="/agency" element={<Agencies />} />
         <Route path="/agency/create" element={<AgencyCreate />} />
+
+        <Route path="/tender" element={<Tenders />} />
 
         <Route path="*" element={<UnderDevelopment />} />
       </Route>
