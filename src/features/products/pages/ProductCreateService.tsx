@@ -1,6 +1,5 @@
 import { Button, Card, Select, TextInput } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
-import { IconCalendar, IconPlus } from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { ProductUnitForm } from '../components';
