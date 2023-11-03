@@ -7,7 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DistrictSelect, ProvinceSelect, RegencySelect } from '@/features/region';
 
 import { useCreateAgency } from '../api';
-import { AgencyDTO } from '../types';
+import { Agency, AgencyDTO } from '../types';
 
 type RegionSelect = {
   province: number | string | null;
@@ -15,30 +15,33 @@ type RegionSelect = {
   district: number | string | null;
 };
 
-export const AgencyCreateForm: React.FC = () => {
+type Props = {
+  agency: Agency;
+};
+
+export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
   const navigate = useNavigate();
   const { mutateAsync } = useCreateAgency();
   const form = useForm<AgencyDTO>({
     initialValues: {
-      name: '',
-      address: '',
-      email: '',
-      classes: undefined,
-      hospital_code: undefined,
-      kecamatan_id: undefined,
-      latitude: 0,
-      longitude: 0,
-      owner: '',
+      name: agency.name,
+      address: agency.address,
+      classes: agency.classes,
+      email: agency.email,
+      hospital_code: agency.hospital_code,
+      latitude: agency.latitude,
+      longitude: agency.latitude,
+      owner: agency.owner,
       password: '',
-      phone_number: '',
-      sector: undefined,
+      phone_number: agency.phone_number,
+      sector: agency.sector,
     },
   });
 
   const [region, setRegion] = useState<RegionSelect>({
-    province: null,
-    district: null,
-    regency: null,
+    province: agency.kecamatan.kabupaten?.province_id || null,
+    regency: agency.kecamatan.kabupaten_id,
+    district: agency.kecamatan.id,
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
@@ -53,7 +56,7 @@ export const AgencyCreateForm: React.FC = () => {
         onSuccess: () => {
           notifications.show({
             color: 'green',
-            message: 'Instansi berhasil dibuat',
+            message: 'Instansi berhasil diubah',
           });
           navigate('/agency');
         },
@@ -61,7 +64,7 @@ export const AgencyCreateForm: React.FC = () => {
           form.setErrors((response?.data as any).errors);
           notifications.show({
             color: 'red',
-            message: 'Instansi gagal dibuat',
+            message: 'Instansi gagal diubah',
           });
         },
       }
@@ -71,7 +74,7 @@ export const AgencyCreateForm: React.FC = () => {
   return (
     <Card component="form" onSubmit={handleSubmit} shadow="lg">
       <Card.Section p="lg" withBorder>
-        <h2 className="font-semibold text-base">Tambah Data Instansi</h2>
+        <h2 className="font-semibold text-base">Edit Data Instansi</h2>
       </Card.Section>
 
       <Card.Section p="lg" pt="xs">
@@ -183,7 +186,7 @@ export const AgencyCreateForm: React.FC = () => {
           <PasswordInput
             {...form.getInputProps('password')}
             label="Password"
-            placeholder="Masukan Password"
+            placeholder="Biarkan kosong jika tidak berubah"
             className="col-span-12 md:col-span-4"
           />
         </div>

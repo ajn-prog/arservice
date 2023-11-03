@@ -1,75 +1,105 @@
 import { ActionIcon } from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconEdit, IconTrash, IconX } from '@tabler/icons-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
-import { Metadata } from '@/types/api';
 
-import { Agency } from '../types';
+import { useAgencies, useDeleteAgency } from '../api';
+import { AgencyQuery } from '../types';
 
-const agencies: Agency[] = Array(12)
-  .fill(0)
-  .map((_, i) => ({
-    id: i,
-    name: `Instansi ${i + 1}`,
-    address: 'Ini Alamat',
-    area: 'Ini Area',
-    code: 'Ini Kode',
-    group: 'Ini Kelas',
-  }));
+const initialParams: AgencyQuery = {
+  page: 1,
+  limit: 10,
+  search: '',
+};
 
 type Props = {
   toolbar?: React.ReactNode;
 };
 
 export const AgencyTable: React.FC<Props> = ({ toolbar }) => {
-  const [metadata, setMetadata] = useState<Metadata>({
-    limit: 5,
-    page: 1,
-    total: agencies.length,
-    count: 5 <= (agencies?.length ?? 0) ? 5 : agencies?.length ?? 0 % 5,
-  });
+  const [params, setParams] = useState(initialParams);
+  const { data, isLoading } = useAgencies({ params });
+  const deleteMutation = useDeleteAgency();
 
-  function handlePage(page: number) {
-    const count =
-      page * metadata.limit <= metadata.total ? metadata.limit : metadata.total % metadata.limit;
-
-    setMetadata({
-      ...metadata,
-      count,
-      page,
-    });
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Instansi',
+        children: <div className="text-sm">Apakah anda yakin untuk menghapus instansi ini?</div>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Instansi berhasil dihapus',
+                  color: 'green',
+                  icon: <IconCheck />,
+                });
+                modals.closeAll();
+              },
+              onError: () => {
+                notifications.show({
+                  message: 'Instansi tidak bisa dihapus',
+                  color: 'red',
+                  icon: <IconX />,
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
   }
-
-  const data = useMemo(() => {
-    const start = metadata.limit * (metadata.page - 1);
-    const end = start + metadata.count;
-
-    return (agencies ?? []).slice(start, end);
-  }, [metadata]);
 
   return (
     <Table
       title="Tabel Data Instansi"
       toolbar={toolbar}
       header={['Instansi', 'Kelas', 'Alamat', 'Provinsi/Area', 'Created At', '']}
-      items={data}
-      onPageChange={handlePage}
-      metadata={metadata}
+      items={data?.data}
+      onPageChange={(page) => {
+        setParams({ ...params, page });
+      }}
+      loading={isLoading}
+      metadata={{
+        count: data?.data.length || 10,
+        limit: params.limit || 10,
+        page: params.page || 10,
+        total: data?.total || 10,
+      }}
       renderItem={(agency) => (
         <tr key={agency.id}>
           <td>{agency.name}</td>
-          <td>{agency.group}</td>
+          <td>{agency.classes}</td>
           <td>{agency.address}</td>
-          <td>{agency.area}</td>
+          <td>{agency.kecamatan.kabupaten?.province?.name ?? '-'}</td>
           <td>{dayjs(agency.createdAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon title="Update Instansi" color="primary" radius="lg">
+              <ActionIcon
+                component={Link}
+                to={`/agency/${agency.id}`}
+                title="Update Instansi"
+                color="primary"
+                radius="lg"
+              >
                 <IconEdit size={18} />
               </ActionIcon>
-              <ActionIcon title="Hapus Instansi" color="red" radius="lg">
+              <ActionIcon
+                onClick={handleRemove(agency.id)}
+                title="Hapus Instansi"
+                color="red"
+                radius="lg"
+              >
                 <IconTrash size={18} />
               </ActionIcon>
             </div>
