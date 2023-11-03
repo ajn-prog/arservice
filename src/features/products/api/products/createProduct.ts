@@ -11,7 +11,7 @@ type ProductRequest = {
 };
 
 export async function createProduct({ data }: ProductRequest) {
-  const res = await axios.post<GeneralResponse<Product>>('/ar-service/admin/product', data);
+  const res = await axios.post<GeneralResponse<Product>>('/ar-service/product', data);
 
   return res.data;
 }

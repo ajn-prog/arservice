@@ -11,7 +11,7 @@ type UnitRequest = {
 };
 
 export async function getUnit({ id }: UnitRequest) {
-  const res = await axios.get<GeneralResponse<Unit>>(`/ar-service/admin/unit/${id}`);
+  const res = await axios.get<GeneralResponse<Unit>>(`/ar-service/unit/${id}`);
 
   return res.data.data;
 }

@@ -11,7 +11,7 @@ type TenderRequest = {
 };
 
 export async function getTenders({ params }: TenderRequest) {
-  const res = await axios.get<PaginatedResult<Tender>>('/ar-service/admin/tender', { params });
+  const res = await axios.get<PaginatedResult<Tender>>('/ar-service/tender', { params });
 
   return res.data.data;
 }

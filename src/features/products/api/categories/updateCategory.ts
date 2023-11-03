@@ -12,7 +12,7 @@ export type CategoryUpdateDTO = {
 };
 
 export async function updateCategory({ id, data }: CategoryUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Category>>(`/ar-service/admin/category/${id}`, data);
+  const res = await axios.put<GeneralResponse<Category>>(`/ar-service/category/${id}`, data);
 
   return res.data;
 }

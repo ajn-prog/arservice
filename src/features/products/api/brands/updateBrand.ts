@@ -12,7 +12,7 @@ export type BrandUpdateDTO = {
 };
 
 export async function updateBrand({ id, data }: BrandUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Brand>>(`/ar-service/admin/brand/${id}`, data);
+  const res = await axios.put<GeneralResponse<Brand>>(`/ar-service/brand/${id}`, data);
 
   return res.data;
 }

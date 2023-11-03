@@ -11,7 +11,7 @@ type BrandRequest = {
 };
 
 export async function getBrands({ params }: BrandRequest) {
-  const res = await axios.get<PaginatedResult<Brand>>('/ar-service/admin/brand', { params });
+  const res = await axios.get<PaginatedResult<Brand>>('/ar-service/brand', { params });
 
   return res.data.data;
 }

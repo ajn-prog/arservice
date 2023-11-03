@@ -12,7 +12,7 @@ export type UnitUpdateDTO = {
 };
 
 export async function updateUnit({ id, data }: UnitUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Unit>>(`/ar-service/admin/unit/${id}`, data);
+  const res = await axios.put<GeneralResponse<Unit>>(`/ar-service/unit/${id}`, data);
 
   return res.data;
 }

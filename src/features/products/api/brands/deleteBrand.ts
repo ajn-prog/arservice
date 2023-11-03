@@ -11,7 +11,7 @@ type BrandRequest = {
 };
 
 export async function deleteBrand({ id }: BrandRequest) {
-  const res = await axios.delete<GeneralResponse<Brand>>(`/ar-service/admin/brand/${id}`);
+  const res = await axios.delete<GeneralResponse<Brand>>(`/ar-service/brand/${id}`);
 
   return res.data;
 }

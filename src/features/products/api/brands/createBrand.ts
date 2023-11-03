@@ -11,7 +11,7 @@ type BrandRequest = {
 };
 
 export async function createBrand({ data }: BrandRequest) {
-  const res = await axios.post<GeneralResponse<Brand>>('/ar-service/admin/brand', data);
+  const res = await axios.post<GeneralResponse<Brand>>('/ar-service/brand', data);
 
   return res.data;
 }

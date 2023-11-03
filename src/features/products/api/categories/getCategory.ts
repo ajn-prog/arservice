@@ -11,7 +11,7 @@ type CategoryRequest = {
 };
 
 export async function getCategory({ id }: CategoryRequest) {
-  const res = await axios.get<GeneralResponse<Category>>(`/ar-service/admin/category/${id}`);
+  const res = await axios.get<GeneralResponse<Category>>(`/ar-service/category/${id}`);
 
   return res.data.data;
 }

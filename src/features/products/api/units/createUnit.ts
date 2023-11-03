@@ -11,7 +11,7 @@ type UnitRequest = {
 };
 
 export async function createUnit({ data }: UnitRequest) {
-  const res = await axios.post<GeneralResponse<Unit>>('/ar-service/admin/unit', data);
+  const res = await axios.post<GeneralResponse<Unit>>('/ar-service/unit', data);
 
   return res.data;
 }

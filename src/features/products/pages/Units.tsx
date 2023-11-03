@@ -16,7 +16,7 @@ export const Units: React.FC = () => {
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-800">Data Unit</h1>
+        <h1 className="text-xl font-bold text-gray-800">Data Satuan</h1>
         <Button onClick={handleAdd}>Tambah</Button>
       </div>
 

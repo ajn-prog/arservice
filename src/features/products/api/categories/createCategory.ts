@@ -11,7 +11,7 @@ type CategoryRequest = {
 };
 
 export async function createCategory({ data }: CategoryRequest) {
-  const res = await axios.post<GeneralResponse<Category>>('/ar-service/admin/category', data);
+  const res = await axios.post<GeneralResponse<Category>>('/ar-service/category', data);
 
   return res.data;
 }

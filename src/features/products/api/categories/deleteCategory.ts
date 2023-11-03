@@ -11,7 +11,7 @@ type CategoryRequest = {
 };
 
 export async function deleteCategory({ id }: CategoryRequest) {
-  const res = await axios.delete<GeneralResponse<Category>>(`/ar-service/admin/category/${id}`);
+  const res = await axios.delete<GeneralResponse<Category>>(`/ar-service/category/${id}`);
 
   return res.data;
 }

@@ -11,7 +11,7 @@ type CategoryRequest = {
 };
 
 export async function getCategories({ params }: CategoryRequest) {
-  const res = await axios.get<PaginatedResult<Category>>('/ar-service/admin/category', { params });
+  const res = await axios.get<PaginatedResult<Category>>('/ar-service/category', { params });
 
   return res.data.data;
 }

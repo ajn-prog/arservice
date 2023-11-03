@@ -1,1 +1,0 @@
-import{j as t}from"./index-38c625a7.js";const r=()=>t.jsx("main",{}),s=()=>t.jsx("main",{}),i=()=>t.jsx("div",{}),n=()=>t.jsx("div",{}),u=()=>t.jsx("div",{});export{i as GuideCreate,u as GuideDetail,n as GuideUpdate,r as Guides,s as ProductGuides};

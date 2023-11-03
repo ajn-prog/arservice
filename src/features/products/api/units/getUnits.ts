@@ -11,7 +11,7 @@ type UnitRequest = {
 };
 
 export async function getUnits({ params }: UnitRequest) {
-  const res = await axios.get<PaginatedResult<Unit>>('/ar-service/admin/unit', { params });
+  const res = await axios.get<PaginatedResult<Unit>>('/ar-service/unit', { params });
 
   return res.data.data;
 }

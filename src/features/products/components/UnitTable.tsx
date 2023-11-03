@@ -69,7 +69,7 @@ export const UnitTable: React.FC<Props> = ({ toolbar }) => {
 
   return (
     <Table
-      title="Tabel Data Unit"
+      title="Tabel Data Satuan"
       toolbar={toolbar}
       loading={isLoading}
       header={['Nama', '']}

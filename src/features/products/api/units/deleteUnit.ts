@@ -11,7 +11,7 @@ type UnitRequest = {
 };
 
 export async function deleteUnit({ id }: UnitRequest) {
-  const res = await axios.delete<GeneralResponse<Unit>>(`/ar-service/admin/unit/${id}`);
+  const res = await axios.delete<GeneralResponse<Unit>>(`/ar-service/unit/${id}`);
 
   return res.data;
 }

@@ -12,7 +12,7 @@ export type ProductUpdateDTO = {
 };
 
 export async function updateProduct({ id, data }: ProductUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Product>>(`/ar-service/admin/product/${id}`, data);
+  const res = await axios.put<GeneralResponse<Product>>(`/ar-service/product/${id}`, data);
 
   return res.data;
 }
