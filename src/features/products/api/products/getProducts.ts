@@ -11,7 +11,7 @@ type ProductRequest = {
 };
 
 export async function getProducts({ params }: ProductRequest) {
-  const res = await axios.get<PaginatedResult<Product>>('/ar-service/product', { params });
+  const res = await axios.get<PaginatedResult<Product>>('/ar-service/products', { params });
 
   return res.data.data;
 }

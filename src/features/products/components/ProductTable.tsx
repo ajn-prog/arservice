@@ -1,94 +1,90 @@
 import { ActionIcon } from '@mantine/core';
-import { IconDotsCircleHorizontal, IconEdit, IconTrash } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import {
+  IconCheck,
+  IconDotsCircleHorizontal,
+  IconEdit,
+  IconTrash,
+  IconX,
+} from '@tabler/icons-react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
-import { Metadata } from '@/types/api';
 
-import { Brand, Category, Product } from '../types';
+import { useDeleteProduct, useProducts } from '../api';
+import { ProductQuery } from '../types';
 
-const brands: Brand[] = [
-  {
-    id: 1,
-    name: 'Brand A',
-  },
-  {
-    id: 2,
-    name: 'Brand B',
-  },
-];
-
-const categories: Category[] = [
-  {
-    id: 1,
-    name: 'Brand A',
-  },
-  {
-    id: 2,
-    name: 'Brand B',
-  },
-];
-
-const products: Product[] = Array(15)
-  .fill(0)
-  .map((_, i) => ({
-    id: i,
-    name: `Produk ${i + 1}`,
-    brand: brands[(i + 1) % 2],
-    category: categories[i % 2],
-    code: `TX${i + 1}`,
-    unit: {
-      id: 1,
-      name: 'Buah',
-    },
-    date_entry: new Date(),
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  }));
+const initialParams: ProductQuery = {
+  page: 1,
+  limit: 10,
+  search: '',
+};
 
 type Props = {
   toolbar?: React.ReactNode;
 };
 
 export const ProductTable: React.FC<Props> = ({ toolbar }) => {
-  const [metadata, setMetadata] = useState<Metadata>({
-    limit: 5,
-    page: 1,
-    total: products.length,
-    count: 5 <= (products?.length ?? 0) ? 5 : products?.length ?? 0 % 5,
-  });
+  const [params, setParams] = useState(initialParams);
+  const { data, isLoading } = useProducts({ params });
+  const deleteMutation = useDeleteProduct();
 
-  function handlePage(page: number) {
-    const count =
-      page * metadata.limit <= metadata.total ? metadata.limit : metadata.total % metadata.limit;
-
-    setMetadata({
-      ...metadata,
-      count,
-      page,
-    });
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Produk',
+        children: <div className="text-sm">Apakah anda yakin untuk menghapus produk ini?</div>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Produk berhasil dihapus',
+                  color: 'green',
+                  icon: <IconCheck />,
+                });
+                modals.closeAll();
+              },
+              onError: () => {
+                notifications.show({
+                  message: 'Produk tidak bisa dihapus',
+                  color: 'red',
+                  icon: <IconX />,
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
   }
-
-  const data = useMemo(() => {
-    const start = metadata.limit * (metadata.page - 1);
-    const end = start + metadata.count;
-
-    return (products ?? []).slice(start, end);
-  }, [metadata]);
 
   return (
     <Table
       title="Tabel Data Produk"
       toolbar={toolbar}
-      header={['Produk', 'Unit', 'Kategori', 'Brand', 'Modified At', '']}
-      items={data}
-      onPageChange={handlePage}
-      metadata={metadata}
+      header={['Produk', 'Kategori', 'Brand', 'Modified At', '']}
+      items={data?.data}
+      onPageChange={(page) => {
+        setParams({ ...params, page });
+      }}
+      loading={isLoading}
+      metadata={{
+        count: data?.data.length || 10,
+        limit: params.limit || 10,
+        page: params.page || 10,
+        total: data?.total || 10,
+      }}
       renderItem={(product) => (
         <tr key={product.id}>
           <td>{product.name}</td>
-          <td>{product.unit.name}</td>
           <td>{product.category.name}</td>
           <td>{product.brand.name}</td>
           <td>{dayjs(product.updatedAt).format('D MMMM YYYY H:mm')}</td>
@@ -97,10 +93,21 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
               <ActionIcon title="Detail Produk" color="gray" radius="lg">
                 <IconDotsCircleHorizontal size={18} />
               </ActionIcon>
-              <ActionIcon title="Update Produk" color="primary" radius="lg">
+              <ActionIcon
+                component={Link}
+                to={`/product/${product.id}`}
+                title="Update Produk"
+                color="primary"
+                radius="lg"
+              >
                 <IconEdit size={18} />
               </ActionIcon>
-              <ActionIcon title="Hapus Produk" color="red" radius="lg">
+              <ActionIcon
+                onClick={handleRemove(product.id)}
+                title="Hapus Produk"
+                color="red"
+                radius="lg"
+              >
                 <IconTrash size={18} />
               </ActionIcon>
             </div>

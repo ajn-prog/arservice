@@ -11,7 +11,7 @@ type ProductRequest = {
 };
 
 export async function getProduct({ id }: ProductRequest) {
-  const res = await axios.get<GeneralResponse<Product>>(`/ar-service/product/${id}`);
+  const res = await axios.get<GeneralResponse<Product>>(`/ar-service/products/${id}`);
 
   return res.data.data;
 }

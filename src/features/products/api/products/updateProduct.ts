@@ -4,15 +4,22 @@ import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { Product, ProductDTO } from '../../types';
+import {
+  Product,
+  ProductAccessoryDTO,
+  ProductPreventiveDTO,
+  ProductType,
+  ProductUnitDTO,
+} from '../../types';
 
 export type ProductUpdateDTO = {
   id: number;
-  data: ProductDTO;
+  type: ProductType;
+  data: ProductUnitDTO | ProductAccessoryDTO | ProductPreventiveDTO;
 };
 
-export async function updateProduct({ id, data }: ProductUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Product>>(`/ar-service/product/${id}`, data);
+export async function updateProduct({ id, type, data }: ProductUpdateDTO) {
+  const res = await axios.put<GeneralResponse<Product>>(`/ar-service/products/${type}/${id}`, data);
 
   return res.data;
 }
