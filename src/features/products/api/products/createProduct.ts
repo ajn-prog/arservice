@@ -17,8 +17,14 @@ type ProductRequest = {
   data: ProductUnitDTO | ProductAccessoryDTO | ProductPreventiveDTO;
 };
 
+const urls = {
+  main: '/ar-service/products/unit',
+  accessories: '/ar-service/products/accessories',
+  preventive: '/ar-service/products/preventive',
+};
+
 export async function createProduct({ type, data }: ProductRequest) {
-  const res = await axios.post<GeneralResponse<Product>>(`/ar-service/products/${type}`, data);
+  const res = await axios.post<GeneralResponse<Product>>(urls[type], data);
 
   return res.data;
 }

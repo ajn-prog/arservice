@@ -23,15 +23,8 @@ const { Categories } = lazyImport(() => import('@/features/products'), 'Categori
 const { Brands } = lazyImport(() => import('@/features/products'), 'Brands');
 const { Units } = lazyImport(() => import('@/features/products'), 'Units');
 const { Products } = lazyImport(() => import('@/features/products'), 'Products');
-const { ProductCreateUnit } = lazyImport(() => import('@/features/products'), 'ProductCreateUnit');
-const { ProductCreateAccessory } = lazyImport(
-  () => import('@/features/products'),
-  'ProductCreateAccessory'
-);
-const { ProductCreateService } = lazyImport(
-  () => import('@/features/products'),
-  'ProductCreateService'
-);
+const { ProductCreate } = lazyImport(() => import('@/features/products'), 'ProductCreate');
+const { ProductUpdate } = lazyImport(() => import('@/features/products'), 'ProductUpdate');
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -43,9 +36,10 @@ export const AppRoutes: React.FC = () => {
         <Route path="/brand" element={<Brands />} />
         <Route path="/unit" element={<Units />} />
         <Route path="/product" element={<Products />} />
-        <Route path="/product/create/unit" element={<ProductCreateUnit />} />
-        <Route path="/product/create/accessory" element={<ProductCreateAccessory />} />
-        <Route path="/product/create/service" element={<ProductCreateService />} />
+        <Route path="/product/:id" element={<ProductUpdate />} />
+        <Route path="/product/create/main" element={<ProductCreate type="main" />} />
+        <Route path="/product/create/accessories" element={<ProductCreate type="accessories" />} />
+        <Route path="/product/create/preventive" element={<ProductCreate type="preventive" />} />
 
         <Route path="/agency" element={<Agencies />} />
         <Route path="/agency/create" element={<AgencyCreate />} />

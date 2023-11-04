@@ -22,7 +22,7 @@ export type Product = {
   description: string;
   price: number;
   catalogue_link: string;
-  type: string;
+  type: ProductType;
   stock: number;
   warranty: number;
   plat_number: string;

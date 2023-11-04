@@ -23,6 +23,12 @@ const initialParams: ProductQuery = {
   search: '',
 };
 
+const types = {
+  main: 'Unit',
+  accessories: 'Accessories',
+  preventive: 'Service/Sparepart',
+};
+
 type Props = {
   toolbar?: React.ReactNode;
 };
@@ -49,6 +55,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
                   color: 'green',
                   icon: <IconCheck />,
                 });
+                setParams(initialParams);
                 modals.closeAll();
               },
               onError: () => {
@@ -70,7 +77,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
     <Table
       title="Tabel Data Produk"
       toolbar={toolbar}
-      header={['Produk', 'Kategori', 'Brand', 'Modified At', '']}
+      header={['Produk', 'Tipe', 'Kategori', 'Brand', 'Modified At', '']}
       items={data?.data}
       onPageChange={(page) => {
         setParams({ ...params, page });
@@ -85,6 +92,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
       renderItem={(product) => (
         <tr key={product.id}>
           <td>{product.name}</td>
+          <td>{types[product.type]}</td>
           <td>{product.category.name}</td>
           <td>{product.brand.name}</td>
           <td>{dayjs(product.updatedAt).format('D MMMM YYYY H:mm')}</td>
