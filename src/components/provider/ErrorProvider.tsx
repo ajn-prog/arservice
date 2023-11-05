@@ -1,14 +1,15 @@
 import { Button } from '@mantine/core';
-import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 
 interface Props {
   children: React.ReactNode;
 }
 
-const ErrorFallback = () => {
+const ErrorFallback = ({ error }: FallbackProps) => {
   return (
-    <div className="text-red-500 flex flex-col h-screen justify-center items-center" role="alert">
+    <div className="flex flex-col h-screen justify-center items-center" role="alert">
       <h2 className="text-lg font-semibold">Terjadi Kesalahan</h2>
+      <p className="text-red-500">{error.message}</p>
       <Button className="mt-4" onClick={() => window.location.assign(window.location.origin)}>
         Refresh
       </Button>
