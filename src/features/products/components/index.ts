@@ -9,3 +9,6 @@ export * from './UnitCreateForm';
 export * from './UnitUpdateForm';
 export * from './ProductTable';
 export * from './ProductUnitForm';
+export * from './ModalityTable';
+export * from './ModalityCreateForm';
+export * from './ModalityUpdateForm';

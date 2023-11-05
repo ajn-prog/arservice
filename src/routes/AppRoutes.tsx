@@ -22,6 +22,7 @@ const { GuideUpdate } = lazyImport(() => import('@/features/guides'), 'GuideUpda
 const { Categories } = lazyImport(() => import('@/features/products'), 'Categories');
 const { Brands } = lazyImport(() => import('@/features/products'), 'Brands');
 const { Units } = lazyImport(() => import('@/features/products'), 'Units');
+const { Modalities } = lazyImport(() => import('@/features/products'), 'Modalities');
 const { Products } = lazyImport(() => import('@/features/products'), 'Products');
 const { ProductCreate } = lazyImport(() => import('@/features/products'), 'ProductCreate');
 const { ProductUpdate } = lazyImport(() => import('@/features/products'), 'ProductUpdate');
@@ -35,6 +36,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/category" element={<Categories />} />
         <Route path="/brand" element={<Brands />} />
         <Route path="/unit" element={<Units />} />
+        <Route path="/modality" element={<Modalities />} />
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<ProductUpdate />} />
         <Route path="/product/create/main" element={<ProductCreate type="main" />} />

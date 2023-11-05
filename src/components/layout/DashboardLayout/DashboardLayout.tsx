@@ -37,6 +37,10 @@ const navigations: SidebarNavigation = [
             href: '/category',
           },
           {
+            title: 'Data Modality',
+            href: '/modality',
+          },
+          {
             title: 'Data Brand',
             href: '/brand',
           },
