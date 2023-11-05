@@ -43,7 +43,7 @@ export type ProductUnitDTO = {
   unit_product_id?: string | number;
   modality_product_id?: string | number;
   product_code?: string;
-  date_entry?: string;
+  date_entry?: string | Date;
   name?: string;
   type?: ProductType;
 };

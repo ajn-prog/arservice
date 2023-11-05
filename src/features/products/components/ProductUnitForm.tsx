@@ -1,15 +1,18 @@
-import { Button, Card, Select, TextInput } from '@mantine/core';
+import { Button, Card, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconCalendar } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useCreateProduct } from '../api';
+import { dayjs } from '@/lib/dayjs';
+
+import { useCreateProduct, useUpdateProduct } from '../api';
 import { Product, ProductUnitDTO } from '../types';
 
 import { BrandSelect } from './BrandSelect';
 import { CategorySelect } from './CategorySelect';
+import { ModalitySelect } from './ModalitySelect';
 import { UnitSelect } from './UnitSelect';
 
 type Props = {
@@ -19,53 +22,80 @@ type Props = {
 export const ProductUnitForm: React.FC<Props> = ({ product }) => {
   const navigate = useNavigate();
   const createMutation = useCreateProduct();
+  const updateMutation = useUpdateProduct();
   const form = useForm<ProductUnitDTO>({
     initialValues: {
       name: product?.name ?? '',
-      brand_id: product?.brand_id ?? '',
+      brand_id: product?.brand_id.toString() ?? '',
       category_product_id: product?.category_product_id.toString() ?? '',
-      date_entry: product?.date_entry ?? '',
-      modality_product_id: product?.modality_product_id ?? '',
+      date_entry: product?.date_entry ? dayjs(product.date_entry).toDate() : '',
+      modality_product_id: product?.modality_product_id.toString() ?? '',
       product_code: product?.product_code ?? '',
       type: 'main',
-      unit_product_id: product?.unit_product_id ?? '',
+      unit_product_id: product?.unit_product_id.toString() ?? '',
     },
   });
 
-  console.log(form.values);
-
   const handleSubmit = form.onSubmit(async (values) => {
-    await createMutation.mutateAsync(
-      {
-        type: 'main',
-        data: {
-          ...values,
+    if (product) {
+      await updateMutation.mutateAsync(
+        {
+          id: product.id,
+          type: 'main',
+          data: {
+            ...values,
+          },
         },
-      },
-      {
-        onSuccess: () => {
-          notifications.show({
-            color: 'green',
-            message: 'Produk berhasil dibuat',
-          });
-          navigate('/product');
+        {
+          onSuccess: () => {
+            notifications.show({
+              color: 'green',
+              message: 'Produk berhasil diubah',
+            });
+            navigate('/product');
+          },
+          onError: ({ response }) => {
+            form.setErrors((response?.data as any).errors);
+            notifications.show({
+              color: 'red',
+              message: 'Produk gagal diubah',
+            });
+          },
+        }
+      );
+    } else {
+      await createMutation.mutateAsync(
+        {
+          type: 'main',
+          data: {
+            ...values,
+          },
         },
-        onError: ({ response }) => {
-          form.setErrors((response?.data as any).errors);
-          notifications.show({
-            color: 'red',
-            message: 'Produk gagal dibuat',
-          });
-        },
-      }
-    );
+        {
+          onSuccess: () => {
+            notifications.show({
+              color: 'green',
+              message: 'Produk berhasil dibuat',
+            });
+            navigate('/product');
+          },
+          onError: ({ response }) => {
+            form.setErrors((response?.data as any).errors);
+            notifications.show({
+              color: 'red',
+              message: 'Produk gagal dibuat',
+            });
+          },
+        }
+      );
+    }
   });
 
   return (
     <Card component="form" onSubmit={handleSubmit} shadow="lg">
       <Card.Section p="lg" withBorder>
         <h2 className="font-semibold text-base">
-          Tambah Data Produk <span className="text-primary-600">(Unit)</span>
+          {product ? 'Edit' : 'Tambah'} Data Produk <span className="text-primary-600">(Unit)</span>
         </h2>
       </Card.Section>
 
@@ -117,11 +147,10 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             nothingFound="Data tidak ditemukan"
             withinPortal
           />
-          <Select
+          <ModalitySelect
             {...form.getInputProps('modality_product_id')}
             label="Modality"
             placeholder="Pilih Modality"
-            data={['1', '2']}
             className="col-span-12 md:col-span-3"
             nothingFound="Data tidak ditemukan"
             withinPortal
@@ -130,10 +159,19 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
       </Card.Section>
 
       <Card.Section p="lg" withBorder className="flex justify-end items-center space-x-4">
-        <Button component={Link} to="/product" variant="light" color="gray.6" bg="gray.2">
+        <Button
+          component={Link}
+          to="/product"
+          variant="light"
+          color="gray.6"
+          bg="gray.2"
+          disabled={createMutation.isLoading || updateMutation.isLoading}
+        >
           Batal
         </Button>
-        <Button type="submit">Tambah</Button>
+        <Button type="submit" loading={createMutation.isLoading || updateMutation.isLoading}>
+          Simpan
+        </Button>
       </Card.Section>
     </Card>
   );

@@ -18,8 +18,14 @@ export type ProductUpdateDTO = {
   data: ProductUnitDTO | ProductAccessoryDTO | ProductPreventiveDTO;
 };
 
+const urls = {
+  main: '/ar-service/products/unit',
+  accessories: '/ar-service/products/accessories',
+  preventive: '/ar-service/products/preventive',
+};
+
 export async function updateProduct({ id, type, data }: ProductUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Product>>(`/ar-service/products/${type}/${id}`, data);
+  const res = await axios.post<GeneralResponse<Product>>(`${urls[type]}/${id}`, data);
 
   return res.data;
 }
@@ -33,7 +39,7 @@ export function useUpdateProduct({ config }: UseUpdateProductOptions = {}) {
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['products']);
-      queryClient.invalidateQueries(['product', args[1].id]);
+      queryClient.invalidateQueries(['product']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);
