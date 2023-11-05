@@ -24,8 +24,11 @@ export type Metadata = {
 };
 
 export type Pagination = {
+  search?: string;
   page?: number;
   limit?: number;
+  sort?: 'asc' | 'desc';
+  sort_by?: string;
 };
 
 export type PaginatedResult<T> = GeneralResponse<{
