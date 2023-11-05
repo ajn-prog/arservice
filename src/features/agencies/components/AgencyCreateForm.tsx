@@ -106,6 +106,7 @@ export const AgencyCreateForm: React.FC = () => {
             withinPortal
           />
           <Select
+            {...form.getInputProps('owner')}
             label="Kepemilikan"
             placeholder="Pilih Kepemilikan"
             data={['Perorangan', 'Korporasi', 'Negara']}
@@ -169,22 +170,16 @@ export const AgencyCreateForm: React.FC = () => {
             className="col-span-12 md:col-span-4"
           />
           <TextInput
-            {...form.getInputProps('owner')}
-            label="Nama Owner"
-            placeholder="Masukan Nama Owner"
-            className="col-span-12 md:col-span-4"
-          />
-          <TextInput
             {...form.getInputProps('email')}
             label="Email"
             placeholder="Masukan Email"
-            className="col-span-12 md:col-span-4"
+            className="col-span-12 md:col-span-6"
           />
           <PasswordInput
             {...form.getInputProps('password')}
             label="Password"
             placeholder="Masukan Password"
-            className="col-span-12 md:col-span-4"
+            className="col-span-12 md:col-span-6"
           />
         </div>
       </Card.Section>
