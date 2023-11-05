@@ -54,9 +54,9 @@ export type ProductAccessoryDTO = {
   unit_product_id?: string | number;
   product_code?: string;
   name?: string;
-  date_entry?: string;
+  date_entry?: string | Date;
   type?: ProductType;
-  price?: string;
+  price?: string | number;
   is_consumable?: string | boolean;
   images?: File[];
 };

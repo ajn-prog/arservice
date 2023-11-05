@@ -1,4 +1,4 @@
-import { ProductUnitForm } from '../components';
+import { ProductAccessoryForm, ProductUnitForm } from '../components';
 import { ProductType } from '../types';
 
 type Props = {
@@ -10,6 +10,8 @@ export const ProductCreate: React.FC<Props> = ({ type }) => {
     switch (type) {
       case 'main':
         return <ProductUnitForm />;
+      case 'accessories':
+        return <ProductAccessoryForm />;
       default:
         return null;
     }

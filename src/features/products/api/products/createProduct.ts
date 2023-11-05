@@ -24,7 +24,24 @@ const urls = {
 };
 
 export async function createProduct({ type, data }: ProductRequest) {
-  const res = await axios.post<GeneralResponse<Product>>(urls[type], data);
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (Array.isArray(value)) {
+      value.forEach((file, i) => {
+        if (!(file instanceof File)) return;
+        formData.append(`${key}[${i}]`, file);
+      });
+    } else {
+      if (value instanceof Date) {
+        formData.append(key, value.toJSON());
+      } else {
+        formData.append(key, value.toString());
+      }
+    }
+  }
+
+  const res = await axios.post<GeneralResponse<Product>>(urls[type], formData);
 
   return res.data;
 }
