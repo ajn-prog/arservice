@@ -4,14 +4,18 @@ import { IconLock, IconMail } from '@tabler/icons-react';
 
 import { useLogin } from '../api';
 
-export const LoginForm: React.FC = () => {
+type Props = {
+  role: 'admin' | 'customer';
+};
+
+export const LoginForm: React.FC<Props> = ({ role }) => {
   const form = useForm({ initialValues: { email: '', password: '' } });
   const loginMutation = useLogin();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await loginMutation.mutateAsync(
-      { data: form.values },
+      { role, data: form.values },
       {
         onError: ({ response }) => {
           form.setErrors((response?.data as any).errors);
