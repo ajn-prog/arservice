@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { DistrictSelect, ProvinceSelect, RegencySelect } from '@/features/region';
 
-import { useCreateAgency } from '../api';
+import { useUpdateAgency } from '../api';
 import { Agency, AgencyDTO } from '../types';
 
 type RegionSelect = {
@@ -21,7 +21,7 @@ type Props = {
 
 export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
   const navigate = useNavigate();
-  const { mutateAsync } = useCreateAgency();
+  const { mutateAsync } = useUpdateAgency();
   const form = useForm<AgencyDTO>({
     initialValues: {
       name: agency.name,
@@ -47,6 +47,7 @@ export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(
       {
+        id: agency.id,
         data: {
           ...values,
           kecamatan_id: region.district || undefined,
