@@ -1,3 +1,3 @@
-import { UserAdmin, UserCustomer } from '@/features/user';
+import { UserAdmin } from '@/features/user';
 
-export type Creds = UserAdmin | UserCustomer;
+export type Creds = UserAdmin;

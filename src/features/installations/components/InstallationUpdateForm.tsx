@@ -1,25 +1,16 @@
 import { Button, Card, PasswordInput, Select, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
-import { DistrictSelect, ProvinceSelect, RegencySelect } from '@/features/region';
 
 import { useCreateInstallation } from '../api';
 import { Installation, InstallationDTO } from '../types';
-
-type RegionSelect = {
-  province: number | string | null;
-  regency: number | string | null;
-  district: number | string | null;
-};
 
 type Props = {
   installation: Installation;
 };
 
-export const InstallationUpdateForm: React.FC<Props> = ({ installation }) => {
+export const InstallationUpdateForm: React.FC<Props> = () => {
   const navigate = useNavigate();
   const { mutateAsync } = useCreateInstallation();
   const form = useForm<InstallationDTO>({
