@@ -13,6 +13,12 @@ const { AgencyUpdate } = lazyImport(() => import('@/features/agencies'), 'Agency
 
 const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
 
+const { Installations } = lazyImport(() => import('@/features/installations'), 'Installations');
+const { InstallationCreate } = lazyImport(
+  () => import('@/features/installations'),
+  'InstallationCreate'
+);
+
 const { Guides } = lazyImport(() => import('@/features/guides'), 'Guides');
 const { ProductGuides } = lazyImport(() => import('@/features/guides'), 'ProductGuides');
 const { GuideCreate } = lazyImport(() => import('@/features/guides'), 'GuideCreate');
@@ -46,6 +52,10 @@ export const AppRoutes: React.FC = () => {
         <Route path="/agency" element={<Agencies />} />
         <Route path="/agency/create" element={<AgencyCreate />} />
         <Route path="/agency/:id" element={<AgencyUpdate />} />
+
+        <Route path="/installation" element={<Installations />} />
+        <Route path="/installation/create" element={<InstallationCreate />} />
+        <Route path="/installation/:id" element={<Installations />} />
 
         <Route path="/guide" element={<Guides />} />
         <Route path="/guide/:productId" element={<ProductGuides />} />

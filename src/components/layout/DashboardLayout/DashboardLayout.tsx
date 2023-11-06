@@ -48,7 +48,7 @@ const navigations: SidebarNavigation = [
       },
       { title: 'Panduan', href: '/guide', icon: IconClipboardText },
       { title: 'Instansi', href: '/agency', icon: IconBuildingCommunity },
-      { title: 'Install Base', href: '/installbase', icon: IconTool },
+      { title: 'Install Base', href: '/installation', icon: IconTool },
       { title: 'Produk', href: '/product', icon: IconShoppingBag },
       { title: 'Penawaran', href: '/tender', icon: IconShoppingCart },
       { title: 'Komplain', href: '/complain', icon: IconMessage2 },

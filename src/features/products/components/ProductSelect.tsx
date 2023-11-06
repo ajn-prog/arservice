@@ -1,14 +1,14 @@
 import { SelectProps, Select } from '@mantine/core';
 import { useMemo } from 'react';
 
-import { useAgencies } from '../api';
+import { useProducts } from '../api';
 
 type Props = Omit<SelectProps, 'data'>;
 
-export const AgencySelect: React.FC<Props> = ({ ...props }) => {
-  const { data } = useAgencies({ params: { limit: 0 } });
+export const ProductSelect: React.FC<Props> = ({ ...props }) => {
+  const { data } = useProducts({ params: { limit: 0 } });
 
-  const agencies = useMemo(() => {
+  const products = useMemo(() => {
     if (!data) return [];
 
     return data.data.map(({ id, name }) => ({
@@ -17,5 +17,5 @@ export const AgencySelect: React.FC<Props> = ({ ...props }) => {
     }));
   }, [data]);
 
-  return <Select {...props} data={agencies} searchable />;
+  return <Select {...props} data={products} searchable />;
 };
