@@ -1,21 +1,18 @@
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { IconLock, IconMail } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 
 import { useLogin } from '../api';
 
-type Props = {
-  role: 'admin' | 'customer';
-};
-
-export const LoginForm: React.FC<Props> = ({ role }) => {
+export const LoginForm: React.FC = () => {
   const form = useForm({ initialValues: { email: '', password: '' } });
   const loginMutation = useLogin();
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     await loginMutation.mutateAsync(
-      { role, data: form.values },
+      { data: form.values },
       {
         onError: ({ response }) => {
           form.setErrors((response?.data as any).errors);
@@ -25,7 +22,14 @@ export const LoginForm: React.FC<Props> = ({ role }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="relative flex flex-col justify-center align-middle space-y-6 w-full max-w-xs"
+    >
+      <div className="font-roboto font-bold text-[40px] text-[#1C1C55] text-center">Welcome !</div>
+      <div className="font-roboto font-normal text-[22px] text-[#1C1C55] text-center">
+        Log in your account
+      </div>
       <div className="mb-4">
         <TextInput
           name="email"
@@ -42,9 +46,16 @@ export const LoginForm: React.FC<Props> = ({ role }) => {
           {...form.getInputProps('password')}
         />
       </div>
-      <Button type="submit" fullWidth loading={loginMutation.isLoading}>
-        Masuk
-      </Button>
+      <div className="">
+        <Button type="submit" fullWidth loading={loginMutation.isLoading}>
+          Masuk
+        </Button>
+        <div className="flex justify-end pt-2">
+          <Link to="#" className="text-sm">
+            Lupa Password?
+          </Link>
+        </div>
+      </div>
     </form>
   );
 };

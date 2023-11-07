@@ -11,7 +11,6 @@ import { Creds } from '../types';
 import { CREDS_KEY } from './creds';
 
 type LoginDTO = {
-  role: 'admin' | 'customer';
   data: {
     email: string;
     password: string;
@@ -24,11 +23,8 @@ type LoginResponse = GeneralResponse<{
   user: UserAdmin | UserCustomer;
 }>;
 
-export async function login({ role, data }: LoginDTO): Promise<LoginResponse> {
-  const res = await axios.post<LoginResponse>(
-    role == 'admin' ? '/auth/login' : '/auth/customer/login',
-    data
-  );
+export async function login({ data }: LoginDTO): Promise<LoginResponse> {
+  const res = await axios.post<LoginResponse>('/auth/login', data);
 
   return res.data;
 }
