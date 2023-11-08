@@ -25,26 +25,38 @@ export const CartMenu: React.FC = () => {
         <div className="px-4 py-2.5 border-b border-gray-200">
           <h2 className="text-base font-semibold">Keranjang</h2>
         </div>
-        <div className="divide-y divide-gray-200">
-          {carts.map((cart) => (
-            <div key={cart.id} className="px-4 py-2 flex items-center">
-              <div className="flex-grow">
-                <Badge size="xs">{cart.product.brand.name}</Badge>
-                <div className="text-sm font-medium">{cart.product.name}</div>
-                <div className="text-xs text-gray-600">{cart.product.category.name}</div>
-              </div>
-              <div className="flex-shrink-0 text-primary-600 text-sm">
-                {types[cart.product.type]}
-              </div>
-            </div>
-          ))}
-        </div>
 
-        <div className="px-4 py-2">
-          <Button component={Link} to="/cart" variant="subtle" fullWidth>
-            Lihat Semua
-          </Button>
-        </div>
+        {carts.length > 0 ? (
+          <>
+            <div className="divide-y divide-gray-200">
+              {carts.map((cart) => (
+                <div key={cart.id} className="px-4 py-2 flex items-center">
+                  <div className="flex-grow">
+                    <Badge size="xs">{cart.product.brand.name}</Badge>
+                    <div className="text-sm font-medium">{cart.product.name}</div>
+                    <div className="text-xs text-gray-600">{cart.product.category.name}</div>
+                  </div>
+                  <div className="flex-shrink-0 text-primary-600 text-sm">
+                    {types[cart.product.type]}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="px-4 py-2">
+              <Button component={Link} to="/cart" variant="subtle" fullWidth>
+                Lihat Semua
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="px-4 py-2">
+            <p className="text-sm text-center my-2">Keranjang Kosong</p>
+            <Button component={Link} to="/product" variant="subtle" fullWidth>
+              Lihat Katalog
+            </Button>
+          </div>
+        )}
       </Menu.Dropdown>
     </Menu>
   );
