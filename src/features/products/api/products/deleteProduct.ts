@@ -11,7 +11,7 @@ type ProductRequest = {
 };
 
 export async function deleteProduct({ id }: ProductRequest) {
-  const res = await axios.delete<GeneralResponse<Product>>(`/ar-service/products/${id}`);
+  const res = await axios.delete<GeneralResponse<Product>>(`/ar-service/product/${id}`);
 
   return res.data;
 }
