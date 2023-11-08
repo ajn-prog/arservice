@@ -8,28 +8,12 @@ export type Engineer = {
   user_id: number;
 };
 
-export type UserAdmin = {
+export type User = {
   name: string;
   phone: string;
   email: string;
-  role: string;
+  role: 'Superadmin' | 'Admin' | 'Customer';
   agency: string;
   is_from_arkan: number;
   display_picture: string;
-};
-
-export type UserCustomer = {
-  id: number;
-  hospital_code: string;
-  name: string;
-  sector: string;
-  owner: string;
-  classes: string;
-  address: string;
-  kecamatan_id: number;
-  phone_number: string;
-  latitude: string;
-  longitude: string;
-  email: string;
-  created_at: string | Date;
 };

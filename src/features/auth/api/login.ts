@@ -1,12 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { UserAdmin, UserCustomer } from '@/features/user';
+import { User } from '@/features/user';
 import { axios } from '@/lib/axios';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 import storage from '@/utils/storage';
-
-import { Creds } from '../types';
 
 import { CREDS_KEY } from './creds';
 
@@ -19,8 +17,8 @@ type LoginDTO = {
 
 type LoginResponse = GeneralResponse<{
   access_token: string;
-  token_type: Creds;
-  user: UserAdmin | UserCustomer;
+  token_type: string;
+  user: User;
 }>;
 
 export async function login({ data }: LoginDTO): Promise<LoginResponse> {
