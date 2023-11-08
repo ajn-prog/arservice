@@ -9,6 +9,7 @@ import {
   IconShoppingBag,
   IconShoppingCart,
   IconMessage2,
+  IconUser,
 } from '@tabler/icons-react';
 import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -19,7 +20,7 @@ import { SidebarNavigation } from '@/types/navigation';
 
 import { Header } from './Header';
 
-const navigations: SidebarNavigation = [
+const adminNavigations: SidebarNavigation = [
   {
     title: 'Menu',
     routes: [
@@ -57,6 +58,21 @@ const navigations: SidebarNavigation = [
   },
 ];
 
+const customerNavigations: SidebarNavigation = [
+  {
+    title: 'Menu',
+    routes: [
+      { title: 'Profile', href: '/', icon: IconUser },
+      { title: 'Install Base', href: '/installation', icon: IconTool },
+      { title: 'Panduan', href: '/guide', icon: IconClipboardText },
+      { title: 'Penawaran', href: '/tender', icon: IconShoppingCart },
+      { title: 'Produk', href: '/product', icon: IconShoppingBag },
+      { title: 'Komplain', href: '/complain', icon: IconMessage2 },
+      { title: 'Tracking', href: '/tracking', icon: IconTruck },
+    ],
+  },
+];
+
 const LoadingScreen = () => (
   <Center className="w-full h-full bg-body">
     <Loader />
@@ -70,7 +86,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar navigations={navigations} />
+      <Sidebar navigations={creds.role == 'Customer' ? customerNavigations : adminNavigations} />
 
       <div
         className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden pb-12"
