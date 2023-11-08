@@ -2,24 +2,29 @@ import { Button, Modal } from '@mantine/core';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useProducts } from '../api';
-import { ProductTable } from '../components';
+import { Authorization } from '@/features/auth';
+
+import { ProductList, ProductTable } from '../components';
 
 export const Products: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const { data } = useProducts();
-
-  console.log(data);
 
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Produk</h1>
-        <Button onClick={() => setOpen(true)}>Tambah</Button>
+        <Authorization role={['Superadmin', 'Admin']}>
+          <Button onClick={() => setOpen(true)}>Tambah</Button>
+        </Authorization>
       </div>
 
       <section className="mb-8">
-        <ProductTable />
+        <Authorization role={['Customer']}>
+          <ProductList />
+        </Authorization>
+        <Authorization role={['Superadmin', 'Admin']}>
+          <ProductTable />
+        </Authorization>
       </section>
 
       <Modal title="Pilih Jenis Produk" centered opened={open} onClose={() => setOpen(false)}>

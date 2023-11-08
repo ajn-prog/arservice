@@ -15,3 +15,4 @@ export * from './ModalityUpdateForm';
 export * from './ModalitySelect';
 export * from './ProductAccessoryForm';
 export * from './ProductSelect';
+export * from './ProductList';
