@@ -1,7 +1,7 @@
 import { UnstyledButton } from '@mantine/core';
 import { IconMenu2 } from '@tabler/icons-react';
 
-import { CartMenu } from '@/features/carts';
+import { CartMenu } from '@/features/tenders';
 
 import { UserMenu } from './UserMenu';
 

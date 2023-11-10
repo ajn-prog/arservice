@@ -1,10 +1,9 @@
-import { Pagination } from '@/types/api';
+import { Product } from '@/features/products';
 import { BaseEntity } from '@/types/entity';
 
-export type Tender = {
-  name: string;
+export type Cart = {
+  customer_id: number;
+  product_id: number;
+  quantity: number;
+  product: Product;
 } & BaseEntity;
-
-export type TenderQuery = {
-  status?: string;
-} & Pagination;

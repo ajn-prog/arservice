@@ -3,7 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { AuthProvider } from '@/features/auth';
-import { CartProvider } from '@/features/carts';
+import { CartProvider } from '@/features/tenders';
 import { queryClient } from '@/lib/react-query';
 
 import { ErrorProvider } from './ErrorProvider';
