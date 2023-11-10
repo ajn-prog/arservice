@@ -1,6 +1,7 @@
 import { Button } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 
 import { CartList } from '../components';
 import { useCart } from '../hooks';
@@ -35,7 +36,12 @@ export const Carts: React.FC = () => {
               <p className="text-primary-600 text-sm">Jumlah Barang ({count})</p>
             </div>
             <div className="pt-4">
-              <Button fullWidth disabled={selected.length == 0}>
+              <Button
+                component={Link}
+                to="/cart/checkout"
+                fullWidth
+                disabled={selected.length == 0}
+              >
                 Beli
               </Button>
             </div>

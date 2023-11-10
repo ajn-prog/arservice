@@ -15,9 +15,10 @@ type Props = {
   carts: Cart[];
   selected: number[];
   onChange: (selected: number[]) => void;
+  readOnly?: boolean;
 };
 
-export const CartList: React.FC<Props> = ({ carts, selected, onChange }) => {
+export const CartList: React.FC<Props> = ({ carts, selected, onChange, readOnly = false }) => {
   const { updateCart } = useCart();
 
   async function handleCart(cartId: number, quantity: number) {
@@ -47,12 +48,14 @@ export const CartList: React.FC<Props> = ({ carts, selected, onChange }) => {
       {carts.map((cart) => (
         <div key={cart.id} className="bg-white w-full px-4 py-4 flex items-center">
           <div className="flex-grow flex items-center space-x-4">
-            <div>
-              <Checkbox
-                checked={selected.includes(cart.product_id)}
-                onChange={handleSelected(cart.product_id)}
-              />
-            </div>
+            {!readOnly && (
+              <div>
+                <Checkbox
+                  checked={selected.includes(cart.product_id)}
+                  onChange={handleSelected(cart.product_id)}
+                />
+              </div>
+            )}
             <div className="w-20 h-20 bg-gray-200 rounded-md flex-shrink-0"></div>
             <div className="space-y-1">
               <div className="text-primary-600 text-sm">{types[cart.product.type]}</div>
@@ -63,35 +66,41 @@ export const CartList: React.FC<Props> = ({ carts, selected, onChange }) => {
             </div>
           </div>
           <div className="flex-shrink-0">
-            <div className="flex items-center justify-center flex-shrink-0">
-              <ActionIcon
-                onClick={() => handleCart(cart.id, cart.quantity - 1)}
-                size={20}
-                variant="outline"
-                color="primary"
-                radius="100%"
-              >
-                <IconMinus className="p-px" />
-              </ActionIcon>
-              <NumberInput
-                hideControls
-                min={0}
-                step={1}
-                variant="unstyled"
-                readOnly
-                value={cart.quantity}
-                className="[&_input]:w-8 [&_input]:text-center border-b border-gray-200 px-2"
-              />
-              <ActionIcon
-                onClick={() => handleCart(cart.id, cart.quantity + 1)}
-                size={20}
-                variant="outline"
-                color="primary"
-                radius="100%"
-              >
-                <IconPlus className="p-px" />
-              </ActionIcon>
-            </div>
+            {readOnly ? (
+              <div className="text-sm text-primary-600">
+                Jumlah (<strong>{cart.quantity}</strong>)
+              </div>
+            ) : (
+              <div className="flex items-center justify-center flex-shrink-0">
+                <ActionIcon
+                  onClick={() => handleCart(cart.id, cart.quantity - 1)}
+                  size={20}
+                  variant="outline"
+                  color="primary"
+                  radius="100%"
+                >
+                  <IconMinus className="p-px" />
+                </ActionIcon>
+                <NumberInput
+                  hideControls
+                  min={0}
+                  step={1}
+                  variant="unstyled"
+                  readOnly
+                  value={cart.quantity}
+                  className="[&_input]:w-8 [&_input]:text-center border-b border-gray-200 px-2"
+                />
+                <ActionIcon
+                  onClick={() => handleCart(cart.id, cart.quantity + 1)}
+                  size={20}
+                  variant="outline"
+                  color="primary"
+                  radius="100%"
+                >
+                  <IconPlus className="p-px" />
+                </ActionIcon>
+              </div>
+            )}
           </div>
         </div>
       ))}

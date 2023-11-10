@@ -7,3 +7,9 @@ export type Cart = {
   quantity: number;
   product: Product;
 } & BaseEntity;
+
+export type Order = {
+  customer_id: number;
+  status: string;
+  recipient_address?: string;
+} & BaseEntity;
