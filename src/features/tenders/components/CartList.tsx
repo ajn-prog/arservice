@@ -1,8 +1,8 @@
 import { ActionIcon, Checkbox, NumberInput } from '@mantine/core';
-import { notifications } from '@mantine/notifications';
+import { modals } from '@mantine/modals';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 
-import { useUpdateCart } from '../api';
+import { useCart } from '../hooks';
 import { Cart } from '../types';
 
 const types = {
@@ -14,36 +14,31 @@ const types = {
 type Props = {
   carts: Cart[];
   selected: number[];
-  onChange?: (selected: number[]) => void;
+  onChange: (selected: number[]) => void;
 };
 
-export const CartList: React.FC<Props> = ({ carts }) => {
-  const updateMutation = useUpdateCart();
+export const CartList: React.FC<Props> = ({ carts, selected, onChange }) => {
+  const { updateCart } = useCart();
 
-  function handleUpdate(cart: Cart, type: 'plus' | 'minus') {
-    return async () => {
-      await updateMutation.mutateAsync(
-        {
-          data: {
-            id: cart.id,
-            product_id: cart.product_id,
-            quantity: 1,
-            type,
-          },
+  async function handleCart(cartId: number, quantity: number) {
+    if (quantity == 0) {
+      return modals.openConfirmModal({
+        title: 'Hapus Keranjang',
+        children: <div className="text-sm">Apakah Anda yakin untuk menghapus keranjang?</div>,
+        onConfirm: async () => {
+          await updateCart(cartId, quantity);
         },
-        {
-          onSuccess: () => {
-            notifications.show({
-              message: 'Keranjang berhasil dirubah',
-            });
-          },
-          onError: () => {
-            notifications.show({
-              message: 'Keranjang gagal dirubah',
-            });
-          },
-        }
-      );
+      });
+    }
+
+    await updateCart(cartId, quantity);
+  }
+
+  function handleSelected(productId: number) {
+    return () => {
+      if (!selected.includes(productId)) return onChange([...selected, productId]);
+
+      return onChange(selected.filter((v) => v !== productId));
     };
   }
 
@@ -53,9 +48,12 @@ export const CartList: React.FC<Props> = ({ carts }) => {
         <div key={cart.id} className="bg-white w-full px-4 py-4 flex items-center">
           <div className="flex-grow flex items-center space-x-4">
             <div>
-              <Checkbox />
+              <Checkbox
+                checked={selected.includes(cart.product_id)}
+                onChange={handleSelected(cart.product_id)}
+              />
             </div>
-            <div className="w-20 h-20 bg-gray-200 rounded-md"></div>
+            <div className="w-20 h-20 bg-gray-200 rounded-md flex-shrink-0"></div>
             <div className="space-y-1">
               <div className="text-primary-600 text-sm">{types[cart.product.type]}</div>
               <div className="text-gray-900 font-semibold">{cart.product.name}</div>
@@ -67,7 +65,7 @@ export const CartList: React.FC<Props> = ({ carts }) => {
           <div className="flex-shrink-0">
             <div className="flex items-center justify-center flex-shrink-0">
               <ActionIcon
-                onClick={handleUpdate(cart, 'minus')}
+                onClick={() => handleCart(cart.id, cart.quantity - 1)}
                 size={20}
                 variant="outline"
                 color="primary"
@@ -85,7 +83,7 @@ export const CartList: React.FC<Props> = ({ carts }) => {
                 className="[&_input]:w-8 [&_input]:text-center border-b border-gray-200 px-2"
               />
               <ActionIcon
-                onClick={handleUpdate(cart, 'minus')}
+                onClick={() => handleCart(cart.id, cart.quantity + 1)}
                 size={20}
                 variant="outline"
                 color="primary"
