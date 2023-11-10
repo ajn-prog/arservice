@@ -3,6 +3,8 @@ import { IconShoppingCart } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useCart } from '@/features/tenders';
+
 import { useProducts } from '../api';
 import { ProductQuery } from '../types';
 
@@ -15,6 +17,7 @@ export const ProductList: React.FC = () => {
     sort_by: 'created_at',
   });
   const { data, isLoading, isError, isFetching } = useProducts({ params });
+  const { addProduct } = useCart();
 
   if (isLoading || isError || isFetching)
     return (
@@ -63,6 +66,7 @@ export const ProductList: React.FC = () => {
                   size="xs"
                   variant="outline"
                   leftIcon={<IconShoppingCart size={14} />}
+                  onClick={() => addProduct(product.id)}
                 >
                   Tambah Keranjang
                 </Button>
