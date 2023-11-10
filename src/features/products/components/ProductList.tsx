@@ -18,7 +18,7 @@ export const ProductList: React.FC = () => {
 
   if (isLoading || isError || isFetching)
     return (
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Array(4)
           .fill(0)
           .map((_, i) => (
@@ -42,7 +42,7 @@ export const ProductList: React.FC = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {data.data.map((product) => (
           <div key={product.id} className="w-full bg-white rounded-lg overflow-hidden">
             <Link to={`/product/${product.id}`}>
