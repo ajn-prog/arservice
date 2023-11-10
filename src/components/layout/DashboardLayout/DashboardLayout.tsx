@@ -10,6 +10,7 @@ import {
   IconShoppingCart,
   IconMessage2,
   IconUser,
+  IconBasket,
 } from '@tabler/icons-react';
 import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -65,8 +66,9 @@ const customerNavigations: SidebarNavigation = [
       { title: 'Profile', href: '/', icon: IconUser },
       { title: 'Install Base', href: '/installation', icon: IconTool },
       { title: 'Panduan', href: '/guide', icon: IconClipboardText },
-      { title: 'Penawaran', href: '/tender', icon: IconShoppingCart },
       { title: 'Produk', href: '/product', icon: IconShoppingBag },
+      { title: 'Keranjang', href: '/cart', icon: IconShoppingCart },
+      { title: 'Penawaran', href: '/tender', icon: IconBasket },
       { title: 'Komplain', href: '/complain', icon: IconMessage2 },
       { title: 'Tracking', href: '/tracking', icon: IconTruck },
     ],
