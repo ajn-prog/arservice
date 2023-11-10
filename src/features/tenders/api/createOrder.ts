@@ -6,20 +6,32 @@ import { GeneralResponse } from '@/types/api';
 
 import { Order } from '../types';
 
-type OrderRequest = {
-  data: number[];
+export type OrderRequest = {
+  data: {
+    name?: string;
+    phone?: string;
+    position?: string;
+    address?: string;
+    kecamatan_id?: number | string;
+    products: number[];
+  };
 };
 
-export async function createOrder({ data }: OrderRequest) {
+export async function createOrder(request: OrderRequest) {
+  const { products, ...data } = request.data;
   const formData = new FormData();
 
-  data.forEach((v, i) => {
+  products.forEach((v, i) => {
     formData.append(`ids[${i}]`, v.toString());
   });
 
-  const res = await axios.post<GeneralResponse<Order>>('/ar-service/order', formData);
+  const res1 = await axios.post<GeneralResponse<Order>>('/ar-service/order', formData);
+  const res2 = await axios.post<GeneralResponse<Order>>(
+    `/ar-service/tender/${res1.data.data.id}`,
+    data
+  );
 
-  return res.data;
+  return res2.data;
 }
 
 type UseCreateOrderOptions = {
