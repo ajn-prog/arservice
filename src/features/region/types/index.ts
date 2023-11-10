@@ -17,3 +17,10 @@ export type District = {
   kabupaten_id: number;
   kabupaten?: Regency;
 };
+
+export type Village = {
+  id: number;
+  name: string;
+  kecamatan_id: number;
+  kecamatan?: District;
+};
