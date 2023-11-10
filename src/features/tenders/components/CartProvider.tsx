@@ -28,14 +28,14 @@ export const CartProvider: React.FC<Props> = ({ children }) => {
       {
         onSuccess: () => {
           notifications.show({
-            title: 'Kerajang',
+            title: 'Keranjang',
             message: 'Produk berhasil ditambahkan',
             color: 'green',
           });
         },
         onError: () => {
           notifications.show({
-            title: 'Kerajang',
+            title: 'Keranjang',
             message: 'Produk gagal ditambahkan',
             color: 'red',
           });
