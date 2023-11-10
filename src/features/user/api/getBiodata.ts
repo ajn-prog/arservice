@@ -7,7 +7,7 @@ import { GeneralResponse } from '@/types/api';
 import { Biodata } from '../types';
 
 export async function getBiodata() {
-  const res = await axios.get<GeneralResponse<Biodata>>('/ar-service/biodata');
+  const res = await axios.get<GeneralResponse<Biodata>>('/ar-service/profile/biodata');
 
   return res.data.data;
 }
