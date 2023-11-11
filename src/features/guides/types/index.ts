@@ -1,3 +1,4 @@
+import { Product } from '@/features/products';
 import { BaseEntity } from '@/types/entity';
 
 export type Guide = {
@@ -10,7 +11,7 @@ export type Guide = {
 
 export type GuideList = {
   guide: Guide[];
-} & BaseEntity;
+} & Product;
 
 export type GuideDTO = {
   product_id: number;
