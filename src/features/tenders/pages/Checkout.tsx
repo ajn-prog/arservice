@@ -48,6 +48,7 @@ export const Checkout: React.FC = () => {
                 message: 'Penawaran berhasil dibuat',
                 color: 'green',
               });
+              setSelected([]);
               navigate('/tender');
             },
             onError: () => {
