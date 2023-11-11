@@ -19,6 +19,7 @@ const { InstallationCreate } = lazyImport(
 
 const { Carts } = lazyImport(() => import('@/features/tenders'), 'Carts');
 const { Checkout } = lazyImport(() => import('@/features/tenders'), 'Checkout');
+const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
 
 const { Guides } = lazyImport(() => import('@/features/guides'), 'Guides');
 const { ProductGuides } = lazyImport(() => import('@/features/guides'), 'ProductGuides');
@@ -57,6 +58,8 @@ export const AppRoutes: React.FC = () => {
         <Route path="/installation" element={<Installations />} />
         <Route path="/installation/create" element={<InstallationCreate />} />
         <Route path="/installation/:id" element={<Installations />} />
+
+        <Route path="/tender" element={<Tenders />} />
 
         <Route path="/cart" element={<Carts />} />
         <Route path="/cart/checkout" element={<Checkout />} />
