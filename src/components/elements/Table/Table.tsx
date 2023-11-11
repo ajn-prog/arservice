@@ -11,7 +11,7 @@ interface Props<T> {
   toolbar?: React.ReactNode;
   header: (string | boolean)[];
   items: T[] | undefined;
-  renderItem: (item: T) => React.ReactNode;
+  renderItem: (item: T, index: number) => React.ReactNode;
   metadata?: Metadata;
   onPageChange?: (page: number) => void;
   loading?: boolean;
@@ -53,7 +53,7 @@ export const Table = <T,>(props: Props<T>) => {
               {loading || !items ? (
                 <TableSkeleton col={header.length} row={5} />
               ) : items.length > 0 ? (
-                items.map((item) => renderItem(item))
+                items.map((item, index) => renderItem(item, index))
               ) : (
                 <tr>
                   <td colSpan={header.length} className="text-center !py-12">
