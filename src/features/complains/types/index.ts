@@ -42,10 +42,10 @@ export type Complain = {
 } & BaseEntity;
 
 export type ComplainDTO = {
-  installbase_id: number | string;
+  installbase_id?: number | string;
   title: string;
   status: ComplainStatus;
-  priority: ComplainPriority;
+  priority?: ComplainPriority;
   detail: string;
   placement_space: string;
   filename: File[];
