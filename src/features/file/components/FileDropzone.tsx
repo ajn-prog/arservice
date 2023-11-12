@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 
 type Props = {
-  label?: string;
+  label?: React.ReactNode;
   value?: File;
   error?: string;
 } & Omit<DropzoneProps, 'children'>;
