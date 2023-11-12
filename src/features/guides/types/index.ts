@@ -14,9 +14,9 @@ export type GuideList = {
 } & Product;
 
 export type GuideDTO = {
-  product_id: number;
+  product_id?: number;
   title: string;
   description: string;
   video?: string;
-  image: File;
+  image?: File;
 };
