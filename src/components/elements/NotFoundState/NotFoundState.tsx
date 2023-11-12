@@ -13,7 +13,10 @@ export const NotFoundState: React.FC<Props> = ({ message, to }) => {
   return (
     <div className="mt-48 text-center">
       <h1 className="text-lg font-bold mb-6">{message ?? 'Halaman tidak ditemukan'}</h1>
-      <Button onClick={() => navigate(to ? to : (-1 as To))} leftIcon={<IconArrowLeft size={14} />}>
+      <Button
+        onClick={() => navigate(to ? to : (-1 as To))}
+        leftSection={<IconArrowLeft size={14} />}
+      >
         Kembali
       </Button>
     </div>

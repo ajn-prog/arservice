@@ -19,9 +19,9 @@ export type ProductUpdateDTO = {
 };
 
 const urls = {
-  main: '/ar-service/products/unit',
-  accessories: '/ar-service/products/accessories',
-  preventive: '/ar-service/products/preventive',
+  main: '/ar-service/product/unit',
+  accessories: '/ar-service/product/accessories',
+  preventive: '/ar-service/product/preventive',
 };
 
 export async function updateProduct({ id, type, data }: ProductUpdateDTO) {

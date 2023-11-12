@@ -128,27 +128,24 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
             label="Brand"
             placeholder="Pilih Brand"
             className="col-span-12 md:col-span-3"
-            withinPortal
           />
           <CategorySelect
             {...form.getInputProps('category_product_id')}
             label="Kategori"
             placeholder="Pilih Kategori"
             className="col-span-12 md:col-span-3"
-            withinPortal
           />
           <UnitSelect
             {...form.getInputProps('unit_product_id')}
             label="Satuan"
             placeholder="Pilih Satuan"
             className="col-span-12 md:col-span-3"
-            withinPortal
           />
           <NumberInput
             {...form.getInputProps('price')}
             label="Harga"
             placeholder="Masukan Harga"
-            icon={<span>Rp.</span>}
+            leftSection={<span className="text-xs">Rp.</span>}
             className="col-span-12 md:col-span-6"
           />
           <div className="py-1">

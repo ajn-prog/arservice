@@ -1,10 +1,38 @@
-import { Pagination } from '@/types/api';
+import { Product } from '@/features/products';
 import { BaseEntity } from '@/types/entity';
 
-export type Tender = {
-  name: string;
+export type Cart = {
+  customer_id: number;
+  product_id: number;
+  quantity: number;
+  product: Product;
 } & BaseEntity;
 
-export type TenderQuery = {
-  status?: string;
-} & Pagination;
+export type Order = {
+  customer_id: number;
+  status: string;
+  recipient_address?: string;
+} & BaseEntity;
+
+export type TenderStatus = 'pending' | 'approved' | 'rejected';
+
+export type TenderItem = {
+  order_id: number;
+  product_id: number;
+  quantity: number;
+  price: number;
+  product: Product;
+} & BaseEntity;
+
+export type Tender = {
+  customer_id: number;
+  stakeholder_id: any;
+  receipt_number: any;
+  expedition: any;
+  status: TenderStatus;
+  details: TenderItem[];
+  recipient_address: string;
+  recipient_name: string;
+  recipient_phone: string;
+  recipient_position: string;
+} & BaseEntity;

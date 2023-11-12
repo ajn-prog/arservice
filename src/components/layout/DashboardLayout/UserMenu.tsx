@@ -10,8 +10,6 @@ export const UserMenu: React.FC = () => {
     logout();
   }
 
-  console.log(creds);
-
   return (
     <div>
       <Menu withArrow position="bottom-end" shadow="md" width={256}>

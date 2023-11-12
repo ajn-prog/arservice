@@ -1,3 +1,6 @@
+import { District, Village } from '@/features/region';
+import { BaseEntity } from '@/types/entity';
+
 export type Engineer = {
   id: number;
   name: string;
@@ -8,18 +11,17 @@ export type Engineer = {
   user_id: number;
 };
 
-export type UserAdmin = {
+export type User = {
   name: string;
   phone: string;
   email: string;
-  role: string;
+  role: 'Superadmin' | 'Admin' | 'Customer';
   agency: string;
   is_from_arkan: number;
   display_picture: string;
 };
 
-export type UserCustomer = {
-  id: number;
+export type Biodata = {
   hospital_code: string;
   name: string;
   sector: string;
@@ -31,5 +33,15 @@ export type UserCustomer = {
   latitude: string;
   longitude: string;
   email: string;
-  created_at: string | Date;
-};
+  kecamatan: District;
+} & BaseEntity;
+
+export type Profile = {
+  customer_id: number;
+  kelurahan_id: number;
+  name: string;
+  phone: string;
+  address: string;
+  position: string;
+  kelurahan: Village;
+} & BaseEntity;

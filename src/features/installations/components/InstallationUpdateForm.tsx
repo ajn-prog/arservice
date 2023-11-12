@@ -72,7 +72,6 @@ export const InstallationUpdateForm: React.FC<Props> = () => {
             placeholder="Pilih Sektor"
             data={['Private', 'Public']}
             className="col-span-12 md:col-span-4"
-            withinPortal
           />
           <Select
             {...form.getInputProps('classes')}
@@ -80,7 +79,6 @@ export const InstallationUpdateForm: React.FC<Props> = () => {
             placeholder="Pilih Kelas"
             data={['A', 'B', 'C', 'D', 'D Pratama']}
             className="col-span-12 md:col-span-4"
-            withinPortal
           />
           <Select
             {...form.getInputProps('owner')}
@@ -88,7 +86,6 @@ export const InstallationUpdateForm: React.FC<Props> = () => {
             placeholder="Pilih Kepemilikan"
             data={['Perorangan', 'Korporasi', 'Negara']}
             className="col-span-12 md:col-span-4"
-            withinPortal
           />
         </div>
         <div className="pt-4 grid grid-cols-12 gap-x-6 gap-y-4">

@@ -11,13 +11,19 @@ const { Agencies } = lazyImport(() => import('@/features/agencies'), 'Agencies')
 const { AgencyCreate } = lazyImport(() => import('@/features/agencies'), 'AgencyCreate');
 const { AgencyUpdate } = lazyImport(() => import('@/features/agencies'), 'AgencyUpdate');
 
-const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
-
 const { Installations } = lazyImport(() => import('@/features/installations'), 'Installations');
 const { InstallationCreate } = lazyImport(
   () => import('@/features/installations'),
   'InstallationCreate'
 );
+
+const { Complains } = lazyImport(() => import('@/features/complains'), 'Complains');
+const { ComplainCreate } = lazyImport(() => import('@/features/complains'), 'ComplainCreate');
+const { ComplainDetail } = lazyImport(() => import('@/features/complains'), 'ComplainDetail');
+
+const { Carts } = lazyImport(() => import('@/features/tenders'), 'Carts');
+const { Checkout } = lazyImport(() => import('@/features/tenders'), 'Checkout');
+const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
 
 const { Guides } = lazyImport(() => import('@/features/guides'), 'Guides');
 const { ProductGuides } = lazyImport(() => import('@/features/guides'), 'ProductGuides');
@@ -57,13 +63,20 @@ export const AppRoutes: React.FC = () => {
         <Route path="/installation/create" element={<InstallationCreate />} />
         <Route path="/installation/:id" element={<Installations />} />
 
-        <Route path="/guide" element={<Guides />} />
-        <Route path="/guide/:productId" element={<ProductGuides />} />
-        <Route path="/guide/:productId/create" element={<GuideCreate />} />
-        <Route path="/guide/:productId/:guideId" element={<GuideDetail />} />
-        <Route path="/guide/:productId/:guideId/update" element={<GuideUpdate />} />
-
         <Route path="/tender" element={<Tenders />} />
+
+        <Route path="/cart" element={<Carts />} />
+        <Route path="/cart/checkout" element={<Checkout />} />
+
+        <Route path="/guide" element={<Guides />} />
+        <Route path="/guide/create" element={<GuideCreate />} />
+        <Route path="/guide/product/:id" element={<ProductGuides />} />
+        <Route path="/guide/:id" element={<GuideDetail />} />
+        <Route path="/guide/:id/update" element={<GuideUpdate />} />
+
+        <Route path="/complain" element={<Complains />} />
+        <Route path="/complain/create" element={<ComplainCreate />} />
+        <Route path="/complain/:id" element={<ComplainDetail />} />
 
         <Route path="*" element={<UnderDevelopment />} />
       </Route>

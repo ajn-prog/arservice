@@ -98,10 +98,11 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
           <td>{dayjs(product.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon title="Detail Produk" color="gray" radius="lg">
+              <ActionIcon variant="subtle" title="Detail Produk" color="gray" radius="lg">
                 <IconDotsCircleHorizontal size={18} />
               </ActionIcon>
               <ActionIcon
+                variant="subtle"
                 component={Link}
                 to={`/product/${product.id}`}
                 title="Update Produk"
@@ -111,6 +112,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
                 <IconEdit size={18} />
               </ActionIcon>
               <ActionIcon
+                variant="subtle"
                 onClick={handleRemove(product.id)}
                 title="Hapus Produk"
                 color="red"

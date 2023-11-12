@@ -35,14 +35,12 @@ export const ProductCreateService: React.FC = () => {
               placeholder="Pilih Kategori"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
             <Select
               label="Brand"
               placeholder="Pilih Brand"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
           </div>
         </Card.Section>
@@ -54,7 +52,7 @@ export const ProductCreateService: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <Button variant="subtle" leftIcon={<IconPlus size={16} />}>
+            <Button variant="subtle" leftSection={<IconPlus size={16} />}>
               Tambah Unit
             </Button>
           </div>

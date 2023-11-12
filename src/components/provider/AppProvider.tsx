@@ -3,6 +3,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { AuthProvider } from '@/features/auth';
+import { CartProvider } from '@/features/tenders';
 import { queryClient } from '@/lib/react-query';
 
 import { ErrorProvider } from './ErrorProvider';
@@ -19,7 +20,9 @@ export const AppProvider: React.FC<Props> = ({ children }) => {
         <Router>
           <StyleProvider>
             <AuthProvider>
-              <HelmetProvider>{children}</HelmetProvider>
+              <CartProvider>
+                <HelmetProvider>{children}</HelmetProvider>
+              </CartProvider>
             </AuthProvider>
           </StyleProvider>
         </Router>

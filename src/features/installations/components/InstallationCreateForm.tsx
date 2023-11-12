@@ -1,12 +1,12 @@
-import { Button, Card, Group, NumberInput, TextInput, Textarea } from '@mantine/core';
+import { Button, Card, NumberInput, TextInput, Textarea } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
-import { Dropzone } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconCalendar, IconUpload, IconX } from '@tabler/icons-react';
+import { IconCalendar } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { AgencySelect } from '@/features/agencies';
+import { FileDropzone } from '@/features/file';
 import { ProductSelect } from '@/features/products';
 import { EngineerSelect } from '@/features/user';
 
@@ -82,8 +82,7 @@ export const InstallationCreateForm: React.FC = () => {
             label="Instansi"
             placeholder="Pilih Instansi"
             className="col-span-12 md:col-span-12"
-            withinPortal
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
           />
 
           <ProductSelect
@@ -92,7 +91,7 @@ export const InstallationCreateForm: React.FC = () => {
             placeholder="Pilih Produk"
             className="col-span-12 md:col-span-12"
             limit={20}
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
           />
 
           <TextInput
@@ -125,78 +124,30 @@ export const InstallationCreateForm: React.FC = () => {
             placeholder="Pilih Teknisi"
             className="col-span-12 md:col-span-12"
             limit={20}
-            withinPortal
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
           />
         </div>
         <div className="pt-4 grid grid-cols-12 gap-x-6 gap-y-4">
           <div className="col-span-12">
-            <div className="text-sm mb-1">File BASTB</div>
-            <Dropzone
+            <FileDropzone
+              label="File BASTB"
               onDrop={(files) => form.setFieldValue('bastb_file', files[0] || undefined)}
               onReject={() => notifications.show({ message: 'File tidak sesuai', color: 'red' })}
               maxSize={5 * 1024 ** 2}
               maxFiles={1}
-            >
-              <Group
-                position="center"
-                spacing="md"
-                className="pointer-events-none text-center min-h-[4rem] text-gray-600"
-              >
-                <Dropzone.Accept>
-                  <IconUpload size={32} stroke={1.5} className="text-primary-600" />
-                </Dropzone.Accept>
-                <Dropzone.Reject>
-                  <IconX size={32} stroke={1.5} className="text-red-600" />
-                </Dropzone.Reject>
-                <Dropzone.Idle>
-                  <IconUpload size={32} stroke={1.5} />
-                </Dropzone.Idle>
-
-                {form.values.bastb_file ? (
-                  <div>{form.values.bastb_file.name}</div>
-                ) : (
-                  <div>Klik atau drag file untuk upload</div>
-                )}
-              </Group>
-            </Dropzone>
-            {form.errors['bastb_file'] && (
-              <div className="text-xs text-red-600 mt-1.5">{form.errors['bastb_file']}</div>
-            )}
+              error={form.errors['bastb_file']?.toString()}
+            />
           </div>
           <div className="col-span-12">
             <div className="text-sm mb-1">File BASTP</div>
-            <Dropzone
+            <FileDropzone
+              label="File BASTP"
               onDrop={(files) => form.setFieldValue('bastp_file', files[0] || undefined)}
               onReject={() => notifications.show({ message: 'File tidak sesuai', color: 'red' })}
               maxSize={5 * 1024 ** 2}
               maxFiles={1}
-            >
-              <Group
-                position="center"
-                spacing="md"
-                className="pointer-events-none text-center min-h-[4rem] text-gray-600"
-              >
-                <Dropzone.Accept>
-                  <IconUpload size={32} stroke={1.5} className="text-primary-600" />
-                </Dropzone.Accept>
-                <Dropzone.Reject>
-                  <IconX size={32} stroke={1.5} className="text-red-600" />
-                </Dropzone.Reject>
-                <Dropzone.Idle>
-                  <IconUpload size={32} stroke={1.5} />
-                </Dropzone.Idle>
-
-                {form.values.bastp_file ? (
-                  <div>{form.values.bastp_file.name}</div>
-                ) : (
-                  <div>Klik atau drag file untuk upload</div>
-                )}
-              </Group>
-            </Dropzone>
-            {form.errors['bastp_file'] && (
-              <div className="text-xs text-red-600 mt-1.5">{form.errors['bastp_file']}</div>
-            )}
+              error={form.errors['bastp_file']?.toString()}
+            />
           </div>
           <Textarea
             {...form.getInputProps('note')}

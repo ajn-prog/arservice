@@ -128,32 +128,28 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             label="Brand"
             placeholder="Pilih Brand"
             className="col-span-12 md:col-span-3"
-            nothingFound="Data tidak ditemukan"
-            withinPortal
+            nothingFoundMessage="Data tidak ditemukan"
           />
           <CategorySelect
             {...form.getInputProps('category_product_id')}
             label="Kategori"
             placeholder="Pilih Kategori"
             className="col-span-12 md:col-span-3"
-            nothingFound="Data tidak ditemukan"
-            withinPortal
+            nothingFoundMessage="Data tidak ditemukan"
           />
           <UnitSelect
             {...form.getInputProps('unit_product_id')}
             label="Satuan"
             placeholder="Pilih Satuan"
             className="col-span-12 md:col-span-3"
-            nothingFound="Data tidak ditemukan"
-            withinPortal
+            nothingFoundMessage="Data tidak ditemukan"
           />
           <ModalitySelect
             {...form.getInputProps('modality_product_id')}
             label="Modality"
             placeholder="Pilih Modality"
             className="col-span-12 md:col-span-3"
-            nothingFound="Data tidak ditemukan"
-            withinPortal
+            nothingFoundMessage="Data tidak ditemukan"
           />
         </div>
       </Card.Section>

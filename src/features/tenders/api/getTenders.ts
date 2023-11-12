@@ -2,16 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
-import { PaginatedResult } from '@/types/api';
+import { PaginatedResult, Pagination } from '@/types/api';
 
-import { Tender, TenderQuery } from '../types';
+import { Tender } from '../types';
 
 type TenderRequest = {
-  params?: TenderQuery;
+  params?: Pagination;
 };
 
 export async function getTenders({ params }: TenderRequest) {
-  const res = await axios.get<PaginatedResult<Tender>>('/ar-service/tender', { params });
+  const res = await axios.get<PaginatedResult<Tender>>('/ar-service/tender', {
+    params,
+  });
 
   return res.data.data;
 }
@@ -19,7 +21,7 @@ export async function getTenders({ params }: TenderRequest) {
 type QueryFnType = typeof getTenders;
 
 type UseTendersOptions = {
-  params?: TenderQuery;
+  params?: Pagination;
   config?: QueryConfig<QueryFnType>;
 };
 

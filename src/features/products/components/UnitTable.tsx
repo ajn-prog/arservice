@@ -89,7 +89,8 @@ export const UnitTable: React.FC<Props> = ({ toolbar }) => {
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon
-                title="Update Unit"
+                variant="subtle"
+                title="Update Satuan"
                 color="primary"
                 radius="lg"
                 onClick={handleUpdate(unit)}
@@ -97,7 +98,8 @@ export const UnitTable: React.FC<Props> = ({ toolbar }) => {
                 <IconEdit size={18} />
               </ActionIcon>
               <ActionIcon
-                title="Hapus Unit"
+                variant="subtle"
+                title="Hapus Satuan"
                 color="red"
                 radius="lg"
                 onClick={handleRemove(unit.id)}

@@ -1,6 +1,8 @@
 import { UnstyledButton } from '@mantine/core';
 import { IconMenu2 } from '@tabler/icons-react';
 
+import { CartMenu } from '@/features/tenders';
+
 import { UserMenu } from './UserMenu';
 
 export const Header: React.FC = () => {
@@ -29,7 +31,8 @@ export const Header: React.FC = () => {
             </UnstyledButton>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
+            <CartMenu />
             <UserMenu />
           </div>
         </div>
