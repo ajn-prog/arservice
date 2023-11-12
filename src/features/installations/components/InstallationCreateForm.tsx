@@ -83,7 +83,7 @@ export const InstallationCreateForm: React.FC = () => {
             placeholder="Pilih Instansi"
             className="col-span-12 md:col-span-12"
             withinPortal
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
           />
 
           <ProductSelect
@@ -92,7 +92,7 @@ export const InstallationCreateForm: React.FC = () => {
             placeholder="Pilih Produk"
             className="col-span-12 md:col-span-12"
             limit={20}
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
           />
 
           <TextInput
@@ -126,7 +126,7 @@ export const InstallationCreateForm: React.FC = () => {
             className="col-span-12 md:col-span-12"
             limit={20}
             withinPortal
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
           />
         </div>
         <div className="pt-4 grid grid-cols-12 gap-x-6 gap-y-4">

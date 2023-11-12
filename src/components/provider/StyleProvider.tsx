@@ -4,9 +4,14 @@ import { Notifications } from '@mantine/notifications';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import '@/styles/globals.css';
-import 'swiper/css';
 import { DateProvider } from './DateProvider';
+
+import '@/styles/globals.css';
+import '@mantine/core/styles.css';
+import '@mantine/dropzone/styles.css';
+import '@mantine/tiptap/styles.css';
+import '@mantine/notifications/styles.css';
+import 'swiper/css';
 
 const theme: MantineThemeOverride = {
   fontFamily: 'Roboto, sans-serif',
@@ -57,7 +62,7 @@ export const StyleProvider: React.FC<Props> = ({ children }) => {
   }, [pathname]);
 
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={theme}>
+    <MantineProvider theme={theme}>
       <DateProvider>
         <ModalsProvider labels={{ confirm: 'Konfirmasi', cancel: 'Batal' }}>
           {children}

@@ -119,7 +119,7 @@ export const AgencyCreateForm: React.FC = () => {
             placeholder="Pilih Provinsi"
             className="col-span-12 md:col-span-4"
             withinPortal
-            nothingFound="Data tidak ditemukan"
+            nothingFoundMessage="Data tidak ditemukan"
             value={region.province?.toString()}
             onChange={(v) => {
               setRegion({ province: v, district: null, regency: null });
@@ -131,7 +131,7 @@ export const AgencyCreateForm: React.FC = () => {
             placeholder="Pilih Kabupaten/Kota"
             className="col-span-12 md:col-span-4"
             withinPortal
-            nothingFound={
+            nothingFoundMessage={
               region.province ? 'Data tidak ditemukan' : 'Pilih provinsi terlebih dahulu'
             }
             value={region.regency?.toString()}
@@ -145,7 +145,7 @@ export const AgencyCreateForm: React.FC = () => {
             placeholder="Pilih Kecamatan"
             className="col-span-12 md:col-span-4"
             withinPortal
-            nothingFound={
+            nothingFoundMessage={
               region.province && region.regency
                 ? 'Data tidak ditemukan'
                 : 'Pilih kabupaten terlebih dahulu'
