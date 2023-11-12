@@ -34,7 +34,7 @@ export const LoginForm: React.FC = () => {
         <TextInput
           name="email"
           placeholder="Email"
-          icon={<IconMail size={14} />}
+          leftSection={<IconMail size={14} />}
           {...form.getInputProps('email')}
         />
       </div>
@@ -42,7 +42,7 @@ export const LoginForm: React.FC = () => {
         <PasswordInput
           name="password"
           placeholder="Password"
-          icon={<IconLock size={14} />}
+          leftSection={<IconLock size={14} />}
           {...form.getInputProps('password')}
         />
       </div>

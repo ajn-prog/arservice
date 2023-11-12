@@ -23,7 +23,7 @@ export const AgencyUpdate: React.FC = () => {
     return (
       <div className="mt-48 text-center">
         <h1 className="text-lg font-bold mb-2">Instansi tidak ditemukan</h1>
-        <Button onClick={() => navigate(-1)} leftIcon={<IconArrowLeft size={14} />}>
+        <Button onClick={() => navigate(-1)} leftSection={<IconArrowLeft size={14} />}>
           Kembali
         </Button>
       </div>

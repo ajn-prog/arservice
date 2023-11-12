@@ -12,7 +12,7 @@ export const UnderDevelopment: React.FC = () => {
         <h1 className="text-lg font-bold mb-4 text-center">
           Halaman tidak ditemukan atau fitur Dalam Pengembangan
         </h1>
-        <Button leftIcon={<IconArrowLeft size={16} />} onClick={() => navigate(-1)}>
+        <Button leftSection={<IconArrowLeft size={16} />} onClick={() => navigate(-1)}>
           Kembali
         </Button>
       </div>

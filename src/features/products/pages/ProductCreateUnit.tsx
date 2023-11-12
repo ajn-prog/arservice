@@ -73,7 +73,7 @@ export const ProductCreateUnit: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <Button variant="subtle" leftIcon={<IconPlus size={16} />}>
+            <Button variant="subtle" leftSection={<IconPlus size={16} />}>
               Tambah Unit
             </Button>
           </div>

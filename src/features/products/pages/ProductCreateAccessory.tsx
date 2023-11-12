@@ -61,7 +61,7 @@ export const ProductCreateAccessory: React.FC = () => {
             <NumberInput
               label="Harga"
               placeholder="Masukan Harga"
-              icon={<span>Rp.</span>}
+              leftSection={<span className="text-xs">Rp.</span>}
               className="col-span-12 md:col-span-6"
             />
             <div className="py-1">
@@ -72,39 +72,6 @@ export const ProductCreateAccessory: React.FC = () => {
               </div>
             </div>
           </div>
-
-          <Dropzone
-            onDrop={(files) => console.log(files)}
-            onReject={() => notifications.show({ message: 'File tidak sesuai', color: 'red' })}
-            maxSize={5 * 1024 ** 2}
-            maxFiles={1}
-            accept={['image/*']}
-          >
-            <Group
-              position="center"
-              spacing="xl"
-              className="pointer-events-none text-center min-h-[12rem]"
-            >
-              <Dropzone.Accept>
-                <IconUpload size={50} stroke={1.5} className="text-primary-600" />
-              </Dropzone.Accept>
-              <Dropzone.Reject>
-                <IconX size={50} stroke={1.5} className="text-red-600" />
-              </Dropzone.Reject>
-              <Dropzone.Idle>
-                <IconPhoto size={50} stroke={1.5} />
-              </Dropzone.Idle>
-
-              <div>
-                <Text size="xl" inline>
-                  Drag thumbnail disini atau klik untuk memilih file
-                </Text>
-                <Text size="sm" color="dimmed" inline mt={7}>
-                  Ukuran file tidak boleh melebihi 5mb
-                </Text>
-              </div>
-            </Group>
-          </Dropzone>
         </Card.Section>
 
         <Card.Section p="lg" withBorder>
@@ -114,7 +81,7 @@ export const ProductCreateAccessory: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-end mt-4">
-            <Button variant="subtle" leftIcon={<IconPlus size={16} />}>
+            <Button variant="subtle" leftSection={<IconPlus size={16} />}>
               Tambah Unit
             </Button>
           </div>

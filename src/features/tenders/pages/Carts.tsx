@@ -37,7 +37,7 @@ export const Carts: React.FC = () => {
                 Anda belum pernah menambahkan produk kedalam keranjang
               </p>
 
-              <Button leftIcon={<IconShoppingBag size={17} />}>Lihat Katalog</Button>
+              <Button leftSection={<IconShoppingBag size={17} />}>Lihat Katalog</Button>
             </div>
           )}
         </div>

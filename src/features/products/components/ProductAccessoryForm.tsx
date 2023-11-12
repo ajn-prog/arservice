@@ -145,7 +145,7 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
             {...form.getInputProps('price')}
             label="Harga"
             placeholder="Masukan Harga"
-            icon={<span>Rp.</span>}
+            leftSection={<span className="text-xs">Rp.</span>}
             className="col-span-12 md:col-span-6"
           />
           <div className="py-1">

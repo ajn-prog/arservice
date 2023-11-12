@@ -65,7 +65,7 @@ export const ProductList: React.FC = () => {
                   fullWidth
                   size="xs"
                   variant="outline"
-                  leftIcon={<IconShoppingCart size={14} />}
+                  leftSection={<IconShoppingCart size={14} />}
                   onClick={() => addProduct(product.id)}
                 >
                   Tambah Keranjang
