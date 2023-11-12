@@ -1,0 +1,1 @@
+import{b as s,j as n}from"./index-1a1c1bd9.js";const e=({role:r,children:o})=>{const{creds:t}=s();return r.includes((t==null?void 0:t.role)??"Admin")?n.jsx(n.Fragment,{children:o}):null};export{e as A};
