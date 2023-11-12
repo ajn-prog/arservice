@@ -11,12 +11,16 @@ import { ProductSelect } from '@/features/products';
 import { useCreateGuide } from '../api';
 import { GuideDTO } from '../types';
 
-export const GuideCreateForm: React.FC = () => {
+type Props = {
+  product?: number | string;
+};
+
+export const GuideCreateForm: React.FC<Props> = ({ product }) => {
   const createMutation = useCreateGuide();
   const navigate = useNavigate();
   const form = useForm<GuideDTO>({
     initialValues: {
-      product_id: undefined,
+      product_id: product,
       title: '',
       image: undefined,
       description: '',

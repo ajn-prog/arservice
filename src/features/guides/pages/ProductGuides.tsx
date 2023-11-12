@@ -33,7 +33,7 @@ export const ProductGuides: React.FC = () => {
     <main>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Panduan Berdasarkan Produk</h1>
-        <Button component={Link} to="/guide/create">
+        <Button component={Link} to={`/guide/create?product=${data.id}`}>
           Tambah
         </Button>
       </div>
