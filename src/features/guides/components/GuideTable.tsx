@@ -45,8 +45,8 @@ export const GuideTable: React.FC<Props> = ({ toolbar }) => {
           <td>{dayjs(guide.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <Button component={Link} to={`/guide/${guide.id}`} size="xs">
-                Detail
+              <Button component={Link} to={`/guide/product/${guide.id}`} size="xs">
+                Lihat Panduan
               </Button>
             </div>
           </td>

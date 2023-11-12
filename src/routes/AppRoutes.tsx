@@ -66,8 +66,8 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="/guide" element={<Guides />} />
         <Route path="/guide/create" element={<GuideCreate />} />
-        <Route path="/guide/:productId" element={<ProductGuides />} />
-        <Route path="/guide/:productId/:guideId" element={<GuideDetail />} />
+        <Route path="/guide/product/:id" element={<ProductGuides />} />
+        <Route path="/guide/:id" element={<GuideDetail />} />
         <Route path="/guide/:productId/:guideId/update" element={<GuideUpdate />} />
 
         <Route path="*" element={<UnderDevelopment />} />
