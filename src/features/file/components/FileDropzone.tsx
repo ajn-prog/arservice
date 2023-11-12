@@ -5,7 +5,7 @@ import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 
 type Props = {
   label?: React.ReactNode;
-  value?: File;
+  value?: File | File[];
   error?: string;
 } & Omit<DropzoneProps, 'children'>;
 
@@ -42,7 +42,17 @@ export const FileDropzone: React.FC<Props> = ({ value, label, error, ...props })
           </Dropzone.Idle>
 
           <div className="text-gray-600">
-            {value ? <span>{value.name}</span> : <span>Klik atau drag file untuk upload</span>}
+            {value ? (
+              <span>
+                {Array.isArray(value)
+                  ? value.length > 0
+                    ? `${value.length} Files Attached`
+                    : 'Klik atau drag file untuk upload'
+                  : value.name}
+              </span>
+            ) : (
+              <span>Klik atau drag file untuk upload</span>
+            )}
           </div>
         </Group>
       </Dropzone>
