@@ -129,7 +129,6 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             placeholder="Pilih Brand"
             className="col-span-12 md:col-span-3"
             nothingFoundMessage="Data tidak ditemukan"
-            withinPortal
           />
           <CategorySelect
             {...form.getInputProps('category_product_id')}
@@ -137,7 +136,6 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             placeholder="Pilih Kategori"
             className="col-span-12 md:col-span-3"
             nothingFoundMessage="Data tidak ditemukan"
-            withinPortal
           />
           <UnitSelect
             {...form.getInputProps('unit_product_id')}
@@ -145,7 +143,6 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             placeholder="Pilih Satuan"
             className="col-span-12 md:col-span-3"
             nothingFoundMessage="Data tidak ditemukan"
-            withinPortal
           />
           <ModalitySelect
             {...form.getInputProps('modality_product_id')}
@@ -153,7 +150,6 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             placeholder="Pilih Modality"
             className="col-span-12 md:col-span-3"
             nothingFoundMessage="Data tidak ditemukan"
-            withinPortal
           />
         </div>
       </Card.Section>

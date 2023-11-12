@@ -44,28 +44,24 @@ export const ProductCreateUnit: React.FC = () => {
               placeholder="Pilih Brand"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
             <Select
               label="Kategori"
               placeholder="Pilih Kategori"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
             <Select
               label="Satuan"
               placeholder="Pilih Satuan"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
             <Select
               label="Modality"
               placeholder="Pilih Modality"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
           </div>
         </Card.Section>

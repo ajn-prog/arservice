@@ -35,14 +35,12 @@ export const ProductCreateService: React.FC = () => {
               placeholder="Pilih Kategori"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
             <Select
               label="Brand"
               placeholder="Pilih Brand"
               data={['1', '2']}
               className="col-span-12 md:col-span-3"
-              withinPortal
             />
           </div>
         </Card.Section>
