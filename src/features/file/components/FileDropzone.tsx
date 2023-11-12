@@ -1,13 +1,13 @@
-import { Group } from '@mantine/core';
+import { Group, rem } from '@mantine/core';
 import { Dropzone, DropzoneProps } from '@mantine/dropzone';
 import { notifications } from '@mantine/notifications';
-import { IconUpload, IconX } from '@tabler/icons-react';
+import { IconPhoto, IconUpload, IconX } from '@tabler/icons-react';
 
 type Props = {
   label?: string;
   value?: File;
   error?: string;
-} & DropzoneProps;
+} & Omit<DropzoneProps, 'children'>;
 
 export const FileDropzone: React.FC<Props> = ({ value, label, error, ...props }) => {
   return (
@@ -16,21 +16,29 @@ export const FileDropzone: React.FC<Props> = ({ value, label, error, ...props })
 
       <Dropzone
         onReject={() => notifications.show({ message: 'File tidak sesuai', color: 'red' })}
+        style={{
+          border: '2px dashed #cecece',
+        }}
         {...props}
       >
-        <Group
-          position="center"
-          spacing="md"
-          className="pointer-events-none text-center min-h-[4rem] text-gray-600"
-        >
+        <Group justify="center" gap="xl" mih={120} style={{ pointerEvents: 'none' }}>
           <Dropzone.Accept>
-            <IconUpload size={32} stroke={1.5} className="text-primary-600" />
+            <IconUpload
+              style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-blue-6)' }}
+              stroke={1.5}
+            />
           </Dropzone.Accept>
           <Dropzone.Reject>
-            <IconX size={32} stroke={1.5} className="text-red-600" />
+            <IconX
+              style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-red-6)' }}
+              stroke={1.5}
+            />
           </Dropzone.Reject>
           <Dropzone.Idle>
-            <IconUpload size={32} stroke={1.5} />
+            <IconPhoto
+              style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-dimmed)' }}
+              stroke={1.5}
+            />
           </Dropzone.Idle>
 
           {value ? <div>{value.name}</div> : <div>Klik atau drag file untuk upload</div>}
