@@ -113,7 +113,7 @@ export const GuideList: React.FC<Props> = ({ productId }) => {
               <div className="grid grid-cols-2 gap-2 mt-4">
                 <Button
                   component={Link}
-                  to={`/guide/${guide.id}`}
+                  to={`/guide/${guide.id}/update`}
                   variant="light"
                   leftSection={<IconEdit size={16} />}
                   fullWidth
