@@ -92,6 +92,7 @@ export const ModalityTable: React.FC<Props> = ({ toolbar }) => {
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon
+                variant="subtle"
                 title="Update Modality"
                 color="primary"
                 radius="lg"
@@ -100,6 +101,7 @@ export const ModalityTable: React.FC<Props> = ({ toolbar }) => {
                 <IconEdit size={18} />
               </ActionIcon>
               <ActionIcon
+                variant="subtle"
                 title="Hapus Modality"
                 color="red"
                 radius="lg"

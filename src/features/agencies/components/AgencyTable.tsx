@@ -86,6 +86,7 @@ export const AgencyTable: React.FC<Props> = ({ toolbar }) => {
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon
+                variant="subtle"
                 component={Link}
                 to={`/agency/${agency.id}`}
                 title="Update Instansi"
@@ -95,6 +96,7 @@ export const AgencyTable: React.FC<Props> = ({ toolbar }) => {
                 <IconEdit size={18} />
               </ActionIcon>
               <ActionIcon
+                variant="subtle"
                 onClick={handleRemove(agency.id)}
                 title="Hapus Instansi"
                 color="red"

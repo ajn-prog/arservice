@@ -89,6 +89,7 @@ export const CategoryTable: React.FC<Props> = ({ toolbar }) => {
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon
+                variant="subtle"
                 title="Update Kategori"
                 color="primary"
                 radius="lg"
@@ -97,6 +98,7 @@ export const CategoryTable: React.FC<Props> = ({ toolbar }) => {
                 <IconEdit size={18} />
               </ActionIcon>
               <ActionIcon
+                variant="subtle"
                 title="Hapus Kategori"
                 color="red"
                 radius="lg"

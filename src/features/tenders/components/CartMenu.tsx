@@ -16,7 +16,7 @@ export const CartMenu: React.FC = () => {
   return (
     <Menu position="bottom-end" width={320}>
       <Menu.Target>
-        <ActionIcon size="lg" color="gray" className="text-gray-800">
+        <ActionIcon variant="subtle" size="lg" color="gray" className="text-gray-800">
           <IconShoppingCart style={{ width: '70%', height: '70%' }} stroke={1.4} />
         </ActionIcon>
       </Menu.Target>

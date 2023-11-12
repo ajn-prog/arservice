@@ -87,6 +87,7 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon
+                variant="subtle"
                 component={Link}
                 to={`/installation/${installation.id}`}
                 title="Update Install Base"
@@ -96,6 +97,7 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
                 <IconEdit size={18} />
               </ActionIcon>
               <ActionIcon
+                variant="subtle"
                 onClick={handleRemove(installation.id)}
                 title="Hapus Install Base"
                 color="red"
