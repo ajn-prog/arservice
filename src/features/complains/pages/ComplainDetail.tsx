@@ -85,16 +85,13 @@ export const ComplainDetail: React.FC = () => {
             </div>
           </div>
           <div className="pt-4">
-            <div className="prose prose-sm" dangerouslySetInnerHTML={{ __html: complain.detail }} />
-          </div>
-
-          <section className="mt-6">
-            <div className="mb-2">
-              <h3 className="text-base font-bold">Lampiran</h3>
-            </div>
+            <div
+              className="prose prose-sm mb-4"
+              dangerouslySetInnerHTML={{ __html: complain.detail }}
+            />
 
             <AttachmentList files={complain.complain_files.map(({ filename }) => filename)} />
-          </section>
+          </div>
 
           <section className="mt-6">
             <div className="mb-2">
