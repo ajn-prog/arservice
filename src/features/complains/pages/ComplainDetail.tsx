@@ -1,4 +1,5 @@
 import { Button, Card } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -7,12 +8,29 @@ import { AttachmentList } from '@/features/file';
 import { clsx } from '@/utils/format';
 
 import { useComplain } from '../api';
-import { ComplainBadge, ComplainReplies } from '../components';
+import { ComplainBadge, ComplainReplies, ReplyForm } from '../components';
 
 export const ComplainDetail: React.FC = () => {
   const { id } = useParams<'id'>();
   const navigate = useNavigate();
   const { data: complain, isLoading, isError } = useComplain({ id: id as string });
+
+  function handleReply() {
+    if (!complain) return;
+
+    modals.open({
+      modalId: 'complain-reply',
+      title: 'Balas Komplain',
+      size: 'xl',
+      children: (
+        <ReplyForm
+          complain={complain.id}
+          onCancel={() => modals.close('complain-reply')}
+          onSuccess={() => modals.close('complain-reply')}
+        />
+      ),
+    });
+  }
 
   if (isLoading)
     return (
@@ -88,7 +106,7 @@ export const ComplainDetail: React.FC = () => {
         </Card.Section>
         <Card.Section p="lg">
           <div className="flex items-center space-x-2">
-            <Button>Reply</Button>
+            <Button onClick={handleReply}>Reply</Button>
             <Button color="red">Close</Button>
           </div>
         </Card.Section>
