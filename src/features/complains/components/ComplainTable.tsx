@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { Badge, Button } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconEye, IconTrash, IconX } from '@tabler/icons-react';
@@ -83,7 +83,17 @@ export const ComplainTable: React.FC<Props> = ({ toolbar }) => {
           <td className="capitalize">{complain.priority}</td>
           <td>{complain.installbase.product.name}</td>
           <td>{complain.installbase.customer.name}</td>
-          <td>{complain.status}</td>
+          <td>
+            {complain.status == 'open' ? (
+              <Badge variant="light" color="red">
+                Open
+              </Badge>
+            ) : (
+              <Badge variant="light" color="gray">
+                Closed
+              </Badge>
+            )}
+          </td>
           <td>{dayjs(complain.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
