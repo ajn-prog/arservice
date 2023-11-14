@@ -1,7 +1,7 @@
 import { Button } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
 import { Authorization } from '@/features/auth';
@@ -85,57 +85,78 @@ export const GuideList: React.FC<Props> = ({ productId }) => {
     );
 
   return (
-    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      {data.guide.map((guide) => (
-        <div key={guide.id} className="w-full bg-white rounded-lg overflow-hidden">
-          <Link to={`/guide/${guide.id}`}>
-            <div className="w-full aspect-video bg-gray-200 relative">
-              {guide.image && (
-                <img
-                  src={guide.image}
-                  alt=""
-                  className="absolute inset-0 w-full h-full object-cover object-center"
-                />
-              )}
-            </div>
-          </Link>
-          <div className="p-4">
+    <>
+      <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {data.guide.map((guide) => (
+          <div key={guide.id} className="w-full bg-white rounded-lg overflow-hidden">
             <Link to={`/guide/${guide.id}`}>
-              <h2 className="line-clamp-2 text-base font-bold mb-1 hover:underline">
-                {guide.title}
-              </h2>
-              <p className="text-sm line-clamp-2 text-gray-600">
-                {getExcerpt(guide.description, 15)}
-              </p>
-            </Link>
-
-            <Authorization role={['Admin', 'Superadmin']}>
-              <div className="grid grid-cols-2 gap-2 mt-4">
-                <Button
-                  component={Link}
-                  to={`/guide/${guide.id}/update`}
-                  variant="light"
-                  leftSection={<IconEdit size={16} />}
-                  fullWidth
-                  size="xs"
-                >
-                  Edit
-                </Button>
-                <Button
-                  color="red"
-                  variant="light"
-                  leftSection={<IconTrash size={16} />}
-                  fullWidth
-                  size="xs"
-                  onClick={handleDelete(guide)}
-                >
-                  Hapus
-                </Button>
+              <div className="w-full aspect-video bg-gray-200 relative">
+                {guide.image && (
+                  <img
+                    src={guide.image}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover object-center"
+                  />
+                )}
               </div>
-            </Authorization>
+            </Link>
+            <div className="p-4">
+              <Link to={`/guide/${guide.id}`}>
+                <h2 className="line-clamp-2 text-base font-bold mb-1 hover:underline">
+                  {guide.title}
+                </h2>
+                <p className="text-sm line-clamp-2 text-gray-600">
+                  {getExcerpt(guide.description, 15)}
+                </p>
+              </Link>
+
+              <Authorization role={['Admin', 'Superadmin']}>
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  <Button
+                    component={Link}
+                    to={`/guide/${guide.id}/update`}
+                    variant="light"
+                    leftSection={<IconEdit size={16} />}
+                    fullWidth
+                    size="xs"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="light"
+                    leftSection={<IconTrash size={16} />}
+                    fullWidth
+                    size="xs"
+                    onClick={handleDelete(guide)}
+                  >
+                    Hapus
+                  </Button>
+                </div>
+              </Authorization>
+            </div>
           </div>
+        ))}
+      </div>
+      {data.guide.length == 0 && (
+        <div className="col-span-12 flex flex-col items-center justify-center py-24 mx-auto max-w-md">
+          <p className="text-lg font-bold mb-4 text-center">
+            Belum ada panduan untuk produk ini
+            <Authorization role={['Admin', 'Superadmin']}>
+              , tekan tombol dibawah untuk menambahkan
+            </Authorization>
+          </p>
+          <Authorization role={['Admin', 'Superadmin']}>
+            <Button
+              component={Link}
+              to={`/guide/create?product=${data.id}`}
+              leftSection={<IconPlus size={16} />}
+            >
+              Tambah Panduan
+            </Button>
+          </Authorization>
         </div>
-      ))}
-    </div>
+      )}
+    </>
   );
 };
