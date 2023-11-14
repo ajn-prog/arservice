@@ -1,7 +1,36 @@
-import { Badge, Button, Card } from '@mantine/core';
-import { IconPaperclip, IconUser } from '@tabler/icons-react';
+import { Button, Card } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { LoadingScreen } from '@/components/elements';
+import { AttachmentList } from '@/features/file';
+import { clsx } from '@/utils/format';
+
+import { useComplain } from '../api';
+import { ComplainBadge, ComplainReplies } from '../components';
 
 export const ComplainDetail: React.FC = () => {
+  const { id } = useParams<'id'>();
+  const navigate = useNavigate();
+  const { data: complain, isLoading, isError } = useComplain({ id: id as string });
+
+  if (isLoading)
+    return (
+      <div className="mt-48">
+        <LoadingScreen />
+      </div>
+    );
+
+  if (isError)
+    return (
+      <div className="mt-48 text-center">
+        <h1 className="text-lg font-bold mb-2">Data komplain tidak ditemukan</h1>
+        <Button onClick={() => navigate(-1)} leftSection={<IconArrowLeft size={14} />}>
+          Kembali
+        </Button>
+      </div>
+    );
+
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
@@ -9,83 +38,53 @@ export const ComplainDetail: React.FC = () => {
       </div>
 
       <Card>
-        <Card.Section p="lg" withBorder>
-          <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-base">Detail Komplain #1029</h2>
-            <div>
-              Priority: <span className="text-primary-600">Medium</span>
+        <Card.Section px="lg" py="md" withBorder>
+          <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 border-b border-gray-300 pb-4">
+            <div className="flex-grow">
+              <ComplainBadge status={complain.status} radius="sm" />
+              <h1 className="font-bold text-xl text-gray-800 mt-1 mb-1">
+                {complain.title} #{complain.id}
+              </h1>
+              <p className="text-xs text-gray-600">
+                Dibuka oleh <span className="font-bold">Dwa Meizadewa</span> pada 4 minggu yang
+                lalu.
+              </p>
+            </div>
+            <div className="text-sm md:text-base">
+              Priority:{' '}
+              <span
+                className={clsx(
+                  'capitalize',
+                  complain.priority == 'high'
+                    ? 'text-red-600'
+                    : complain.priority == 'medium'
+                    ? 'text-primary-600'
+                    : 'text-green-600'
+                )}
+              >
+                {complain.priority}
+              </span>
             </div>
           </div>
-        </Card.Section>
-        <Card.Section p="lg" withBorder>
-          <div className="space-y-4">
-            <div className="border border-gray-300 rounded-md">
-              <div className="p-4 border-b border-gray-300 flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gray-200 text-gray-600 rounded-full">
-                    <IconUser size={24} />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm">Budi Teknisi AJN</div>
-                    <div className="text-xs text-gray-600">24 Desember 2023 16.00</div>
-                  </div>
-                </div>
-                <Badge color="green" radius="sm" variant="light">
-                  Client
-                </Badge>
-              </div>
-              <div className="p-4">
-                <p className="text-sm">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste quibusdam, a
-                  voluptate harum libero nisi earum recusandae illo alias commodi magni voluptatum
-                  dolor nobis ipsa!
-                </p>
-
-                <div className="space-y-1 mt-4">
-                  <div className="flex items-center text-sm text-primary-600">
-                    <IconPaperclip size={16} />
-                    <span className="ml-2">awewewe.jpg</span>
-                  </div>
-                  <div className="flex items-center text-sm text-primary-600">
-                    <IconPaperclip size={16} />
-                    <span className="ml-2">awewewe.jpg</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="border border-gray-300 rounded-md">
-              <div className="p-4 border-b border-gray-300 flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="p-2 bg-gray-200 text-gray-600 rounded-full">
-                    <IconUser size={24} />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-sm">Budi Teknisi AJN</div>
-                    <div className="text-xs text-gray-600">24 Desember 2023 16.00</div>
-                  </div>
-                </div>
-                <div>Client</div>
-              </div>
-              <div className="p-4">
-                <p className="text-sm">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iste quibusdam, a
-                  voluptate harum libero nisi earum recusandae illo alias commodi magni voluptatum
-                  dolor nobis ipsa!
-                </p>
-
-                <div className="space-y-1 mt-4">
-                  <div className="flex items-center text-sm text-primary-600">
-                    <IconPaperclip size={16} />
-                    <span className="ml-2">awewewe.jpg</span>
-                  </div>
-                  <div className="flex items-center text-sm text-primary-600">
-                    <IconPaperclip size={16} />
-                    <span className="ml-2">awewewe.jpg</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="pt-4">
+            <div className="prose prose-sm" dangerouslySetInnerHTML={{ __html: complain.detail }} />
           </div>
+
+          <section className="mt-6">
+            <div className="mb-2">
+              <h3 className="text-base font-bold">Lampiran</h3>
+            </div>
+
+            <AttachmentList files={complain.complain_files.map(({ filename }) => filename)} />
+          </section>
+
+          <section className="mt-6">
+            <div className="mb-2">
+              <h3 className="text-base font-bold">Balasan</h3>
+            </div>
+
+            <ComplainReplies replies={complain.complain_reply} />
+          </section>
         </Card.Section>
         <Card.Section p="lg">
           <div className="flex items-center space-x-2">

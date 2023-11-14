@@ -1,4 +1,4 @@
-import { Badge, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconEye, IconTrash, IconX } from '@tabler/icons-react';
@@ -10,6 +10,8 @@ import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
 
 import { useComplains, useDeleteComplain } from '../api';
+
+import { ComplainBadge } from './ComplainBadge';
 
 const initialParams: Pagination = {
   page: 1,
@@ -84,15 +86,7 @@ export const ComplainTable: React.FC<Props> = ({ toolbar }) => {
           <td>{complain.installbase.product.name}</td>
           <td>{complain.installbase.customer.name}</td>
           <td>
-            {complain.status == 'open' ? (
-              <Badge variant="light" color="red">
-                Open
-              </Badge>
-            ) : (
-              <Badge variant="light" color="gray">
-                Closed
-              </Badge>
-            )}
+            <ComplainBadge status={complain.status} />
           </td>
           <td>{dayjs(complain.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>

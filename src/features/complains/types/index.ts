@@ -33,7 +33,7 @@ export type Complain = {
   installbase_id: number;
   title: string;
   status: ComplainStatus;
-  priority: string;
+  priority: ComplainPriority;
   detail: string;
   placement_space: string;
   installbase: Installation;
