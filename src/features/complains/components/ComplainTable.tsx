@@ -11,6 +11,8 @@ import { Pagination } from '@/types/api';
 
 import { useComplains, useDeleteComplain } from '../api';
 
+import { ComplainBadge } from './ComplainBadge';
+
 const initialParams: Pagination = {
   page: 1,
   limit: 10,
@@ -83,7 +85,9 @@ export const ComplainTable: React.FC<Props> = ({ toolbar }) => {
           <td className="capitalize">{complain.priority}</td>
           <td>{complain.installbase.product.name}</td>
           <td>{complain.installbase.customer.name}</td>
-          <td>{complain.status}</td>
+          <td>
+            <ComplainBadge status={complain.status} />
+          </td>
           <td>{dayjs(complain.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">

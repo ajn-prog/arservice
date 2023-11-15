@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DistrictSelect, ProvinceSelect, RegencySelect } from '@/features/region';
 
 import { useUpdateAgency } from '../api';
+import { CLASSES, OWNERSHIP, SECTORS } from '../constants';
 import { Agency, AgencyDTO } from '../types';
 
 type RegionSelect = {
@@ -97,21 +98,21 @@ export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
             {...form.getInputProps('sector')}
             label="Sektor"
             placeholder="Pilih Sektor"
-            data={['Private', 'Public']}
+            data={SECTORS}
             className="col-span-12 md:col-span-4"
           />
           <Select
             {...form.getInputProps('classes')}
             label="Kelas"
             placeholder="Pilih Kelas"
-            data={['A', 'B', 'C', 'D', 'D Pratama']}
+            data={CLASSES}
             className="col-span-12 md:col-span-4"
           />
           <Select
             {...form.getInputProps('owner')}
             label="Kepemilikan"
             placeholder="Pilih Kepemilikan"
-            data={['Perorangan', 'Korporasi', 'Negara']}
+            data={OWNERSHIP}
             className="col-span-12 md:col-span-4"
           />
 

@@ -32,8 +32,8 @@ export type ComplainPriority = 'low' | 'medium' | 'high';
 export type Complain = {
   installbase_id: number;
   title: string;
-  status: string;
-  priority: string;
+  status: ComplainStatus;
+  priority: ComplainPriority;
   detail: string;
   placement_space: string;
   installbase: Installation;
