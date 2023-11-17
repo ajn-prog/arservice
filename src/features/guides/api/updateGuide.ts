@@ -30,7 +30,7 @@ export async function updateGuide({ id, data }: GuideRequest) {
     }
   }
 
-  const res = await axios.put<GeneralResponse<Guide>>(`/ar-service/guide-product/${id}`, formData);
+  const res = await axios.post<GeneralResponse<Guide>>(`/ar-service/guide-product/${id}`, formData);
 
   return res.data;
 }
