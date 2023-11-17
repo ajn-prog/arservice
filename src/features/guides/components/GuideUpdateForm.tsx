@@ -2,7 +2,7 @@ import { Button, Card, TextInput } from '@mantine/core';
 import { IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { TextEditor } from '@/components/forms';
 import { FileDropzone } from '@/features/file';
@@ -111,7 +111,7 @@ export const GuideUpdateForm: React.FC<Props> = ({ guide }) => {
         <Button type="submit" loading={updateMutation.isLoading}>
           Simpan
         </Button>
-        <Button component={Link} to="/guide" variant="light" color="gray.6" bg="gray.2">
+        <Button onClick={() => navigate(-1)} variant="light" color="gray.6" bg="gray.2">
           Batal
         </Button>
       </Card.Section>
