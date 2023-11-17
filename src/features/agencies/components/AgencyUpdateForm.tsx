@@ -79,7 +79,7 @@ export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
         <h2 className="font-semibold text-base">Edit Data Instansi</h2>
       </Card.Section>
 
-      <Card.Section p="lg" pt="xs">
+      <Card.Section p="lg" pt="xs" withBorder>
         <div className="pb-6 grid grid-cols-12 gap-x-6 gap-y-4 border-b border-gray-300">
           <TextInput
             {...form.getInputProps('hospital_code')}
@@ -183,11 +183,11 @@ export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
         </div>
       </Card.Section>
 
-      <Card.Section p="lg" withBorder className="flex justify-end items-center space-x-4">
+      <Card.Section p="lg" withBorder className="flex items-center space-x-4">
+        <Button type="submit">Simpan</Button>
         <Button component={Link} to="/agency" variant="light" color="gray.6" bg="gray.2">
           Batal
         </Button>
-        <Button type="submit">Simpan</Button>
       </Card.Section>
     </Card>
   );
