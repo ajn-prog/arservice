@@ -19,7 +19,6 @@ export type Installation = {
 
 export type InstallationDTO = {
   title?: string;
-  product_id?: number | string;
   customer_id?: number | string;
   installation_date?: string | Date | null;
   warranty_month?: number | string;
@@ -27,6 +26,10 @@ export type InstallationDTO = {
   project_number?: number | string;
   note?: string;
   engineer_ids?: Array<string | number>;
-  bastp_file?: File;
-  bastb_file?: File;
+  file?: File;
+  products: {
+    product_id?: number | string;
+    warranty_month?: number | string;
+    serial_number?: number | string;
+  }[];
 };
