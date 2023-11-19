@@ -1,11 +1,12 @@
 import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconEdit, IconTrash, IconX } from '@tabler/icons-react';
+import { IconCheck, IconEye, IconTrash, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
+import { Authorization } from '@/features/auth';
 import { PRODUCT_TYPES } from '@/features/products';
 import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
@@ -104,21 +105,23 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
                 variant="subtle"
                 component={Link}
                 to={`/installation/${installation.id}`}
-                title="Update Install Base"
+                title="Detail Install Base"
                 color="primary"
                 radius="lg"
               >
-                <IconEdit size={18} />
+                <IconEye size={18} />
               </ActionIcon>
-              <ActionIcon
-                variant="subtle"
-                onClick={handleRemove(installation.id)}
-                title="Hapus Install Base"
-                color="red"
-                radius="lg"
-              >
-                <IconTrash size={18} />
-              </ActionIcon>
+              <Authorization role={['Superadmin', 'Admin']}>
+                <ActionIcon
+                  variant="subtle"
+                  onClick={handleRemove(installation.id)}
+                  title="Hapus Install Base"
+                  color="red"
+                  radius="lg"
+                >
+                  <IconTrash size={18} />
+                </ActionIcon>
+              </Authorization>
             </div>
           </td>
         </tr>
