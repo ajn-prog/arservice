@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { IconBasketOff, IconShoppingBag } from '@tabler/icons-react';
 import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { CartList } from '../components';
 import { useCart } from '../hooks';
@@ -47,7 +47,9 @@ export const Carts: React.FC = () => {
                 Anda belum pernah menambahkan produk kedalam keranjang
               </p>
 
-              <Button leftSection={<IconShoppingBag size={17} />}>Lihat Katalog</Button>
+              <Button component={Link} to="/product" leftSection={<IconShoppingBag size={17} />}>
+                Lihat Katalog
+              </Button>
             </div>
           )}
         </div>
