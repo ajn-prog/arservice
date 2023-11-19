@@ -25,7 +25,7 @@ export type ComplainReply = {
   };
 } & BaseEntity;
 
-export type ComplainStatus = 'open' | 'closed';
+export type ComplainStatus = 'waiting' | 'progress' | 'close';
 
 export type ComplainPriority = 'low' | 'medium' | 'high';
 
