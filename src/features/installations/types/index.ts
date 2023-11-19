@@ -2,19 +2,26 @@ import { Agency } from '@/features/agencies';
 import { Product } from '@/features/products';
 import { BaseEntity } from '@/types/entity';
 
-export type Installation = {
-  title: string;
-  technical_contract_id: any;
+export type InstallationItem = {
+  installbase_id: number;
   product_id: number;
-  customer_id: number;
-  installation_date_estimation: string;
-  installation_date: string;
-  warranty_month: number;
   serial_number: string;
+  warranty_month: string;
+  product: Product;
+} & BaseEntity;
+
+export type Installation = {
+  technical_contract_id: number;
+  customer_id: number;
+  installation_date: string;
   project_number: string;
   note: string;
+  title: string;
+  file: string | null;
+  created_at: string;
+  updated_at: string;
   customer: Agency;
-  product: Product;
+  items: InstallationItem[];
 } & BaseEntity;
 
 export type InstallationDTO = {

@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
+import { PRODUCT_TYPES } from '@/features/products';
 import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
 
@@ -66,7 +67,7 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
     <Table
       title="Tabel Data Install Base"
       toolbar={toolbar}
-      header={['Project Number', 'Rumah Sakit', 'Produk', 'Diperbaharui', '']}
+      header={['#', 'Project Number', 'Nama Kegiatan', 'Produk', 'Rumah Sakit', 'Diperbaharui', '']}
       items={data?.data}
       onPageChange={(page) => {
         setParams({ ...params, page });
@@ -78,11 +79,24 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
         page: params.page || 10,
         total: data?.total || 10,
       }}
-      renderItem={(installation) => (
+      renderItem={(installation, i) => (
         <tr key={installation.id}>
+          <td>{(params.limit ?? 5) * ((params.page ?? 0) - 1) + i + 1}</td>
           <td>{installation.project_number}</td>
+          <td>{installation.title}</td>
+          <td>
+            <div className="text-xs text-primary-600">
+              {PRODUCT_TYPES[installation.items[0].product.type]}
+            </div>
+            <div className="text-sm text-gray-900">{installation.items[0].product.name}</div>
+
+            {installation.items.length > 1 && (
+              <div className="text-xs text-gray-600 mt-1">
+                + {installation.items.length - 1} produk lainnya
+              </div>
+            )}
+          </td>
           <td>{installation.customer.name}</td>
-          <td>{installation.product.name}</td>
           <td>{dayjs(installation.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
