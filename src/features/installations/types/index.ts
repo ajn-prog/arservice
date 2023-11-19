@@ -1,12 +1,17 @@
 import { Agency } from '@/features/agencies';
 import { Product } from '@/features/products';
+import { Engineer } from '@/features/user';
 import { BaseEntity } from '@/types/entity';
+
+export type Contract = {
+  engineers: Engineer[];
+} & BaseEntity;
 
 export type InstallationItem = {
   installbase_id: number;
   product_id: number;
   serial_number: string;
-  warranty_month: string;
+  warranty_month: string | number;
   product: Product;
 } & BaseEntity;
 
@@ -21,6 +26,7 @@ export type Installation = {
   created_at: string;
   updated_at: string;
   customer: Agency;
+  technical_contract: Contract;
   items: InstallationItem[];
 } & BaseEntity;
 
