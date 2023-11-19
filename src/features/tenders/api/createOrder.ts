@@ -13,25 +13,28 @@ export type OrderRequest = {
     position?: string;
     address?: string;
     kecamatan_id?: number | string;
-    products: number[];
+    carts: number[];
   };
 };
 
-export async function createOrder(request: OrderRequest) {
-  const { products, ...data } = request.data;
+export async function createOrder({ data }: OrderRequest) {
   const formData = new FormData();
 
-  products.forEach((v, i) => {
-    formData.append(`ids[${i}]`, v.toString());
-  });
+  for (const [key, value] of Object.entries(data)) {
+    if (!value) continue;
 
-  const res1 = await axios.post<GeneralResponse<Order>>('/ar-service/order', formData);
-  const res2 = await axios.post<GeneralResponse<Order>>(
-    `/ar-service/tender/${res1.data.data.id}`,
-    data
-  );
+    if (Array.isArray(value)) {
+      value.forEach((v, i) => {
+        formData.append(`${key}[${i}]`, v.toString());
+      });
+    } else {
+      formData.append(key, value.toString());
+    }
+  }
 
-  return res2.data;
+  const res = await axios.post<GeneralResponse<Order>>('/ar-service/order', formData);
+
+  return res.data;
 }
 
 type UseCreateOrderOptions = {

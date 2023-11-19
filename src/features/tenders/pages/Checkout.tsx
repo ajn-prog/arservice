@@ -21,7 +21,7 @@ export const Checkout: React.FC = () => {
   const form = useForm<OrderRequest['data']>({
     initialValues: {
       name: '',
-      products: [],
+      carts: [],
       address: '',
       kecamatan_id: undefined,
       phone: '',
@@ -40,7 +40,7 @@ export const Checkout: React.FC = () => {
       onConfirm: async () => {
         await orderMutation.mutateAsync(
           {
-            data: { ...values, products: selected },
+            data: { ...values, carts: selected },
           },
           {
             onSuccess: () => {
