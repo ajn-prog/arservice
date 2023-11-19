@@ -1,6 +1,5 @@
-import { ActionIcon, Button, NumberInput, TextInput } from '@mantine/core';
-import { IconPlus, IconX } from '@tabler/icons-react';
-import { Fragment } from 'react';
+import { Button, NumberInput, TextInput } from '@mantine/core';
+import { IconPlus } from '@tabler/icons-react';
 
 import { ProductSelect } from '@/features/products';
 
@@ -16,9 +15,9 @@ export const ProductSelectForm: React.FC<Props> = ({ value, onChange }) => {
     onChange([
       ...value,
       {
-        product_id: undefined,
-        serial_number: undefined,
-        warranty_month: undefined,
+        product_id: '',
+        serial_number: '',
+        warranty_month: '',
       },
     ]);
   }
@@ -31,9 +30,21 @@ export const ProductSelectForm: React.FC<Props> = ({ value, onChange }) => {
     };
   }
 
+  function handleChange(index: number, v: InstallationDTO['products'][number]) {
+    onChange(
+      value.map((val, i) => {
+        if (i === index) {
+          return v;
+        }
+
+        return val;
+      })
+    );
+  }
+
   return (
     <div>
-      <div className="grid grid-cols-12 gap-x-2 gap-y-2">
+      <div className="grid grid-cols-12 gap-x-2 mb-1">
         <div className="col-span-4 text-sm">Produk</div>
         <div className="col-span-4 text-sm">Serial Number</div>
         <div className="col-span-4 text-sm">Masa Garansi</div>
@@ -43,18 +54,32 @@ export const ProductSelectForm: React.FC<Props> = ({ value, onChange }) => {
       {value.map((v, i) => (
         <div className="grid grid-cols-12 gap-x-2 gap-y-2 mb-2" key={`psf_${i}`}>
           <ProductSelect
+            required
             placeholder="Pilih Produk"
             className="col-span-4"
             limit={20}
             nothingFoundMessage="Data tidak ditemukan"
+            value={v.product_id}
+            onChange={(value) => {
+              if (value) handleChange(i, { ...v, product_id: value });
+            }}
           />
 
-          <TextInput placeholder="Ex : MU/23/09/001" className="col-span-4" />
+          <TextInput
+            required
+            placeholder="Ex : MU/23/09/001"
+            className="col-span-4"
+            value={v.serial_number}
+            onChange={(value) => handleChange(i, { ...v, serial_number: value.target.value })}
+          />
 
           <NumberInput
+            required
             placeholder="..."
             className="col-span-3"
             hideControls
+            value={v.warranty_month}
+            onChange={(value) => handleChange(i, { ...v, warranty_month: value })}
             rightSection={<span className="text-xs text-gray-600 pr-7">/bulan</span>}
           />
           <div className="col-span-1 flex items-center">

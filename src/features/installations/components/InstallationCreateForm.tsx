@@ -30,9 +30,9 @@ export const InstallationCreateForm: React.FC = () => {
       file: undefined,
       products: [
         {
-          product_id: undefined,
-          serial_number: undefined,
-          warranty_month: undefined,
+          product_id: '',
+          serial_number: '',
+          warranty_month: '',
         },
       ],
     },
@@ -125,6 +125,7 @@ export const InstallationCreateForm: React.FC = () => {
               onReject={() => notifications.show({ message: 'File tidak sesuai', color: 'red' })}
               maxSize={5 * 1024 ** 2}
               maxFiles={1}
+              value={form.values['file']}
               error={form.errors['file']?.toString()}
             />
           </div>

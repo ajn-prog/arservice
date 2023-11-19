@@ -17,9 +17,17 @@ export async function createInstallation({ data }: InstallationRequest) {
     if (!value) continue;
 
     if (Array.isArray(value)) {
-      value.forEach((v, i) => {
-        formData.append(`${key}[${i}]`, v.toString());
-      });
+      if (typeof value[0] == 'string') {
+        value.forEach((v, i) => {
+          formData.append(`${key}[${i}]`, v.toString());
+        });
+      } else {
+        value.forEach((v, i) => {
+          for (const [key, value] of Object.entries(v)) {
+            formData.append(`${key}[${i}]`, value.toString());
+          }
+        });
+      }
     } else if (value instanceof Date) {
       formData.append(key, value.toJSON());
     } else if (value instanceof File) {

@@ -28,8 +28,8 @@ export type InstallationDTO = {
   engineer_ids?: Array<string | number>;
   file?: File;
   products: {
-    product_id?: number | string;
+    product_id?: string;
     warranty_month?: number | string;
-    serial_number?: number | string;
+    serial_number?: string;
   }[];
 };
