@@ -3,6 +3,7 @@ import { IconArrowLeft } from '@tabler/icons-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
+import { Authorization } from '@/features/auth';
 import { useProduct } from '@/features/products';
 
 import { GuideList } from '../components';
@@ -33,9 +34,12 @@ export const ProductGuides: React.FC = () => {
     <main>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Panduan Berdasarkan Produk</h1>
-        <Button component={Link} to={`/guide/create?product=${data.id}`}>
-          Tambah
-        </Button>
+
+        <Authorization role={['Admin', 'Superadmin']}>
+          <Button component={Link} to={`/guide/create?product=${data.id}`}>
+            Tambah
+          </Button>
+        </Authorization>
       </div>
 
       <section>
