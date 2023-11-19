@@ -2,13 +2,14 @@ import { Button } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
 import { IconBasketOff, IconShoppingBag } from '@tabler/icons-react';
 import { useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { CartList } from '../components';
 import { useCart } from '../hooks';
 
 export const Carts: React.FC = () => {
   const { carts } = useCart();
+  const navigate = useNavigate();
   const [selected, setSelected] = useLocalStorage<number[]>({
     key: 'selected-cart',
     defaultValue: [],
@@ -19,6 +20,15 @@ export const Carts: React.FC = () => {
       .filter(({ product_id }) => selected.includes(product_id))
       .reduce((prev, curr) => prev + curr.quantity, 0);
   }, [carts, selected]);
+
+  function handleSubmit() {
+    setSelected(
+      carts
+        .filter(({ product_id }) => selected.includes(product_id))
+        .map(({ product_id }) => product_id)
+    );
+    navigate('/cart/checkout');
+  }
 
   return (
     <main>
@@ -48,12 +58,7 @@ export const Carts: React.FC = () => {
               <p className="text-primary-600 text-sm">Jumlah Barang ({count})</p>
             </div>
             <div className="pt-4">
-              <Button
-                component={Link}
-                to="/cart/checkout"
-                fullWidth
-                disabled={selected.length == 0}
-              >
+              <Button onClick={handleSubmit} fullWidth disabled={count == 0}>
                 Beli
               </Button>
             </div>
