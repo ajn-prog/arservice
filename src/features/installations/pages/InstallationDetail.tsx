@@ -3,7 +3,6 @@ import { IconArrowLeft, IconPaperclip } from '@tabler/icons-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
-import { AttachmentList } from '@/features/file';
 import { dayjs } from '@/lib/dayjs';
 
 import { useInstallation } from '../api';
