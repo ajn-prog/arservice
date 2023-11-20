@@ -6,7 +6,7 @@ import { useEngineers } from '../api';
 type Props = Omit<MultiSelectProps, 'data'>;
 
 export const EngineerSelect: React.FC<Props> = ({ ...props }) => {
-  const { data } = useEngineers({ params: { limit: 0 } });
+  const { data } = useEngineers({ params: { limit: 500000 } });
 
   const engineers = useMemo(() => {
     if (!data) return [];

@@ -7,7 +7,7 @@ type Props = Omit<SelectProps, 'data'>;
 
 export const BrandSelect: React.FC<Props> = ({ ...props }) => {
   const [search, setSearch] = useState('');
-  const { data } = useBrands({ params: { limit: 0 } });
+  const { data } = useBrands({ params: { limit: 500000 } });
 
   const brands = useMemo(() => {
     if (!data) return [];

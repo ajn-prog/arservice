@@ -6,7 +6,7 @@ import { useInstallations } from '../api';
 type Props = Omit<SelectProps, 'data'>;
 
 export const InstallationSelect: React.FC<Props> = ({ ...props }) => {
-  const { data } = useInstallations({ params: { limit: 0 } });
+  const { data } = useInstallations({ params: { limit: 500000 } });
 
   const installations = useMemo(() => {
     if (!data) return [];

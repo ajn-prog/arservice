@@ -99,6 +99,7 @@ export const InstallationCreateForm: React.FC = () => {
             label="Instansi"
             placeholder="Pilih Instansi"
             className="col-span-12 md:col-span-12"
+            limit={5}
             nothingFoundMessage="Data tidak ditemukan"
           />
 

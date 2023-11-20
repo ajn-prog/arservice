@@ -6,7 +6,7 @@ import { useProducts } from '../api';
 type Props = Omit<SelectProps, 'data'>;
 
 export const ProductSelect: React.FC<Props> = ({ ...props }) => {
-  const { data } = useProducts({ params: { limit: 0 } });
+  const { data } = useProducts({ params: { limit: 500000 } });
 
   const products = useMemo(() => {
     if (!data) return [];
