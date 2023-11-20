@@ -101,7 +101,7 @@ export const InstallationDetail: React.FC = () => {
                   <Table.Td>{i + 1}</Table.Td>
                   <Table.Td>{item.serial_number}</Table.Td>
                   <Table.Td>{item.product.name}</Table.Td>
-                  <Table.Td>{item.product.brand.name}</Table.Td>
+                  <Table.Td>{item.product.brand?.name ?? '[Tanpa Merk]'}</Table.Td>
                   <Table.Td>{item.warranty_month} Bulan</Table.Td>
                   <Table.Td>
                     {dayjs(data.installation_date)

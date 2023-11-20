@@ -7,7 +7,7 @@ type Props = Omit<SelectProps, 'data'>;
 
 export const CategorySelect: React.FC<Props> = ({ ...props }) => {
   const [search, setSearch] = useState('');
-  const { data } = useCategories({ params: { limit: 0 } });
+  const { data } = useCategories({ params: { limit: 500000 } });
 
   const categories = useMemo(() => {
     if (!data) return [];

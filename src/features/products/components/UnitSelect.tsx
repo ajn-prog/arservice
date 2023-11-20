@@ -7,7 +7,7 @@ type Props = Omit<SelectProps, 'data'>;
 
 export const UnitSelect: React.FC<Props> = ({ ...props }) => {
   const [search, setSearch] = useState('');
-  const { data } = useUnits({ params: { limit: 0 } });
+  const { data } = useUnits({ params: { limit: 500000 } });
 
   const units = useMemo(() => {
     if (!data) return [];

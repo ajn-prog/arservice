@@ -86,15 +86,19 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
           <td>{installation.project_number}</td>
           <td>{installation.title}</td>
           <td>
-            <div className="text-xs text-primary-600">
-              {PRODUCT_TYPES[installation.items[0].product.type]}
-            </div>
-            <div className="text-sm text-gray-900">{installation.items[0].product.name}</div>
+            {installation.items.length > 0 && (
+              <>
+                <div className="text-xs text-primary-600">
+                  {PRODUCT_TYPES[installation.items[0].product.type]}
+                </div>
+                <div className="text-sm text-gray-900">{installation.items[0].product.name}</div>
 
-            {installation.items.length > 1 && (
-              <div className="text-xs text-gray-600 mt-1">
-                + {installation.items.length - 1} produk lainnya
-              </div>
+                {installation.items.length > 1 && (
+                  <div className="text-xs text-gray-600 mt-1">
+                    + {installation.items.length - 1} produk lainnya
+                  </div>
+                )}
+              </>
             )}
           </td>
           <td>{installation.customer.name}</td>

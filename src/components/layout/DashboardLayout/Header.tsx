@@ -1,6 +1,7 @@
 import { UnstyledButton } from '@mantine/core';
 import { IconMenu2 } from '@tabler/icons-react';
 
+import { Authorization } from '@/features/auth';
 import { CartMenu } from '@/features/tenders';
 
 import { UserMenu } from './UserMenu';
@@ -32,7 +33,9 @@ export const Header: React.FC = () => {
           </div>
 
           <div className="flex items-center space-x-4">
-            <CartMenu />
+            <Authorization role={['Customer']}>
+              <CartMenu />
+            </Authorization>
             <UserMenu />
           </div>
         </div>

@@ -1,12 +1,18 @@
+import { ActionIcon } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { IconEdit, IconEye } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Table } from '@/components/elements';
+import { Authorization } from '@/features/auth';
 import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
 
 import { useTenders } from '../api';
+import { Tender } from '../types';
 
 import { TenderBadge } from './TenderBadge';
+import { TenderUpdateForm } from './TenderUpdateForm';
 
 const initialParams: Pagination = {
   page: 1,
@@ -27,6 +33,21 @@ type Props = {
 export const TenderTable: React.FC<Props> = ({ toolbar }) => {
   const [params, setParams] = useState(initialParams);
   const { data, isLoading } = useTenders({ params });
+
+  function handleUpdate(tender: Tender) {
+    return () => {
+      modals.open({
+        title: 'Konfirmasi Penawaran',
+        children: (
+          <TenderUpdateForm
+            tender={tender}
+            onSuccess={() => modals.closeAll()}
+            onCancel={() => modals.closeAll()}
+          />
+        ),
+      });
+    };
+  }
 
   return (
     <Table
@@ -50,7 +71,11 @@ export const TenderTable: React.FC<Props> = ({ toolbar }) => {
             <div className="text-xs text-primary-600">{types[tender.details[0].product.type]}</div>
             <div className="text-sm text-gray-900">{tender.details[0].product.name}</div>
 
-            <div className="text-xs text-gray-600 mt-1">+ 3 produk lainnya</div>
+            {tender.details.length > 1 && (
+              <div className="text-xs text-gray-600 mt-1">
+                + {tender.details.length - 1} produk lainnya
+              </div>
+            )}
           </td>
           <td>
             <div className="text-gray-900">
@@ -62,7 +87,26 @@ export const TenderTable: React.FC<Props> = ({ toolbar }) => {
             <TenderBadge status={tender.status} />
           </td>
           <td>{dayjs(tender.updatedAt).format('D MMMM YYYY H:mm')}</td>
-          <td></td>
+          <td>
+            <div className="flex items-center space-x-2">
+              <ActionIcon variant="subtle" title="Detail Penawaran" color="gray" radius="lg">
+                <IconEye size={18} />
+              </ActionIcon>
+              <Authorization role={['Superadmin', 'Admin']}>
+                {tender.status == 'pending' && (
+                  <ActionIcon
+                    onClick={handleUpdate(tender)}
+                    variant="subtle"
+                    title="Hapus Penawaran"
+                    color="primary"
+                    radius="lg"
+                  >
+                    <IconEdit size={18} />
+                  </ActionIcon>
+                )}
+              </Authorization>
+            </div>
+          </td>
         </tr>
       )}
     />
