@@ -83,8 +83,8 @@ export const ComplainTable: React.FC<Props> = ({ toolbar }) => {
           <td>{(params.limit ?? 5) * ((params.page ?? 0) - 1) + i + 1}</td>
           <td>{complain.title}</td>
           <td className="capitalize">{complain.priority}</td>
-          <td>{complain.installbase.product.name}</td>
-          <td>{complain.installbase.customer.name}</td>
+          <td>{complain.title}</td>
+          <td>{complain.title}</td>
           <td>
             <ComplainBadge status={complain.status} />
           </td>

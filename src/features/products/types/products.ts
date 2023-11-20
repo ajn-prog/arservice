@@ -21,6 +21,7 @@ export type Product = {
   name: string;
   description: string;
   price: number;
+  thumbnail: null | string;
   catalogue_link: string;
   type: ProductType;
   stock: number;
@@ -44,6 +45,7 @@ export type ProductUnitDTO = {
   modality_product_id?: string | number;
   product_code?: string;
   date_entry?: string | Date;
+  thumbnail?: File;
   name?: string;
   type?: ProductType;
 };
@@ -58,6 +60,7 @@ export type ProductAccessoryDTO = {
   type?: ProductType;
   price?: string | number;
   is_consumable?: string | boolean;
+  thumbnail?: File;
   images?: File[];
 };
 

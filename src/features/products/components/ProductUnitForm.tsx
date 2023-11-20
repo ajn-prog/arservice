@@ -1,8 +1,8 @@
-import { Button, Card, TextInput } from '@mantine/core';
+import { Button, Card, FileInput, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconCalendar } from '@tabler/icons-react';
+import { IconCalendar, IconPhoto } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { dayjs } from '@/lib/dayjs';
@@ -33,6 +33,7 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
       product_code: product?.product_code ?? '',
       type: 'main',
       unit_product_id: product?.unit_product_id.toString() ?? '',
+      thumbnail: undefined,
     },
   });
 
@@ -99,7 +100,7 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
         </h2>
       </Card.Section>
 
-      <Card.Section p="lg">
+      <Card.Section p="lg" withBorder>
         <div className="grid grid-cols-12 gap-4">
           <TextInput
             {...form.getInputProps('product_code')}
@@ -151,10 +152,26 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             className="col-span-12 md:col-span-3"
             nothingFoundMessage="Data tidak ditemukan"
           />
+          <FileInput
+            {...form.getInputProps('thumbnail')}
+            label="Thumbnail"
+            placeholder="Pilih Thumbnail"
+            className="col-span-12"
+            multiple={false}
+            accept="image/*"
+            leftSection={<IconPhoto size={16} />}
+            value={form.values['thumbnail']}
+            onChange={(v) => {
+              if (v) form.setFieldValue('thumbnail', v);
+            }}
+          />
         </div>
       </Card.Section>
 
       <Card.Section p="lg" withBorder className="flex justify-end items-center space-x-4">
+        <Button type="submit" loading={createMutation.isLoading || updateMutation.isLoading}>
+          Simpan
+        </Button>
         <Button
           component={Link}
           to="/product"
@@ -164,9 +181,6 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
           disabled={createMutation.isLoading || updateMutation.isLoading}
         >
           Batal
-        </Button>
-        <Button type="submit" loading={createMutation.isLoading || updateMutation.isLoading}>
-          Simpan
         </Button>
       </Card.Section>
     </Card>
