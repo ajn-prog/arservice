@@ -36,3 +36,9 @@ export type Tender = {
   recipient_phone: string;
   recipient_position: string;
 } & BaseEntity;
+
+export type TenderUpdateDTO = {
+  status: TenderStatus;
+  contract_value?: string | number;
+  delivery_cost?: string | number;
+};
