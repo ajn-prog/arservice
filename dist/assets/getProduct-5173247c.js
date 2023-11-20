@@ -1,0 +1,1 @@
+import{a as e,i as a}from"./index-8e6e2209.js";async function u({id:r}){return(await e.get(`/ar-service/product/${r}`)).data.data}function o({config:r,id:t}){return a({...r,queryKey:["product",t],queryFn:()=>u({id:t})})}export{u as g,o as u};
