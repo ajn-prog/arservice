@@ -1,9 +1,11 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGuideItem } from '../api';
-import { LoadingScreen } from '@/components/elements';
 import { Button, Card } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { LoadingScreen } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
+
+import { useGuideItem } from '../api';
 
 export const GuideDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +43,7 @@ export const GuideDetail: React.FC = () => {
           <section className="w-full aspect-video bg-gray-200 rounded-md overflow-hidden relative my-4">
             {guide.video ? (
               <iframe
-                src="https://www.youtube.com/embed/G7IFa0DHOyc"
+                src={guide.video}
                 title="Kenapa Kita Susah Menabung?"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
