@@ -57,6 +57,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/modality" element={<Modalities />} />
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<ProductUpdate />} />
+        <Route path="/product/:id/update" element={<ProductUpdate />} />
         <Route path="/product/create/main" element={<ProductCreate type="main" />} />
         <Route path="/product/create/accessories" element={<ProductCreate type="accessories" />} />
         <Route path="/product/create/preventive" element={<ProductCreate type="preventive" />} />

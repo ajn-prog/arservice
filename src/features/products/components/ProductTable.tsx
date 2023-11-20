@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
+import { Authorization } from '@/features/auth';
 import { dayjs } from '@/lib/dayjs';
 
 import { useDeleteProduct, useProducts } from '../api';
@@ -98,28 +99,37 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
           <td>{dayjs(product.updatedAt).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon variant="subtle" title="Detail Produk" color="gray" radius="lg">
-                <IconDotsCircleHorizontal size={18} />
-              </ActionIcon>
               <ActionIcon
-                variant="subtle"
                 component={Link}
                 to={`/product/${product.id}`}
-                title="Update Produk"
-                color="primary"
-                radius="lg"
-              >
-                <IconEdit size={18} />
-              </ActionIcon>
-              <ActionIcon
                 variant="subtle"
-                onClick={handleRemove(product.id)}
-                title="Hapus Produk"
-                color="red"
+                title="Detail Produk"
+                color="gray"
                 radius="lg"
               >
-                <IconTrash size={18} />
+                <IconDotsCircleHorizontal size={18} />
               </ActionIcon>
+              <Authorization role={['Admin', 'Superadmin']}>
+                <ActionIcon
+                  variant="subtle"
+                  component={Link}
+                  to={`/product/${product.id}/update`}
+                  title="Update Produk"
+                  color="primary"
+                  radius="lg"
+                >
+                  <IconEdit size={18} />
+                </ActionIcon>
+                <ActionIcon
+                  variant="subtle"
+                  onClick={handleRemove(product.id)}
+                  title="Hapus Produk"
+                  color="red"
+                  radius="lg"
+                >
+                  <IconTrash size={18} />
+                </ActionIcon>
+              </Authorization>
             </div>
           </td>
         </tr>

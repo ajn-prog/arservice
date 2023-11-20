@@ -5,7 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { LoadingScreen } from '@/components/elements';
 
 import { useProduct } from '../api';
-import { ProductUnitForm } from '../components';
+import { ProductAccessoryForm, ProductPreventiveForm, ProductUnitForm } from '../components';
 import { Product } from '../types';
 
 export const ProductUpdate: React.FC = () => {
@@ -17,6 +17,10 @@ export const ProductUpdate: React.FC = () => {
     switch (product.type) {
       case 'main':
         return <ProductUnitForm product={product} />;
+      case 'accessories':
+        return <ProductAccessoryForm product={product} />;
+      case 'preventive':
+        return <ProductPreventiveForm product={product} />;
       default:
         return null;
     }
