@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '@/features/tenders';
 
 import { useProducts } from '../api';
+import { PRODUCT_TYPES } from '../constants';
 import { ProductQuery } from '../types';
 
 export const ProductList: React.FC = () => {
@@ -49,16 +50,30 @@ export const ProductList: React.FC = () => {
         {data.data.map((product) => (
           <div key={product.id} className="w-full bg-white rounded-lg overflow-hidden">
             <Link to={`/product/${product.id}`}>
-              <div className="w-full aspect-video bg-gray-200"></div>
+              <div className="w-full aspect-video bg-gray-200 relative">
+                <div className="z-20 absolute top-4 left-4">
+                  <Badge size="xs" color="gray">
+                    {PRODUCT_TYPES[product.type]}
+                  </Badge>
+                </div>
+                {product.thumbnail && (
+                  <img
+                    src={product.thumbnail}
+                    alt=""
+                    className="absolute w-full h-full inset-0 object-cover object-center"
+                  />
+                )}
+              </div>
             </Link>
             <div className="p-4">
-              <Badge className="mb-2">{product.brand.name}</Badge>
+              <Badge className="mb-2">{product.category.name}</Badge>
+
               <Link to={`/product/${product.id}`}>
                 <h2 className="line-clamp-2 text-base font-bold mb-1 hover:underline">
                   {product.name}
                 </h2>
               </Link>
-              <div className="text-sm text-gray-600">{product.category.name}</div>
+              {product.brand && <div className="text-sm text-gray-600">{product.brand.name}</div>}
 
               <div className="space-y-2 mt-2">
                 <Button
