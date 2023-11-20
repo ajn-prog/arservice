@@ -16,3 +16,4 @@ export * from './ModalitySelect';
 export * from './ProductAccessoryForm';
 export * from './ProductSelect';
 export * from './ProductList';
+export * from './ProductPreventiveForm';

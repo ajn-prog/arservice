@@ -71,6 +71,7 @@ export type ProductPreventiveDTO = {
   type?: ProductType;
   description?: string;
   images?: File[];
+  thumbnail?: File;
 };
 
 export type ProductQuery = {
