@@ -1,8 +1,8 @@
-import { Button, Card, NumberInput, Radio, TextInput } from '@mantine/core';
+import { Button, Card, FileInput, NumberInput, Radio, TextInput } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconCalendar, IconPlus } from '@tabler/icons-react';
+import { IconCalendar, IconPhoto, IconPlus } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { PictureList } from '@/features/file';
@@ -35,6 +35,7 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
       unit_product_id: product?.unit_product_id.toString() ?? '',
       is_consumable: 'true',
       price: '',
+      thumbnail: undefined,
     },
   });
 
@@ -101,7 +102,7 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
         </h2>
       </Card.Section>
 
-      <Card.Section p="lg">
+      <Card.Section p="lg" withBorder>
         <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-6">
           <TextInput
             {...form.getInputProps('product_code')}
@@ -150,14 +151,26 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
           />
           <div className="py-1">
             <div className="text-sm mb-2">Status</div>
-            <Radio.Group
-              {...form.getInputProps('is_consumable')}
-              className="flex items-center space-x-4"
-            >
-              <Radio label="Consumable" value="true" />
-              <Radio label="Unconsumable" value="false" />
+            <Radio.Group {...form.getInputProps('is_consumable')}>
+              <div className="flex items-center space-x-4">
+                <Radio label="Consumable" value="true" />
+                <Radio label="Unconsumable" value="false" />
+              </div>
             </Radio.Group>
           </div>
+          <FileInput
+            {...form.getInputProps('thumbnail')}
+            label="Thumbnail"
+            placeholder="Pilih Thumbnail"
+            className="col-span-12"
+            multiple={false}
+            accept="image/*"
+            leftSection={<IconPhoto size={16} />}
+            value={form.values['thumbnail']}
+            onChange={(v) => {
+              if (v) form.setFieldValue('thumbnail', v);
+            }}
+          />
         </div>
 
         <section className="mt-6">
@@ -189,6 +202,9 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
       </Card.Section>
 
       <Card.Section p="lg" withBorder className="flex justify-end items-center space-x-4">
+        <Button type="submit" loading={createMutation.isLoading || updateMutation.isLoading}>
+          Simpan
+        </Button>
         <Button
           component={Link}
           to="/product"
@@ -198,9 +214,6 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
           disabled={createMutation.isLoading || updateMutation.isLoading}
         >
           Batal
-        </Button>
-        <Button type="submit" loading={createMutation.isLoading || updateMutation.isLoading}>
-          Simpan
         </Button>
       </Card.Section>
     </Card>

@@ -1,38 +1,31 @@
-import { Button, Card, FileInput, TextInput } from '@mantine/core';
-import { DateInput } from '@mantine/dates';
+import { Button, Card, FileInput, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { IconCalendar, IconPhoto } from '@tabler/icons-react';
+import { IconPhoto, IconPlus } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { dayjs } from '@/lib/dayjs';
+import { PictureList } from '@/features/file';
 
 import { useCreateProduct, useUpdateProduct } from '../api';
-import { Product, ProductUnitDTO } from '../types';
+import { Product, ProductPreventiveDTO } from '../types';
 
-import { BrandSelect } from './BrandSelect';
 import { CategorySelect } from './CategorySelect';
-import { ModalitySelect } from './ModalitySelect';
-import { UnitSelect } from './UnitSelect';
 
 type Props = {
   product?: Product;
 };
 
-export const ProductUnitForm: React.FC<Props> = ({ product }) => {
+export const ProductPreventiveForm: React.FC<Props> = ({ product }) => {
   const navigate = useNavigate();
   const createMutation = useCreateProduct();
   const updateMutation = useUpdateProduct();
-  const form = useForm<ProductUnitDTO>({
+  const form = useForm<ProductPreventiveDTO>({
     initialValues: {
       name: product?.name ?? '',
-      brand_id: product?.brand_id.toString() ?? '',
       category_product_id: product?.category_product_id.toString() ?? '',
-      date_entry: product?.date_entry ? dayjs(product.date_entry).toDate() : '',
-      modality_product_id: product?.modality_product_id.toString() ?? '',
       product_code: product?.product_code ?? '',
-      type: 'main',
-      unit_product_id: product?.unit_product_id.toString() ?? '',
+      type: 'preventive',
+      images: [],
       thumbnail: undefined,
     },
   });
@@ -42,7 +35,7 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
       await updateMutation.mutateAsync(
         {
           id: product.id,
-          type: 'main',
+          type: 'preventive',
           data: {
             ...values,
           },
@@ -67,7 +60,7 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
     } else {
       await createMutation.mutateAsync(
         {
-          type: 'main',
+          type: 'preventive',
           data: {
             ...values,
           },
@@ -96,16 +89,16 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
     <Card component="form" onSubmit={handleSubmit} shadow="lg">
       <Card.Section p="lg" withBorder>
         <h2 className="font-semibold text-base">
-          {product ? 'Edit' : 'Tambah'} Data Produk <span className="text-primary-600">(Unit)</span>
+          Tambah Data Produk <span className="text-primary-600">(Service dan Sparespart)</span>
         </h2>
       </Card.Section>
 
       <Card.Section p="lg" withBorder>
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-12 gap-x-6 gap-y-4 mb-6">
           <TextInput
             {...form.getInputProps('product_code')}
             label="Kode Produk"
-            placeholder="Masukan Kode Produk"
+            placeholder="Masukan Kode"
             className="col-span-12 md:col-span-2"
           />
           <TextInput
@@ -114,43 +107,17 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             placeholder="Masukan Nama Produk"
             className="col-span-12 md:col-span-7"
           />
-          <DateInput
-            {...form.getInputProps('date_entry')}
-            label="Tanggal Masuk"
-            placeholder="Pilih Tanggal"
-            className="col-span-12 md:col-span-3"
-            popoverProps={{ withinPortal: true }}
-            rightSection={<IconCalendar size={16} color="gray" />}
-            valueFormat="D MMMM YYYY"
-          />
-
-          <BrandSelect
-            {...form.getInputProps('brand_id')}
-            label="Brand"
-            placeholder="Pilih Brand"
-            className="col-span-12 md:col-span-3"
-            nothingFoundMessage="Data tidak ditemukan"
-          />
           <CategorySelect
             {...form.getInputProps('category_product_id')}
             label="Kategori"
             placeholder="Pilih Kategori"
             className="col-span-12 md:col-span-3"
-            nothingFoundMessage="Data tidak ditemukan"
           />
-          <UnitSelect
-            {...form.getInputProps('unit_product_id')}
-            label="Satuan"
-            placeholder="Pilih Satuan"
-            className="col-span-12 md:col-span-3"
-            nothingFoundMessage="Data tidak ditemukan"
-          />
-          <ModalitySelect
-            {...form.getInputProps('modality_product_id')}
-            label="Modality"
-            placeholder="Pilih Modality"
-            className="col-span-12 md:col-span-3"
-            nothingFoundMessage="Data tidak ditemukan"
+          <Textarea
+            {...form.getInputProps('description')}
+            label="Detail"
+            placeholder="Masukan Detail"
+            className="col-span-12"
           />
           <FileInput
             {...form.getInputProps('thumbnail')}
@@ -166,6 +133,33 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
             }}
           />
         </div>
+
+        <section className="mt-6">
+          <h2 className="font-bold mb-2">Foto</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <label
+              htmlFor="file"
+              className="bg-gray-200 hover:bg-gray-300 transition rounded w-full h-44 relative flex items-center justify-center cursor-pointer"
+            >
+              <IconPlus className="text-gray-600 w-10 h-10" />
+              <input
+                id="file"
+                type="file"
+                accept="image/*"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  if (!e.target.files) return;
+                  form.setFieldValue('images', [...form.values.images!, ...e.target.files]);
+                }}
+              />
+            </label>
+            <PictureList
+              files={form.values['images']!}
+              onChange={(files) => form.setFieldValue('images', files as File[])}
+            />
+          </div>
+        </section>
       </Card.Section>
 
       <Card.Section p="lg" withBorder className="flex justify-end items-center space-x-4">

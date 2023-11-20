@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { TextEditor } from '@/components/forms';
 import { FileDropzone } from '@/features/file';
-import { InstallationSelect } from '@/features/installations';
+import { ItemSelect } from '@/features/installations';
 
 import { useCreateComplain } from '../api';
 import { ComplainDTO } from '../types';
@@ -21,11 +21,13 @@ export const ComplainForm: React.FC = () => {
       installbase_id: undefined,
       placement_space: '',
       priority: undefined,
-      status: 'open',
+      status: 'waiting',
     },
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
+    console.log(values);
+
     await mutateAsync(
       {
         data: {
@@ -85,7 +87,7 @@ export const ComplainForm: React.FC = () => {
             className="col-span-12 md:col-span-2"
           />
 
-          <InstallationSelect
+          <ItemSelect
             {...form.getInputProps('installbase_id')}
             label="Produk"
             placeholder="Pilih Produk"

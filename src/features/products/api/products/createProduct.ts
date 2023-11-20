@@ -27,6 +27,8 @@ export async function createProduct({ type, data }: ProductRequest) {
   const formData = new FormData();
 
   for (const [key, value] of Object.entries(data)) {
+    if (!value) continue;
+
     if (Array.isArray(value)) {
       value.forEach((file, i) => {
         if (!(file instanceof File)) return;
@@ -34,7 +36,9 @@ export async function createProduct({ type, data }: ProductRequest) {
       });
     } else {
       if (value instanceof Date) {
-        formData.append(key, value.toJSON());
+        formData.append(key, value.toDateString());
+      } else if (value instanceof File) {
+        formData.append(key, value, value.name);
       } else {
         formData.append(key, value.toString());
       }

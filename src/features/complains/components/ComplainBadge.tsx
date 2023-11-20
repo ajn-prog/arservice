@@ -8,16 +8,22 @@ type Props = {
 
 export const ComplainBadge: React.FC<Props> = ({ status, ...props }) => {
   switch (status) {
-    case 'open':
-      return (
-        <Badge variant="light" color="red" {...props}>
-          Open
-        </Badge>
-      );
-    case 'closed':
+    case 'progress':
       return (
         <Badge variant="light" color="gray" {...props}>
-          Closed
+          Diproses
+        </Badge>
+      );
+    case 'close':
+      return (
+        <Badge variant="light" color="green" {...props}>
+          Selesai
+        </Badge>
+      );
+    case 'waiting':
+      return (
+        <Badge variant="light" color="red" {...props}>
+          Menunggu
         </Badge>
       );
     default:

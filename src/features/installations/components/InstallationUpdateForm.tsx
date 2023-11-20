@@ -16,6 +16,7 @@ export const InstallationUpdateForm: React.FC<Props> = () => {
   const form = useForm<InstallationDTO>({
     initialValues: {
       title: '',
+      products: [],
     },
   });
 

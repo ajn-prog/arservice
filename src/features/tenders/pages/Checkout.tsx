@@ -10,7 +10,7 @@ import { LoadingScreen } from '@/components/elements';
 import { useBiodata } from '@/features/user';
 
 import { OrderRequest, useCreateOrder } from '../api';
-import { CartList } from '../components';
+import { AddressForm, CartList } from '../components';
 import { useCart } from '../hooks';
 
 export const Checkout: React.FC = () => {
@@ -21,7 +21,7 @@ export const Checkout: React.FC = () => {
   const form = useForm<OrderRequest['data']>({
     initialValues: {
       name: '',
-      products: [],
+      carts: [],
       address: '',
       kecamatan_id: undefined,
       phone: '',
@@ -40,7 +40,7 @@ export const Checkout: React.FC = () => {
       onConfirm: async () => {
         await orderMutation.mutateAsync(
           {
-            data: { ...values, products: selected },
+            data: { ...values, carts: selected },
           },
           {
             onSuccess: () => {
@@ -81,6 +81,24 @@ export const Checkout: React.FC = () => {
       .reduce((prev, curr) => prev + curr.quantity, 0);
   }, [carts, selected]);
 
+  function handleAddress() {
+    modals.open({
+      modalId: 'address-modal',
+      title: 'Ubah Alamat',
+      centered: true,
+      children: (
+        <AddressForm
+          onCancel={() => modals.close('address-modal')}
+          onSubmit={(v) => {
+            form.setFieldValue('address', v.address);
+            form.setFieldValue('phone', v.phone);
+            modals.close('address-modal');
+          }}
+        />
+      ),
+    });
+  }
+
   if (isLoading || isError)
     return (
       <div className="my-24">
@@ -120,26 +138,15 @@ export const Checkout: React.FC = () => {
               <div className="border-b border-gray-200 pb-2 mt-4">
                 <h2 className="text-base text-gray-900 font-medium">Alamat Pengiriman</h2>
               </div>
-              <div className="pt-2 grid md:grid-cols-3 grid-cols-3 gap-6">
-                <TextInput
-                  required
-                  label="Instansi"
-                  placeholder="Masukan Alamat"
-                  defaultValue={biodata.name}
-                  readOnly
-                />
-                <TextInput
-                  {...form.getInputProps('phone')}
-                  required
-                  label="No Telepon"
-                  placeholder="Masukan No Telepon"
-                />
-                <TextInput
-                  {...form.getInputProps('address')}
-                  required
-                  label="Alamat"
-                  placeholder="Masukan Alamat"
-                />
+
+              <div className="pt-2">
+                <div className="text-primary-600 font-bold mb-1">{biodata.name}</div>
+                <div className="font-bold">{form.values['phone']}</div>
+                <div className="text-sm text-gray-600">{form.values['address']}</div>
+
+                <Button onClick={handleAddress} variant="outline" className="mt-4" size="xs">
+                  Ganti Alamat Lain
+                </Button>
               </div>
             </Card>
           </div>

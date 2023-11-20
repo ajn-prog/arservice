@@ -5,7 +5,7 @@ export type Guide = {
   product_id: number;
   title: string;
   description: string;
-  image: string | null;
+  image: string;
   video: string | null;
 } & BaseEntity;
 

@@ -12,6 +12,10 @@ const { AgencyCreate } = lazyImport(() => import('@/features/agencies'), 'Agency
 const { AgencyUpdate } = lazyImport(() => import('@/features/agencies'), 'AgencyUpdate');
 
 const { Installations } = lazyImport(() => import('@/features/installations'), 'Installations');
+const { InstallationDetail } = lazyImport(
+  () => import('@/features/installations'),
+  'InstallationDetail'
+);
 const { InstallationCreate } = lazyImport(
   () => import('@/features/installations'),
   'InstallationCreate'
@@ -39,6 +43,8 @@ const { Products } = lazyImport(() => import('@/features/products'), 'Products')
 const { ProductCreate } = lazyImport(() => import('@/features/products'), 'ProductCreate');
 const { ProductUpdate } = lazyImport(() => import('@/features/products'), 'ProductUpdate');
 
+const { Tracking } = lazyImport(() => import('@/features/tracking'), 'Tracking');
+
 export const AppRoutes: React.FC = () => {
   return (
     <Routes>
@@ -51,6 +57,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/modality" element={<Modalities />} />
         <Route path="/product" element={<Products />} />
         <Route path="/product/:id" element={<ProductUpdate />} />
+        <Route path="/product/:id/update" element={<ProductUpdate />} />
         <Route path="/product/create/main" element={<ProductCreate type="main" />} />
         <Route path="/product/create/accessories" element={<ProductCreate type="accessories" />} />
         <Route path="/product/create/preventive" element={<ProductCreate type="preventive" />} />
@@ -61,7 +68,7 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="/installation" element={<Installations />} />
         <Route path="/installation/create" element={<InstallationCreate />} />
-        <Route path="/installation/:id" element={<Installations />} />
+        <Route path="/installation/:id" element={<InstallationDetail />} />
 
         <Route path="/tender" element={<Tenders />} />
 
@@ -77,6 +84,8 @@ export const AppRoutes: React.FC = () => {
         <Route path="/complain" element={<Complains />} />
         <Route path="/complain/create" element={<ComplainCreate />} />
         <Route path="/complain/:id" element={<ComplainDetail />} />
+
+        <Route path="/tracking" element={<Tracking />} />
 
         <Route path="*" element={<UnderDevelopment />} />
       </Route>

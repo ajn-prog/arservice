@@ -1,25 +1,37 @@
 import { Agency } from '@/features/agencies';
 import { Product } from '@/features/products';
+import { Engineer } from '@/features/user';
 import { BaseEntity } from '@/types/entity';
 
-export type Installation = {
-  title: string;
-  technical_contract_id: any;
+export type Contract = {
+  engineers: Engineer[];
+} & BaseEntity;
+
+export type InstallationItem = {
+  installbase_id: number;
   product_id: number;
-  customer_id: number;
-  installation_date_estimation: string;
-  installation_date: string;
-  warranty_month: number;
   serial_number: string;
+  warranty_month: string | number;
+  product: Product;
+} & BaseEntity;
+
+export type Installation = {
+  technical_contract_id: number;
+  customer_id: number;
+  installation_date: string;
   project_number: string;
   note: string;
+  title: string;
+  file: string | null;
+  created_at: string;
+  updated_at: string;
   customer: Agency;
-  product: Product;
+  technical_contract: Contract;
+  items: InstallationItem[];
 } & BaseEntity;
 
 export type InstallationDTO = {
   title?: string;
-  product_id?: number | string;
   customer_id?: number | string;
   installation_date?: string | Date | null;
   warranty_month?: number | string;
@@ -27,6 +39,10 @@ export type InstallationDTO = {
   project_number?: number | string;
   note?: string;
   engineer_ids?: Array<string | number>;
-  bastp_file?: File;
-  bastb_file?: File;
+  file?: File;
+  products: {
+    product_id?: string;
+    warranty_month?: number | string;
+    serial_number?: string;
+  }[];
 };
