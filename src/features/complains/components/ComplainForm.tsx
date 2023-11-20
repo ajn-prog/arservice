@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { TextEditor } from '@/components/forms';
 import { FileDropzone } from '@/features/file';
-import { InstallationSelect, ItemSelect } from '@/features/installations';
+import { ItemSelect } from '@/features/installations';
 
 import { useCreateComplain } from '../api';
 import { ComplainDTO } from '../types';
