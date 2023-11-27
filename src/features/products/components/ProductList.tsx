@@ -49,7 +49,7 @@ export const ProductList: React.FC = () => {
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {data.data.map((product) => (
           <div key={product.id} className="w-full bg-white rounded-lg overflow-hidden">
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/product`}>
               <div className="w-full aspect-video bg-gray-200 relative">
                 <div className="z-20 absolute top-4 left-4">
                   <Badge size="xs" color="gray">
