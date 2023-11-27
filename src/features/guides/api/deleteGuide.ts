@@ -23,7 +23,6 @@ export function useDeleteGuide({ config }: UseDeleteGuideOptions = {}) {
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['guides']);
-      queryClient.invalidateQueries(['guide-list']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

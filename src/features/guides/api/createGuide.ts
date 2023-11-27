@@ -42,7 +42,6 @@ export function useCreateGuide({ config }: UseCreateGuideOptions = {}) {
   return useMutation(createGuide, {
     ...config,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['guide-list']);
       queryClient.invalidateQueries(['guides']);
 
       if (config?.onSuccess) {

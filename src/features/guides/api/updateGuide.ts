@@ -43,8 +43,8 @@ export function useUpdateGuide({ config }: UseUpdateGuideOptions = {}) {
   return useMutation(updateGuide, {
     ...config,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['guide-list']);
       queryClient.invalidateQueries(['guides']);
+      queryClient.invalidateQueries(['guide']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

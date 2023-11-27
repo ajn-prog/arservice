@@ -5,12 +5,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { LoadingScreen } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
 
-import { useGuideItem } from '../api';
+import { useGuide } from '../api';
 
 export const GuideDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<'id'>();
-  const { data: guide, isLoading, isError } = useGuideItem({ id: id as string });
+  const { data: guide, isLoading, isError } = useGuide({ id: id as string });
 
   if (isLoading)
     return (

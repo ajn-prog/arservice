@@ -30,7 +30,6 @@ const { Checkout } = lazyImport(() => import('@/features/tenders'), 'Checkout');
 const { Tenders } = lazyImport(() => import('@/features/tenders'), 'Tenders');
 
 const { Guides } = lazyImport(() => import('@/features/guides'), 'Guides');
-const { ProductGuides } = lazyImport(() => import('@/features/guides'), 'ProductGuides');
 const { GuideCreate } = lazyImport(() => import('@/features/guides'), 'GuideCreate');
 const { GuideDetail } = lazyImport(() => import('@/features/guides'), 'GuideDetail');
 const { GuideUpdate } = lazyImport(() => import('@/features/guides'), 'GuideUpdate');
@@ -77,7 +76,6 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="/guide" element={<Guides />} />
         <Route path="/guide/create" element={<GuideCreate />} />
-        <Route path="/guide/product/:id" element={<ProductGuides />} />
         <Route path="/guide/:id" element={<GuideDetail />} />
         <Route path="/guide/:id/update" element={<GuideUpdate />} />
 

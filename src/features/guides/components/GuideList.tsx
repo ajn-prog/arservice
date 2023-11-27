@@ -1,20 +1,26 @@
-import { Button } from '@mantine/core';
+import { Button, Pagination } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Authorization } from '@/features/auth';
 
-import { useDeleteGuide, useGuide } from '../api';
-import { Guide } from '../types';
+import { useDeleteGuide, useGuides } from '../api';
+import { Guide, GuideQuery } from '../types';
 
-type Props = {
-  productId: number | string;
-};
+type Props = GuideQuery;
 
-export const GuideList: React.FC<Props> = ({ productId }) => {
-  const { data, isLoading, isError } = useGuide({ id: productId });
+export const GuideList: React.FC<Props> = (props) => {
+  const [params, setParams] = useState<GuideQuery>({
+    page: 1,
+    limit: 8,
+    search: '',
+    sort: 'desc',
+    sort_by: 'created_at',
+  });
+  const { data, isLoading, isError } = useGuides({ params: { ...params, ...props } });
   const deleteMutation = useDeleteGuide();
 
   function getExcerpt(html: string, maxWords: number) {
@@ -87,7 +93,7 @@ export const GuideList: React.FC<Props> = ({ productId }) => {
   return (
     <>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data.guide.map((guide) => (
+        {data.data.map((guide) => (
           <div key={guide.id} className="w-full bg-white rounded-lg overflow-hidden">
             <Link to={`/guide/${guide.id}`}>
               <div className="w-full aspect-video bg-gray-200 relative">
@@ -138,7 +144,8 @@ export const GuideList: React.FC<Props> = ({ productId }) => {
           </div>
         ))}
       </div>
-      {data.guide.length == 0 && (
+
+      {data.data.length == 0 && (
         <div className="col-span-12 flex flex-col items-center justify-center py-24 mx-auto max-w-md">
           <p className="text-lg font-bold mb-4 text-center">
             Belum ada panduan untuk produk ini
@@ -147,16 +154,21 @@ export const GuideList: React.FC<Props> = ({ productId }) => {
             </Authorization>
           </p>
           <Authorization role={['Admin', 'Superadmin']}>
-            <Button
-              component={Link}
-              to={`/guide/create?product=${data.id}`}
-              leftSection={<IconPlus size={16} />}
-            >
+            <Button component={Link} to="/guide/create" leftSection={<IconPlus size={16} />}>
               Tambah Panduan
             </Button>
           </Authorization>
         </div>
       )}
+
+      <div className="my-6">
+        <Pagination
+          total={data.last_page}
+          value={data.current_page}
+          onChange={(page) => setParams({ ...params, page })}
+          withEdges
+        />
+      </div>
     </>
   );
 };
