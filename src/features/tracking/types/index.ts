@@ -1,27 +1,3 @@
-export type Rajaongkir = {
-  query: Query;
-  status: Status;
-  result: Result;
-};
-
-export type Query = {
-  waybill: string;
-  courier: string;
-};
-
-export type Status = {
-  code: number;
-  description: string;
-};
-
-export type Result = {
-  delivered: boolean;
-  summary: Summary;
-  details: Details;
-  delivery_status: DeliveryStatus;
-  manifest: Manifest[];
-};
-
 export type Summary = {
   courier_code: string;
   courier_name: string;
@@ -69,7 +45,10 @@ export type Manifest = {
   city_name: string;
 };
 
-export type WaybillDTO = {
-  waybill: string;
-  courier: string;
+export type Tracking = {
+  delivered: boolean;
+  summary: Summary;
+  details: Details;
+  delivery_status: DeliveryStatus;
+  manifest: Manifest[];
 };

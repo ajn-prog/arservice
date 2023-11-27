@@ -1,1 +1,1 @@
-export * from './getWaybill';
+export * from './getTracking';
