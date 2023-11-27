@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
-import { GuideList } from '../types';
+import { Guide } from '../types';
 
 type GuideRequest = {
   id: number | string;
 };
 
 export async function getGuide({ id }: GuideRequest) {
-  const res = await axios.get<GeneralResponse<GuideList>>(`/ar-service/guide-product/${id}`);
+  const res = await axios.get<GeneralResponse<Guide>>(`/ar-service/guide-product/${id}`);
 
   return res.data.data;
 }
@@ -26,7 +26,7 @@ type UseGuideOptions = {
 export function useGuide({ config, id }: UseGuideOptions) {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: ['guides', id],
+    queryKey: ['guide', id],
     queryFn: () => getGuide({ id }),
   });
 }

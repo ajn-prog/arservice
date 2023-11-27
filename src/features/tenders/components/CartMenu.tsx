@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Menu } from '@mantine/core';
+import { ActionIcon, Badge, Button, Indicator, Menu } from '@mantine/core';
 import { IconShoppingCart } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
@@ -16,9 +16,11 @@ export const CartMenu: React.FC = () => {
   return (
     <Menu position="bottom-end" width={320}>
       <Menu.Target>
-        <ActionIcon variant="subtle" size="lg" color="gray" className="text-gray-800">
-          <IconShoppingCart style={{ width: '70%', height: '70%' }} stroke={1.4} />
-        </ActionIcon>
+        <Indicator inline label={carts.length} size={18}>
+          <ActionIcon variant="subtle" size="lg" color="gray" className="text-gray-800" radius="lg">
+            <IconShoppingCart style={{ width: '70%', height: '70%' }} stroke={1.4} />
+          </ActionIcon>
+        </Indicator>
       </Menu.Target>
 
       <Menu.Dropdown p={0}>

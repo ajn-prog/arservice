@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
 
-import { useGuideItem } from '../api';
+import { useGuide } from '../api';
 import { GuideUpdateForm } from '../components';
 
 export const GuideUpdate: React.FC = () => {
   const { id } = useParams<'id'>();
-  const { data, isLoading, isError } = useGuideItem({ id: id as string });
+  const { data, isLoading, isError } = useGuide({ id: id as string });
   const navigate = useNavigate();
 
   if (isLoading)

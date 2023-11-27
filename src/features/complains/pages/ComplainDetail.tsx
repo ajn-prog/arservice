@@ -1,18 +1,21 @@
 import { Button, Card } from '@mantine/core';
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
 import { IconArrowLeft } from '@tabler/icons-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
 import { AttachmentList } from '@/features/file';
+import { dayjs } from '@/lib/dayjs';
 import { clsx } from '@/utils/format';
 
-import { useComplain } from '../api';
+import { useCloseComplain, useComplain } from '../api';
 import { ComplainBadge, ComplainReplies, ReplyForm } from '../components';
 
 export const ComplainDetail: React.FC = () => {
   const { id } = useParams<'id'>();
   const navigate = useNavigate();
+  const closeMutation = useCloseComplain();
   const { data: complain, isLoading, isError } = useComplain({ id: id as string });
 
   function handleReply() {
@@ -29,6 +32,36 @@ export const ComplainDetail: React.FC = () => {
           onSuccess={() => modals.close('complain-reply')}
         />
       ),
+    });
+  }
+
+  function handleClose() {
+    modals.openConfirmModal({
+      title: 'Tutup Komplain',
+      children: <div className="text-sm">Apakah anda yakin untuk menutup komplain ini?</div>,
+      centered: true,
+      closeOnConfirm: false,
+      onConfirm: async () => {
+        await closeMutation.mutateAsync(
+          { id: complain!.id, data: { status: 'close' } },
+          {
+            onSuccess: () => {
+              notifications.show({
+                message: 'Komplain berhasil ditutup',
+                color: 'green',
+              });
+              modals.closeAll();
+            },
+            onError: () => {
+              notifications.show({
+                message: 'Komplain gagal dihapus',
+                color: 'red',
+              });
+              modals.closeAll();
+            },
+          }
+        );
+      },
     });
   }
 
@@ -64,8 +97,8 @@ export const ComplainDetail: React.FC = () => {
                 {complain.title} #{complain.id}
               </h1>
               <p className="text-xs text-gray-600">
-                Dibuka oleh <span className="font-bold">Dwa Meizadewa</span> pada 4 minggu yang
-                lalu.
+                Dibuka oleh <span className="font-bold">{complain.customer.name}</span> pada{' '}
+                {dayjs(complain.createdAt).fromNow()}.
               </p>
             </div>
             <div className="text-sm md:text-base">
@@ -104,7 +137,11 @@ export const ComplainDetail: React.FC = () => {
         <Card.Section p="lg">
           <div className="flex items-center space-x-2">
             <Button onClick={handleReply}>Reply</Button>
-            <Button color="red">Close</Button>
+            {complain.status != 'close' && (
+              <Button color="red" onClick={handleClose}>
+                Close
+              </Button>
+            )}
           </div>
         </Card.Section>
       </Card>

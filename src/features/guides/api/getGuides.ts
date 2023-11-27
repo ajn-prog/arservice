@@ -4,14 +4,14 @@ import { axios } from '@/lib/axios';
 import { ExtractFnReturnType, QueryConfig } from '@/lib/react-query';
 import { PaginatedResult, Pagination } from '@/types/api';
 
-import { GuideList } from '../types';
+import { Guide } from '../types';
 
 type GuideRequest = {
   params?: Pagination;
 };
 
 export async function getGuides({ params }: GuideRequest) {
-  const res = await axios.get<PaginatedResult<GuideList>>('/ar-service/guide-product', {
+  const res = await axios.get<PaginatedResult<Guide>>('/ar-service/guide-product', {
     params,
   });
 
@@ -28,7 +28,7 @@ type UseGuidesOptions = {
 export function useGuides({ config, params }: UseGuidesOptions = {}) {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: ['guide-list', params],
+    queryKey: ['guides', params],
     queryFn: () => getGuides({ params }),
     keepPreviousData: true,
   });

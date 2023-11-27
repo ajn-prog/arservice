@@ -48,7 +48,7 @@ export const ProductGuides: React.FC = () => {
           <p className="text-sm text-primary-600">{data.brand.name}</p>
         </div>
 
-        <GuideList productId={data.id} />
+        {/* <GuideList productId={data.id} /> */}
       </section>
     </main>
   );
