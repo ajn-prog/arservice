@@ -1,21 +1,24 @@
 import { Button, Card } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconArrowLeft } from '@tabler/icons-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { IconArrowLeft, IconBrandWhatsapp, IconMessage, IconPhoneCall } from '@tabler/icons-react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
+import { useAuth } from '@/features/auth';
 import { AttachmentList } from '@/features/file';
 import { dayjs } from '@/lib/dayjs';
 import { clsx } from '@/utils/format';
 
-import { useCloseComplain, useComplain } from '../api';
+import { useCloseComplain, useComplain, useOpenCall } from '../api';
 import { ComplainBadge, ComplainReplies, ReplyForm } from '../components';
 
 export const ComplainDetail: React.FC = () => {
   const { id } = useParams<'id'>();
   const navigate = useNavigate();
   const closeMutation = useCloseComplain();
+  const callMutation = useOpenCall();
+  const { creds } = useAuth();
   const { data: complain, isLoading, isError } = useComplain({ id: id as string });
 
   function handleReply() {
@@ -32,6 +35,40 @@ export const ComplainDetail: React.FC = () => {
           onSuccess={() => modals.close('complain-reply')}
         />
       ),
+    });
+  }
+
+  function handleCall() {
+    modals.openConfirmModal({
+      title: 'Open Call',
+      children: (
+        <div className="text-sm">
+          Apakah anda yakin untuk &apos;open call&apos; untuk komplain ini?
+        </div>
+      ),
+      centered: true,
+      closeOnConfirm: false,
+      onConfirm: async () => {
+        await callMutation.mutateAsync(
+          { data: { id: complain?.id || '', is_open_call: 'true' } },
+          {
+            onSuccess: () => {
+              notifications.show({
+                message: 'Call berhasil dibuka',
+                color: 'green',
+              });
+              modals.closeAll();
+            },
+            onError: () => {
+              notifications.show({
+                message: 'Call gagal dibuka',
+                color: 'red',
+              });
+              modals.closeAll();
+            },
+          }
+        );
+      },
     });
   }
 
@@ -132,16 +169,38 @@ export const ComplainDetail: React.FC = () => {
             </div>
 
             <ComplainReplies replies={complain.complain_reply} />
+            <div className="flex justify-end mt-4"></div>
           </section>
         </Card.Section>
         <Card.Section p="lg">
           <div className="flex items-center space-x-2">
-            <Button onClick={handleReply}>Reply</Button>
+            <Button onClick={handleReply} leftSection={<IconMessage size={16} />}>
+              Reply
+            </Button>
+            {!complain.user_engineer && creds?.role != 'Customer' && (
+              <Button onClick={handleCall} color="teal" leftSection={<IconPhoneCall size={16} />}>
+                Open Call
+              </Button>
+            )}
+            {complain.user_engineer && creds?.role == 'Customer' && (
+              <Button
+                component={Link}
+                to={`https://wa.me/${complain.user_engineer.profile.phone}`}
+                target="_blank"
+                color="green"
+                leftSection={<IconBrandWhatsapp size={16} />}
+              >
+                Hubungi Teknisi
+              </Button>
+            )}
             {complain.status != 'close' && (
               <Button color="red" onClick={handleClose}>
                 Close
               </Button>
             )}
+            <Button component={Link} to="/complain" variant="light" color="gray.6" bg="gray.2">
+              Kembali
+            </Button>
           </div>
         </Card.Section>
       </Card>

@@ -1,6 +1,6 @@
 import { Button, Card } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
@@ -31,6 +31,12 @@ export const GuideDetail: React.FC = () => {
 
   return (
     <main>
+      <header className="mb-6">
+        <Button component={Link} to="/guide" leftSection={<IconArrowLeft size={16} />}>
+          Kembali
+        </Button>
+      </header>
+
       <Card p="lg">
         <article className="max-w-2xl w-full mx-auto">
           <header>

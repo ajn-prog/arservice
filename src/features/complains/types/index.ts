@@ -3,6 +3,17 @@ import { Installation } from '@/features/installations';
 import { User } from '@/features/user';
 import { BaseEntity } from '@/types/entity';
 
+type UserProfile = {
+  email: string;
+  profile: {
+    name: string;
+    phone: string;
+    display_picture: string;
+    is_active: string;
+    is_open_call: number;
+  };
+};
+
 export type ComplainFile = {
   complain_id: number;
   complain_reply_id: number | null;
@@ -41,6 +52,7 @@ export type Complain = {
   installbase: Installation;
   user: User;
   customer: Agency;
+  user_engineer?: UserProfile;
   complain_files: ComplainFile[];
   complain_reply: ComplainReply[];
 } & BaseEntity;
