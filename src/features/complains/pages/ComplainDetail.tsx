@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
 import { AttachmentList } from '@/features/file';
+import { dayjs } from '@/lib/dayjs';
 import { clsx } from '@/utils/format';
 
 import { useComplain } from '../api';
@@ -64,8 +65,8 @@ export const ComplainDetail: React.FC = () => {
                 {complain.title} #{complain.id}
               </h1>
               <p className="text-xs text-gray-600">
-                Dibuka oleh <span className="font-bold">Dwa Meizadewa</span> pada 4 minggu yang
-                lalu.
+                Dibuka oleh <span className="font-bold">{complain.customer.name}</span> pada{' '}
+                {dayjs(complain.createdAt).fromNow()}.
               </p>
             </div>
             <div className="text-sm md:text-base">

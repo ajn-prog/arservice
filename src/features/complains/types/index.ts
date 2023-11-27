@@ -1,4 +1,6 @@
+import { Agency } from '@/features/agencies';
 import { Installation } from '@/features/installations';
+import { User } from '@/features/user';
 import { BaseEntity } from '@/types/entity';
 
 export type ComplainFile = {
@@ -37,6 +39,8 @@ export type Complain = {
   detail: string;
   placement_space: string;
   installbase: Installation;
+  user: User;
+  customer: Agency;
   complain_files: ComplainFile[];
   complain_reply: ComplainReply[];
 } & BaseEntity;
