@@ -4,7 +4,7 @@ import { AuthLayout, DashboardLayout } from '@/components/layout';
 import { lazyImport } from '@/utils/lazyImport';
 
 const { Login } = lazyImport(() => import('@/features/auth'), 'Login');
-const { Dashboard } = lazyImport(() => import('@/features/misc'), 'Dashboard');
+const { Home } = lazyImport(() => import('@/features/misc'), 'Home');
 const { UnderDevelopment } = lazyImport(() => import('@/features/misc'), 'UnderDevelopment');
 
 const { Agencies } = lazyImport(() => import('@/features/agencies'), 'Agencies');
@@ -48,7 +48,7 @@ export const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<DashboardLayout />}>
-        <Route index element={<Dashboard />} />
+        <Route index element={<Home />} />
 
         <Route path="/category" element={<Categories />} />
         <Route path="/brand" element={<Brands />} />
