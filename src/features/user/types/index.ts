@@ -62,3 +62,17 @@ export type Profile = {
   position: string;
   kelurahan: Village;
 } & BaseEntity;
+
+export type Stakeholder = {
+  name: string;
+  phone: string;
+  tool_type: string | null;
+  address: string;
+  position: string;
+} & BaseEntity;
+
+export type StakeholderDTO = Array<{
+  name?: string;
+  phone?: string;
+  tool_type?: string;
+}>;
