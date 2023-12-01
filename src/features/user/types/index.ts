@@ -19,9 +19,11 @@ export type User = {
   agency: string;
   is_from_arkan: number;
   display_picture: string;
+  profile: Profile;
 };
 
 export type Biodata = {
+  user_id: number;
   hospital_code: string;
   name: string;
   sector: string;
@@ -30,11 +32,26 @@ export type Biodata = {
   address: string;
   kecamatan_id: number;
   phone_number: string;
-  latitude: string;
-  longitude: string;
-  email: string;
+  latitude: number | string;
+  longitude: number | string;
   kecamatan: District;
+  user: User;
 } & BaseEntity;
+
+export type BiodataDTO = {
+  kecamatan_id?: number | string;
+  hospital_code?: string;
+  name?: string;
+  sector?: string;
+  owner?: string;
+  classes?: string;
+  address?: string;
+  phone_number?: string;
+  latitude?: number | string;
+  longitude?: number | string;
+  email?: string;
+  password?: string;
+};
 
 export type Profile = {
   customer_id: number;
