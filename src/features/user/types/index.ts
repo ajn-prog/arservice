@@ -68,11 +68,14 @@ export type Stakeholder = {
   phone: string;
   tool_type: string | null;
   address: string;
-  position: string;
+  position: 'manajemen' | 'teknisi' | 'pengguna_alat';
 } & BaseEntity;
 
-export type StakeholderDTO = Array<{
-  name?: string;
-  phone?: string;
-  tool_type?: string;
-}>;
+export type StakeholderDTO = {
+  position: Stakeholder['position'];
+  values: Array<{
+    name?: string;
+    phone?: string;
+    tool_type?: string;
+  }>;
+};

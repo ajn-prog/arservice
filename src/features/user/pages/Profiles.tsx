@@ -1,6 +1,6 @@
 import { Card, Tabs } from '@mantine/core';
 
-import { BiodataForm } from '../components';
+import { BiodataForm, EngineerForm, ManagementForm, SupporterForm } from '../components';
 
 export const Profiles: React.FC = () => {
   return (
@@ -14,12 +14,21 @@ export const Profiles: React.FC = () => {
             <Tabs.List grow mb="lg">
               <Tabs.Tab value="biodata">Biodata</Tabs.Tab>
               <Tabs.Tab value="manajemen">Manajemen</Tabs.Tab>
-              <Tabs.Tab value="alat">Pengguna Alat</Tabs.Tab>
+              <Tabs.Tab value="pengguna_alat">Pengguna Alat</Tabs.Tab>
               <Tabs.Tab value="teknisi">Teknisi Rumah Sakit (IPSRS)</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="biodata">
               <BiodataForm />
+            </Tabs.Panel>
+            <Tabs.Panel value="manajemen">
+              <ManagementForm />
+            </Tabs.Panel>
+            <Tabs.Panel value="pengguna_alat">
+              <SupporterForm />
+            </Tabs.Panel>
+            <Tabs.Panel value="teknisi">
+              <EngineerForm />
             </Tabs.Panel>
           </Tabs>
         </Card.Section>
