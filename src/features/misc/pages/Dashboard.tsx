@@ -1,6 +1,11 @@
+import { Loader } from '@mantine/core';
 import { IconClipboardText, IconMessages, IconShoppingCart, IconTool } from '@tabler/icons-react';
 
+import { useDashboard } from '../api';
+
 export const Dashboard: React.FC = () => {
+  const { data } = useDashboard();
+
   return (
     <main>
       <h1 className="text-4xl font-bold mb-6">Selamat Datang</h1>
@@ -12,8 +17,14 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Komplain</h2>
           <div className="mt-1">
-            <span className="font-bold text-4xl">12</span>
-            <span className="text-sm font-medium ml-2 text-gray-600"></span>
+            {data?.complain ? (
+              <>
+                <span className="font-bold text-4xl">{data.complain}</span>
+                <span className="text-sm font-medium ml-2 text-gray-600"></span>
+              </>
+            ) : (
+              <Loader type="dots" />
+            )}
           </div>
         </div>
         <div className="bg-white rounded-lg p-5 shadow-lg shadow-gray-200">
@@ -22,8 +33,14 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Install Base</h2>
           <div className="mt-1">
-            <span className="font-bold text-4xl">50</span>
-            <span className="text-sm font-medium ml-2 text-gray-600"></span>
+            {data?.install_base ? (
+              <>
+                <span className="font-bold text-4xl">{data?.install_base}</span>
+                <span className="text-sm font-medium ml-2 text-gray-600"></span>
+              </>
+            ) : (
+              <Loader type="dots" />
+            )}
           </div>
         </div>
         <div className="bg-white rounded-lg p-5 shadow-lg shadow-gray-200">
@@ -32,8 +49,14 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Penawaran</h2>
           <div className="mt-1">
-            <span className="font-bold text-4xl">42</span>
-            <span className="text-sm font-medium ml-2 text-gray-600"></span>
+            {data?.tender ? (
+              <>
+                <span className="font-bold text-4xl">{data?.tender}</span>
+                <span className="text-sm font-medium ml-2 text-gray-600"></span>
+              </>
+            ) : (
+              <Loader type="dots" />
+            )}
           </div>
         </div>
         <div className="bg-white rounded-lg p-5 shadow-lg shadow-gray-200">
@@ -42,8 +65,14 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Panduan</h2>
           <div className="mt-1">
-            <span className="font-bold text-4xl">243</span>
-            <span className="text-sm font-medium ml-2 text-gray-600"></span>
+            {data?.guide_product ? (
+              <>
+                <span className="font-bold text-4xl">{data?.guide_product}</span>
+                <span className="text-sm font-medium ml-2 text-gray-600"></span>
+              </>
+            ) : (
+              <Loader type="dots" />
+            )}
           </div>
         </div>
       </div>
