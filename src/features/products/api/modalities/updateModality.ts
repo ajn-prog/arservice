@@ -25,7 +25,7 @@ export function useUpdateModality({ config }: UseUpdateModalityOptions = {}) {
   return useMutation(updateModality, {
     ...config,
     onSuccess: (...args) => {
-      queryClient.invalidateQueries(['categories']);
+      queryClient.invalidateQueries(['modalities']);
       queryClient.invalidateQueries(['modality', args[1].id]);
 
       if (config?.onSuccess) {
