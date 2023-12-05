@@ -24,7 +24,7 @@ export const ComplainReplies: React.FC<Props> = ({ replies }) => {
               <div>
                 <div className="font-semibold text-sm">{reply.user.profile.name}</div>
                 <div className="text-xs text-gray-600">
-                  {dayjs(reply.createdAt).format('D MMMM YYYY HH:mm')}
+                  {dayjs(reply.created_at).format('D MMMM YYYY HH:mm')}
                 </div>
               </div>
             </div>

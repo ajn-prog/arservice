@@ -135,7 +135,7 @@ export const ComplainDetail: React.FC = () => {
               </h1>
               <p className="text-xs text-gray-600">
                 Dibuka oleh <span className="font-bold">{complain.customer.name}</span> pada{' '}
-                {dayjs(complain.createdAt).fromNow()}.
+                {dayjs(complain.created_at).fromNow()}.
               </p>
             </div>
             <div className="text-sm md:text-base">

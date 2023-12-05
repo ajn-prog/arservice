@@ -86,7 +86,7 @@ export const TenderTable: React.FC<Props> = ({ toolbar }) => {
           <td>
             <TenderBadge status={tender.status} />
           </td>
-          <td>{dayjs(tender.updatedAt).format('D MMMM YYYY H:mm')}</td>
+          <td>{dayjs(tender.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon variant="subtle" title="Detail Penawaran" color="gray" radius="lg">

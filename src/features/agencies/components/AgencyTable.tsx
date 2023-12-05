@@ -82,7 +82,7 @@ export const AgencyTable: React.FC<Props> = ({ toolbar, ...props }) => {
           <td>{agency.classes}</td>
           <td>{agency.address}</td>
           <td>{agency.kecamatan.kabupaten?.province?.name ?? '-'}</td>
-          <td>{dayjs(agency.createdAt).format('D MMMM YYYY H:mm')}</td>
+          <td>{dayjs(agency.created_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon

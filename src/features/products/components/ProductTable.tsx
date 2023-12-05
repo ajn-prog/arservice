@@ -96,7 +96,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar, ...props }) => {
           <td>{types[product.type]}</td>
           <td>{product.category.name}</td>
           <td>{product.brand?.name ?? '-'}</td>
-          <td>{dayjs(product.updatedAt).format('D MMMM YYYY H:mm')}</td>
+          <td>{dayjs(product.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon

@@ -86,7 +86,7 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
           <td>
             <ComplainBadge status={complain.status} />
           </td>
-          <td>{dayjs(complain.updatedAt).format('D MMMM YYYY H:mm')}</td>
+          <td>{dayjs(complain.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
               <Button

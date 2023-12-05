@@ -102,7 +102,7 @@ export const InstallationTable: React.FC<Props> = ({ toolbar, ...props }) => {
             )}
           </td>
           <td>{installation.customer.name}</td>
-          <td>{dayjs(installation.updatedAt).format('D MMMM YYYY H:mm')}</td>
+          <td>{dayjs(installation.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
               <ActionIcon

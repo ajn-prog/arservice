@@ -42,7 +42,7 @@ export const GuideDetail: React.FC = () => {
           <header>
             <h1 className="text-xl font-bold">{guide.title}</h1>
             <div className="text-base text-primary-600">
-              {dayjs(guide.createdAt).format('D MMMM YYYY')}
+              {dayjs(guide.created_at).format('D MMMM YYYY')}
             </div>
           </header>
 
