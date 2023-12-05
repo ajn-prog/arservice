@@ -11,11 +11,13 @@ export type Engineer = {
   user_id: number;
 };
 
+export type UserRole = 'Superadmin' | 'Customer' | 'Engineer' | 'Logistic' | 'Admin_Legal';
+
 export type User = {
   name: string;
   phone: string;
   email: string;
-  role: 'Superadmin' | 'Admin' | 'Customer';
+  role: UserRole;
   agency: string;
   is_from_arkan: number;
   display_picture: string;

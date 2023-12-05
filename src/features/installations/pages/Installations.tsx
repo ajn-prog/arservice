@@ -10,7 +10,7 @@ export const Installations: React.FC = () => {
     <main>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Install Base</h1>
-        <Authorization role={['Customer']}>
+        <Authorization role={['-Customer']}>
           <Button component={Link} to="/installation/create">
             Tambah
           </Button>
