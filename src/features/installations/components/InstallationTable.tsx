@@ -9,22 +9,20 @@ import { Table } from '@/components/elements';
 import { Authorization } from '@/features/auth';
 import { PRODUCT_TYPES } from '@/features/products';
 import { dayjs } from '@/lib/dayjs';
-import { Pagination } from '@/types/api';
 
 import { useInstallations, useDeleteInstallation } from '../api';
-
-const initialParams: Pagination = {
-  page: 1,
-  limit: 10,
-  search: '',
-};
+import { InstallationQuery } from '../types';
 
 type Props = {
   toolbar?: React.ReactNode;
-} & Pagination;
+} & InstallationQuery;
 
 export const InstallationTable: React.FC<Props> = ({ toolbar, ...props }) => {
-  const [params, setParams] = useState(initialParams);
+  const [params, setParams] = useState<InstallationQuery>({
+    page: 1,
+    limit: 10,
+    search: '',
+  });
   const { data, isLoading } = useInstallations({ params: { ...params, ...props } });
   const deleteMutation = useDeleteInstallation();
 

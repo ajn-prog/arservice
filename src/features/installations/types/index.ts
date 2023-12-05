@@ -1,6 +1,7 @@
 import { Agency } from '@/features/agencies';
 import { Product } from '@/features/products';
 import { Engineer } from '@/features/user';
+import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
 export type Contract = {
@@ -46,3 +47,7 @@ export type InstallationDTO = {
     serial_number?: string;
   }[];
 };
+
+export type InstallationQuery = {
+  customer_id?: string;
+} & Pagination;

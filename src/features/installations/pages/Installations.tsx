@@ -1,16 +1,17 @@
 import { Button, TextInput } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
-import { IconSearch } from '@tabler/icons-react';
+import { IconCategory, IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AgencySelect } from '@/features/agencies';
 import { Authorization } from '@/features/auth';
-import { Pagination } from '@/types/api';
 
 import { InstallationTable } from '../components';
+import { InstallationQuery } from '../types';
 
 export const Installations: React.FC = () => {
-  const [query, setQuery] = useState<Pagination>({
+  const [query, setQuery] = useState<InstallationQuery>({
     search: '',
     limit: 10,
   });
@@ -28,13 +29,23 @@ export const Installations: React.FC = () => {
       </div>
 
       <section className="space-y-4 mb-4">
-        <div className="space-x-4 flex items-center">
-          <div className="max-w-xs w-full">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
             <TextInput
               leftSection={<IconSearch size={16} />}
-              placeholder="Cari berdasarkan judul atau project number"
+              placeholder="Cari berdasarkan judul"
               value={query.search}
               onChange={(v) => setQuery({ ...query, search: v.target.value })}
+            />
+          </div>
+          <div className="col-span-6 md:col-span-3 lg:col-span-2">
+            <AgencySelect
+              leftSection={<IconCategory size={16} />}
+              placeholder="Pilih Instansi"
+              value={query.customer_id?.toString() ?? null}
+              onChange={(v) => {
+                setQuery({ ...query, customer_id: v || undefined });
+              }}
             />
           </div>
         </div>
