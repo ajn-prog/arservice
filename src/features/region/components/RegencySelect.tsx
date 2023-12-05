@@ -13,6 +13,7 @@ export const RegencySelect: React.FC<Props> = ({ provinceId, ...props }) => {
     provinceId: provinceId || 0,
     config: {
       enabled: !!provinceId,
+      cacheTime: 0,
     },
   });
 

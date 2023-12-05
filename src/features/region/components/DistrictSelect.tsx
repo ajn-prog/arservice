@@ -8,11 +8,12 @@ type Props = {
 } & Omit<SelectProps, 'data'>;
 
 export const DistrictSelect: React.FC<Props> = ({ regencyId, ...props }) => {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState<string | undefined>('');
   const { data } = useDistricts({
     regencyId: regencyId || 0,
     config: {
       enabled: !!regencyId,
+      cacheTime: 0,
     },
   });
 
