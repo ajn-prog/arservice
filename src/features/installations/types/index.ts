@@ -10,7 +10,7 @@ export type Contract = {
 
 export type InstallationItem = {
   installbase_id: number;
-  product_id: number;
+  product_id: number | string;
   serial_number: string;
   warranty_month: string | number;
   product: Product;
@@ -35,14 +35,12 @@ export type InstallationDTO = {
   title?: string;
   customer_id?: number | string;
   installation_date?: string | Date | null;
-  warranty_month?: number | string;
-  serial_number?: number | string;
   project_number?: number | string;
   note?: string;
   engineer_ids?: Array<string | number>;
   file?: File;
   products: {
-    product_id?: string;
+    product_id?: string | number;
     warranty_month?: number | string;
     serial_number?: string;
   }[];

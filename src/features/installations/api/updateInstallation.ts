@@ -12,9 +12,35 @@ export type InstallationUpdateDTO = {
 };
 
 export async function updateInstallation({ id, data }: InstallationUpdateDTO) {
-  const res = await axios.put<GeneralResponse<Installation>>(
+  const formData = new FormData();
+
+  for (const [key, value] of Object.entries(data)) {
+    if (!value) continue;
+
+    if (Array.isArray(value)) {
+      if (typeof value[0] == 'string') {
+        value.forEach((v, i) => {
+          formData.append(`${key}[${i}]`, v.toString());
+        });
+      } else {
+        value.forEach((v, i) => {
+          for (const [key, value] of Object.entries(v)) {
+            formData.append(`${key}[${i}]`, value.toString());
+          }
+        });
+      }
+    } else if (value instanceof Date) {
+      formData.append(key, value.toJSON());
+    } else if (value instanceof File) {
+      formData.append(key, value, value.name);
+    } else {
+      formData.append(key, value.toString());
+    }
+  }
+
+  const res = await axios.post<GeneralResponse<Installation>>(
     `/ar-service/install-base/${id}`,
-    data
+    formData
   );
 
   return res.data;
@@ -29,7 +55,7 @@ export function useUpdateInstallation({ config }: UseUpdateInstallationOptions =
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['installations']);
-      queryClient.invalidateQueries(['installation', args[1].id]);
+      queryClient.invalidateQueries(['installation']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

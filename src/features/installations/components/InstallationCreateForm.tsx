@@ -25,8 +25,6 @@ export const InstallationCreateForm: React.FC = () => {
       installation_date: null,
       note: '',
       project_number: '',
-      serial_number: '',
-      warranty_month: 0,
       file: undefined,
       products: [
         {

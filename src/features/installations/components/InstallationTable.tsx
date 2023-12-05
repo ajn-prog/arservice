@@ -1,7 +1,7 @@
 import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconEye, IconTrash, IconX } from '@tabler/icons-react';
+import { IconCheck, IconEdit, IconEye, IconTrash, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -108,21 +108,33 @@ export const InstallationTable: React.FC<Props> = ({ toolbar, ...props }) => {
                 component={Link}
                 to={`/installation/${installation.id}`}
                 title="Detail Install Base"
-                color="primary"
+                color="gray"
                 radius="lg"
               >
                 <IconEye size={18} />
               </ActionIcon>
               <Authorization role={['-Customer']}>
-                <ActionIcon
-                  variant="subtle"
-                  onClick={handleRemove(installation.id)}
-                  title="Hapus Install Base"
-                  color="red"
-                  radius="lg"
-                >
-                  <IconTrash size={18} />
-                </ActionIcon>
+                <>
+                  <ActionIcon
+                    variant="subtle"
+                    title="Update Install Base"
+                    color="primary"
+                    radius="lg"
+                    component={Link}
+                    to={`/installation/${installation.id}/update`}
+                  >
+                    <IconEdit size={18} />
+                  </ActionIcon>
+                  <ActionIcon
+                    variant="subtle"
+                    onClick={handleRemove(installation.id)}
+                    title="Hapus Install Base"
+                    color="red"
+                    radius="lg"
+                  >
+                    <IconTrash size={18} />
+                  </ActionIcon>
+                </>
               </Authorization>
             </div>
           </td>

@@ -20,6 +20,10 @@ const { InstallationCreate } = lazyImport(
   () => import('@/features/installations'),
   'InstallationCreate'
 );
+const { InstallationUpdate } = lazyImport(
+  () => import('@/features/installations'),
+  'InstallationUpdate'
+);
 
 const { Complains } = lazyImport(() => import('@/features/complains'), 'Complains');
 const { ComplainCreate } = lazyImport(() => import('@/features/complains'), 'ComplainCreate');
@@ -68,6 +72,7 @@ export const AppRoutes: React.FC = () => {
         <Route path="/installation" element={<Installations />} />
         <Route path="/installation/create" element={<InstallationCreate />} />
         <Route path="/installation/:id" element={<InstallationDetail />} />
+        <Route path="/installation/:id/update" element={<InstallationUpdate />} />
 
         <Route path="/tender" element={<Tenders />} />
 

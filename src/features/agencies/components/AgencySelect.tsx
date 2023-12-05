@@ -6,7 +6,7 @@ import { useAgencies } from '../api';
 type Props = Omit<SelectProps, 'data'>;
 
 export const AgencySelect: React.FC<Props> = ({ ...props }) => {
-  const { data } = useAgencies({ params: { limit: 500000 } });
+  const { data, isLoading } = useAgencies({ params: { limit: 500000 } });
 
   const agencies = useMemo(() => {
     if (!data) return [];
@@ -17,5 +17,5 @@ export const AgencySelect: React.FC<Props> = ({ ...props }) => {
     }));
   }, [data]);
 
-  return <Select {...props} data={agencies} searchable />;
+  return <Select {...props} data={agencies} searchable disabled={isLoading} />;
 };

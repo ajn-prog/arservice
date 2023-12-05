@@ -92,7 +92,7 @@ export const TenderTable: React.FC<Props> = ({ toolbar }) => {
               <ActionIcon variant="subtle" title="Detail Penawaran" color="gray" radius="lg">
                 <IconEye size={18} />
               </ActionIcon>
-              <Authorization role={['Superadmin', 'Admin']}>
+              <Authorization role={['-Customer']}>
                 {tender.status == 'pending' && (
                   <ActionIcon
                     onClick={handleUpdate(tender)}

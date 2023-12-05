@@ -1,28 +1,48 @@
-import { Button, Card, PasswordInput, Select, TextInput } from '@mantine/core';
+import { Button, Card, TextInput, Textarea } from '@mantine/core';
+import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
+import { IconCalendar } from '@tabler/icons-react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useCreateInstallation } from '../api';
+import { AgencySelect } from '@/features/agencies';
+import { FileDropzone } from '@/features/file';
+import { EngineerSelect } from '@/features/user';
+import { dayjs } from '@/lib/dayjs';
+
+import { useUpdateInstallation } from '../api';
 import { Installation, InstallationDTO } from '../types';
+
+import { ProductSelectForm } from './ProductSelectForm';
 
 type Props = {
   installation: Installation;
 };
 
-export const InstallationUpdateForm: React.FC<Props> = () => {
+export const InstallationUpdateForm: React.FC<Props> = ({ installation }) => {
   const navigate = useNavigate();
-  const { mutateAsync } = useCreateInstallation();
+  const { mutateAsync, isLoading } = useUpdateInstallation();
   const form = useForm<InstallationDTO>({
     initialValues: {
-      title: '',
-      products: [],
+      title: installation.title,
+      customer_id: installation.customer_id.toString(),
+      engineer_ids: installation.technical_contract.engineers.map(({ id }) => id.toString()),
+      installation_date: dayjs(installation.installation_date, 'YYYY-MM-DD').toDate(),
+      note: installation.note || '',
+      project_number: installation.project_number,
+      file: undefined,
+      products: installation.items.map((item) => ({
+        product_id: item.product_id.toString(),
+        serial_number: item.serial_number.toString(),
+        warranty_month: item.warranty_month.toString(),
+      })),
     },
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
     await mutateAsync(
       {
+        id: installation.id,
         data: {
           ...values,
         },
@@ -31,7 +51,7 @@ export const InstallationUpdateForm: React.FC<Props> = () => {
         onSuccess: () => {
           notifications.show({
             color: 'green',
-            message: 'Instansi berhasil diubah',
+            message: 'Install Base berhasil diubah',
           });
           navigate('/installation');
         },
@@ -39,89 +59,96 @@ export const InstallationUpdateForm: React.FC<Props> = () => {
           form.setErrors((response?.data as any).errors);
           notifications.show({
             color: 'red',
-            message: 'Instansi gagal diubah',
+            message: 'Install Base gagal diubah',
           });
         },
       }
     );
   });
 
+  // return null;
+
   return (
     <Card component="form" onSubmit={handleSubmit} shadow="lg">
       <Card.Section p="lg" withBorder>
-        <h2 className="font-semibold text-base">Edit Data Instansi</h2>
+        <h2 className="font-semibold text-base">Edit Data Install Base</h2>
       </Card.Section>
 
-      <Card.Section p="lg" pt="xs">
+      <Card.Section p="lg" pt="xs" withBorder>
         <div className="pb-6 grid grid-cols-12 gap-x-6 gap-y-4 border-b border-gray-300">
-          <TextInput
-            {...form.getInputProps('hospital_code')}
-            label="Kode RS"
-            placeholder="Ex : 20392"
-            className="col-span-12 md:col-span-4"
+          <DateInput
+            {...form.getInputProps('installation_date')}
+            label="Tanggal Install"
+            placeholder="Pilih Tanggal"
+            className="col-span-6 md:col-span-3"
+            popoverProps={{ withinPortal: true }}
+            rightSection={<IconCalendar size={16} color="gray" />}
+            valueFormat="D MMMM YYYY"
           />
           <TextInput
-            {...form.getInputProps('name')}
-            label="Nama Instansi"
-            placeholder="Ex : RS Umum Daerah H. Sahudin Kutacane. . ."
-            className="col-span-12 md:col-span-8"
+            {...form.getInputProps('project_number')}
+            label="Project Number"
+            placeholder="Ex : 20392"
+            className="col-span-6 md:col-span-3"
+          />
+          <TextInput
+            {...form.getInputProps('title')}
+            label="Nama Kegiatan"
+            placeholder="Ex : Perbaikan Alat MINDRAY xxxx"
+            className="col-span-12 md:col-span-6"
           />
 
-          <Select
-            {...form.getInputProps('sector')}
-            label="Sektor"
-            placeholder="Pilih Sektor"
-            data={['Private', 'Public']}
-            className="col-span-12 md:col-span-4"
+          <AgencySelect
+            {...form.getInputProps('customer_id')}
+            label="Instansi"
+            placeholder="Pilih Instansi"
+            className="col-span-12 md:col-span-12"
+            nothingFoundMessage="Data tidak ditemukan"
           />
-          <Select
-            {...form.getInputProps('classes')}
-            label="Kelas"
-            placeholder="Pilih Kelas"
-            data={['A', 'B', 'C', 'D', 'D Pratama']}
-            className="col-span-12 md:col-span-4"
+
+          <EngineerSelect
+            {...form.getInputProps('engineer_ids')}
+            label="Teknisi"
+            placeholder="Pilih Teknisi"
+            className="col-span-12 md:col-span-12"
+            limit={20}
+            nothingFoundMessage="Data tidak ditemukan"
           />
-          <Select
-            {...form.getInputProps('owner')}
-            label="Kepemilikan"
-            placeholder="Pilih Kepemilikan"
-            data={['Perorangan', 'Korporasi', 'Negara']}
-            className="col-span-12 md:col-span-4"
+        </div>
+        <div className="pt-2 pb-4 border-b border-gray-300">
+          <ProductSelectForm
+            value={form.values['products']}
+            onChange={(v) => form.setFieldValue('products', v)}
           />
         </div>
         <div className="pt-4 grid grid-cols-12 gap-x-6 gap-y-4">
-          <TextInput
-            {...form.getInputProps('address')}
-            label="Alamat"
-            placeholder="Ex : Jl. Sultan Adam No. 24"
-            className="col-span-12 md:col-span-8"
-          />
-          <TextInput
-            {...form.getInputProps('phone_number')}
-            label="Telepon"
-            placeholder="Ex : 085752140605. . ."
-            className="col-span-12 md:col-span-4"
-          />
-          <TextInput
-            {...form.getInputProps('email')}
-            label="Email"
-            placeholder="Masukan Email"
-            className="col-span-12 md:col-span-6"
-          />
-          <PasswordInput
-            {...form.getInputProps('password')}
-            label="Password"
-            placeholder="Biarkan kosong jika tidak berubah"
-            className="col-span-12 md:col-span-6"
+          <div className="col-span-12">
+            <FileDropzone
+              label="File Kegiatan"
+              onDrop={(files) => form.setFieldValue('file', files[0] || undefined)}
+              onReject={() => notifications.show({ message: 'File tidak sesuai', color: 'red' })}
+              maxSize={5 * 1024 ** 2}
+              maxFiles={1}
+              value={form.values['file']}
+              error={form.errors['file']?.toString()}
+            />
+          </div>
+          <Textarea
+            {...form.getInputProps('note')}
+            label="Catatan"
+            placeholder="Tambahkan Catatan. . ."
+            className="col-span-12 md:col-span-12"
           />
         </div>
       </Card.Section>
 
-      <Card.Section p="lg" withBorder className="flex justify-end items-center space-x-4">
+      <Card.Section p="lg" withBorder className="flex items-center space-x-4">
+        <Button type="submit" loading={isLoading}>
+          Simpan
+        </Button>
         <Button component={Link} to="/installation" variant="light" color="gray.6" bg="gray.2">
           Batal
         </Button>
-        <Button type="submit">Simpan</Button>
       </Card.Section>
     </Card>
   );

@@ -38,7 +38,7 @@ export const InstallationDetail: React.FC = () => {
       <Card shadow="lg">
         <Card.Section p="lg" withBorder>
           <h2 className="font-semibold text-base">
-            Instalasi Alat Rumah Sakit ({data.project_number})
+            {data.title} ({data.project_number})
           </h2>
         </Card.Section>
         <Card.Section p="lg" withBorder>
