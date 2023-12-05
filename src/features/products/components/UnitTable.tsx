@@ -13,7 +13,7 @@ import { UnitUpdateForm } from '.';
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & UnitQuery;
 
 const initialParams: UnitQuery = {
   page: 1,
@@ -21,9 +21,9 @@ const initialParams: UnitQuery = {
   search: '',
 };
 
-export const UnitTable: React.FC<Props> = ({ toolbar }) => {
+export const UnitTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useUnits({ params });
+  const { data, isLoading } = useUnits({ params: { ...params, ...props } });
   const deleteMutation = useDeleteUnit();
 
   function handleRemove(id: number) {

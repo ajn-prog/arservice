@@ -21,11 +21,11 @@ const initialParams: Pagination = {
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & Pagination;
 
-export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
+export const InstallationTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useInstallations({ params });
+  const { data, isLoading } = useInstallations({ params: { ...params, ...props } });
   const deleteMutation = useDeleteInstallation();
 
   function handleRemove(id: number) {
@@ -115,7 +115,7 @@ export const InstallationTable: React.FC<Props> = ({ toolbar }) => {
               >
                 <IconEye size={18} />
               </ActionIcon>
-              <Authorization role={['Superadmin', 'Admin']}>
+              <Authorization role={['-Customer']}>
                 <ActionIcon
                   variant="subtle"
                   onClick={handleRemove(installation.id)}

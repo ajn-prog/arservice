@@ -1,30 +1,86 @@
-import { Button, Modal } from '@mantine/core';
+import { Button, Modal, Tabs, TextInput } from '@mantine/core';
+import { useDebouncedValue } from '@mantine/hooks';
+import { IconCategory, IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Authorization } from '@/features/auth';
 
-import { ProductList, ProductTable } from '../components';
+import { BrandSelect, CategorySelect, ProductList } from '../components';
+import { ProductQuery, ProductType } from '../types';
 
 export const Products: React.FC = () => {
+  const [query, setQuery] = useState<ProductQuery>({
+    search: '',
+    limit: 10,
+    category: undefined,
+    brand: undefined,
+    type: 'main',
+  });
+  const [params] = useDebouncedValue(query, 200);
   const [open, setOpen] = useState(false);
 
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Produk</h1>
-        <Authorization role={['Superadmin', 'Admin']}>
+        <Authorization role={['-Customer']}>
           <Button onClick={() => setOpen(true)}>Tambah</Button>
         </Authorization>
       </div>
 
+      <section className="space-y-4 mb-4">
+        <div className="grid grid-cols-12 gap-4">
+          <div className="col-span-12 md:col-span-6 lg:col-span-3">
+            <TextInput
+              leftSection={<IconSearch size={16} />}
+              placeholder="Cari berdasarkan nama"
+              value={query.search}
+              onChange={(v) => setQuery({ ...query, search: v.target.value })}
+            />
+          </div>
+          <div className="col-span-6 md:col-span-3 lg:col-span-2">
+            <CategorySelect
+              leftSection={<IconCategory size={16} />}
+              placeholder="Pilih Kategori"
+              value={query.category?.toString() ?? null}
+              onChange={(v) => {
+                setQuery({ ...query, category: v || undefined });
+              }}
+            />
+          </div>
+          <div className="col-span-6 md:col-span-3 lg:col-span-2">
+            <BrandSelect
+              leftSection={<IconCategory size={16} />}
+              placeholder="Pilih Brand"
+              value={query.brand?.toString() ?? null}
+              onChange={(v) => {
+                setQuery({ ...query, brand: v || undefined });
+              }}
+            />
+          </div>
+        </div>
+
+        <div>
+          <Tabs
+            variant="pills"
+            radius="lg"
+            value={query.type}
+            onChange={(v) => {
+              if (v) setQuery({ ...query, type: v as ProductType });
+            }}
+          >
+            <Tabs.List>
+              <Tabs.Tab value="main">Unit</Tabs.Tab>
+              <Tabs.Tab value="accessories">Accessories</Tabs.Tab>
+              <Tabs.Tab value="preventive">Service/Sparepart</Tabs.Tab>
+            </Tabs.List>
+          </Tabs>
+        </div>
+      </section>
+
       <section className="mb-8">
-        <Authorization role={['Customer']}>
-          <ProductList />
-        </Authorization>
-        <Authorization role={['Superadmin', 'Admin']}>
-          <ProductTable />
-        </Authorization>
+        <ProductList {...params} />
       </section>
 
       <Modal title="Pilih Jenis Produk" centered opened={open} onClose={() => setOpen(false)}>

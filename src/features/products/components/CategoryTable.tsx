@@ -13,7 +13,7 @@ import { CategoryUpdateForm } from '.';
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & CategoryQuery;
 
 const initialParams: CategoryQuery = {
   page: 1,
@@ -21,9 +21,9 @@ const initialParams: CategoryQuery = {
   search: '',
 };
 
-export const CategoryTable: React.FC<Props> = ({ toolbar }) => {
+export const CategoryTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useCategories({ params });
+  const { data, isLoading } = useCategories({ params: { ...params, ...props } });
   const deleteMutation = useDeleteCategory();
 
   function handleRemove(id: number) {

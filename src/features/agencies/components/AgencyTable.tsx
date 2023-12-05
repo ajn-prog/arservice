@@ -19,11 +19,11 @@ const initialParams: AgencyQuery = {
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & AgencyQuery;
 
-export const AgencyTable: React.FC<Props> = ({ toolbar }) => {
+export const AgencyTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useAgencies({ params });
+  const { data, isLoading } = useAgencies({ params: { ...params, ...props } });
   const deleteMutation = useDeleteAgency();
 
   function handleRemove(id: number) {

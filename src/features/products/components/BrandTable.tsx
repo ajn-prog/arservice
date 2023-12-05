@@ -13,7 +13,7 @@ import { BrandUpdateForm } from '.';
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & BrandQuery;
 
 const initialParams: BrandQuery = {
   page: 1,
@@ -21,9 +21,9 @@ const initialParams: BrandQuery = {
   search: '',
 };
 
-export const BrandTable: React.FC<Props> = ({ toolbar }) => {
+export const BrandTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useBrands({ params });
+  const { data, isLoading } = useBrands({ params: { ...params, ...props } });
   const deleteMutation = useDeleteBrand();
 
   function handleRemove(id: number) {

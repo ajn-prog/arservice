@@ -17,3 +17,5 @@ export * from './ProductAccessoryForm';
 export * from './ProductSelect';
 export * from './ProductList';
 export * from './ProductPreventiveForm';
+export * from './BrandSelect';
+export * from './CategorySelect';

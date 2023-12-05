@@ -1,6 +1,7 @@
 import { Agency } from '@/features/agencies';
-import { Installation } from '@/features/installations';
+import { InstallationItem } from '@/features/installations';
 import { User } from '@/features/user';
+import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
 type UserProfile = {
@@ -43,13 +44,13 @@ export type ComplainStatus = 'waiting' | 'progress' | 'close';
 export type ComplainPriority = 'low' | 'medium' | 'high';
 
 export type Complain = {
-  installbase_id: number;
+  installbase_detail_id: number;
   title: string;
   status: ComplainStatus;
   priority: ComplainPriority;
   detail: string;
   placement_space: string;
-  installbase: Installation;
+  installbase_detail: InstallationItem;
   user: User;
   customer: Agency;
   user_engineer?: UserProfile;
@@ -66,6 +67,11 @@ export type ComplainDTO = {
   placement_space: string;
   filename: File[];
 };
+
+export type ComplainQuery = {
+  customer_id?: string;
+  status?: ComplainStatus;
+} & Pagination;
 
 export type ReplyDTO = {
   complain_id: number;

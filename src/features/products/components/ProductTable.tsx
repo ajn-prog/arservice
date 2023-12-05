@@ -32,11 +32,11 @@ const types = {
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & ProductQuery;
 
-export const ProductTable: React.FC<Props> = ({ toolbar }) => {
+export const ProductTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useProducts({ params });
+  const { data, isLoading } = useProducts({ params: { ...params, ...props } });
   const deleteMutation = useDeleteProduct();
 
   function handleRemove(id: number) {
@@ -109,7 +109,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar }) => {
               >
                 <IconDotsCircleHorizontal size={18} />
               </ActionIcon>
-              <Authorization role={['Admin', 'Superadmin']}>
+              <Authorization role={['-Customer']}>
                 <ActionIcon
                   variant="subtle"
                   component={Link}

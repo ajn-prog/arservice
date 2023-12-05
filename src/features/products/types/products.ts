@@ -76,4 +76,7 @@ export type ProductPreventiveDTO = {
 
 export type ProductQuery = {
   search?: string;
+  category?: number | string;
+  brand?: number | string;
+  type?: ProductType;
 } & Pagination;

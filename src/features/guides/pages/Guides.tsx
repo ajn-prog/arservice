@@ -23,7 +23,7 @@ export const Guides: React.FC = () => {
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Panduan</h1>
 
-        <Authorization role={['Admin', 'Superadmin']}>
+        <Authorization role={['-Customer']}>
           <Button component={Link} to="/guide/create">
             Tambah
           </Button>
@@ -35,7 +35,7 @@ export const Guides: React.FC = () => {
           <div className="max-w-xs w-full">
             <TextInput
               leftSection={<IconSearch size={16} />}
-              placeholder="Cari"
+              placeholder="Cari berdasarkan judul"
               value={query.search}
               onChange={(v) => setQuery({ ...query, search: v.target.value })}
             />

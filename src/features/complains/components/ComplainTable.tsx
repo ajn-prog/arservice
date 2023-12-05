@@ -7,25 +7,23 @@ import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
-import { Pagination } from '@/types/api';
 
 import { useComplains, useDeleteComplain } from '../api';
+import { ComplainQuery } from '../types';
 
 import { ComplainBadge } from './ComplainBadge';
 
-const initialParams: Pagination = {
-  page: 1,
-  limit: 10,
-  search: '',
-};
-
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & ComplainQuery;
 
-export const ComplainTable: React.FC<Props> = ({ toolbar }) => {
-  const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useComplains({ params });
+export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
+  const [params, setParams] = useState<ComplainQuery>({
+    page: 1,
+    limit: 10,
+    search: '',
+  });
+  const { data, isLoading } = useComplains({ params: { ...params, ...props } });
   const deleteMutation = useDeleteComplain();
 
   function handleRemove(id: number) {
@@ -83,8 +81,8 @@ export const ComplainTable: React.FC<Props> = ({ toolbar }) => {
           <td>{(params.limit ?? 5) * ((params.page ?? 0) - 1) + i + 1}</td>
           <td>{complain.title}</td>
           <td className="capitalize">{complain.priority}</td>
-          <td>{complain.title}</td>
-          <td>{complain.title}</td>
+          <td>{complain.installbase_detail.product.name}</td>
+          <td>{complain.customer.name}</td>
           <td>
             <ComplainBadge status={complain.status} />
           </td>

@@ -9,7 +9,9 @@ import { useProducts } from '../api';
 import { PRODUCT_TYPES } from '../constants';
 import { ProductQuery } from '../types';
 
-export const ProductList: React.FC = () => {
+type Props = ProductQuery;
+
+export const ProductList: React.FC<Props> = ({ ...props }) => {
   const [params, setParams] = useState<ProductQuery>({
     page: 1,
     limit: 8,
@@ -17,7 +19,7 @@ export const ProductList: React.FC = () => {
     sort: 'desc',
     sort_by: 'created_at',
   });
-  const { data, isLoading, isError, isFetching } = useProducts({ params });
+  const { data, isLoading, isError, isFetching } = useProducts({ params: { ...params, ...props } });
   const { addProduct } = useCart();
 
   if (isLoading || isError || isFetching)

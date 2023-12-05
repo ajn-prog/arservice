@@ -14,7 +14,7 @@ import { ModalityUpdateForm } from './ModalityUpdateForm';
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & Pagination;
 
 const initialParams: Pagination = {
   page: 1,
@@ -24,9 +24,9 @@ const initialParams: Pagination = {
   sort_by: 'created_at',
 };
 
-export const ModalityTable: React.FC<Props> = ({ toolbar }) => {
+export const ModalityTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useModalities({ params });
+  const { data, isLoading } = useModalities({ params: { ...params, ...props } });
   const deleteMutation = useDeleteModality();
 
   function handleRemove(id: number) {
