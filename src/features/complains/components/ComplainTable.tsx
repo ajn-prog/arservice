@@ -1,4 +1,4 @@
-import { Button } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconEye, IconTrash, IconX } from '@tabler/icons-react';
@@ -89,25 +89,23 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
           <td>{dayjs(complain.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <Button
+              <ActionIcon
                 component={Link}
-                leftSection={<IconEye size={16} />}
                 to={`/complain/${complain.id}`}
-                title="Update Komplain"
-                color="primary"
+                title="Detail Komplain"
+                color="gray"
                 size="xs"
               >
-                Detail
-              </Button>
-              <Button
-                leftSection={<IconTrash size={16} />}
+                <IconEye size={16} />
+              </ActionIcon>
+              <ActionIcon
                 onClick={handleRemove(complain.id)}
                 title="Hapus Komplain"
                 color="red"
                 size="xs"
               >
-                Hapus
-              </Button>
+                <IconTrash size={16} />
+              </ActionIcon>
             </div>
           </td>
         </tr>
