@@ -17,7 +17,7 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Komplain</h2>
           <div className="mt-1">
-            {data?.complain ? (
+            {data?.complain !== undefined ? (
               <>
                 <span className="font-bold text-4xl">{data.complain}</span>
                 <span className="text-sm font-medium ml-2 text-gray-600"></span>
@@ -33,7 +33,7 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Install Base</h2>
           <div className="mt-1">
-            {data?.install_base ? (
+            {data?.install_base !== undefined ? (
               <>
                 <span className="font-bold text-4xl">{data?.install_base}</span>
                 <span className="text-sm font-medium ml-2 text-gray-600"></span>
@@ -49,7 +49,7 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Penawaran</h2>
           <div className="mt-1">
-            {data?.tender ? (
+            {data?.tender !== undefined ? (
               <>
                 <span className="font-bold text-4xl">{data?.tender}</span>
                 <span className="text-sm font-medium ml-2 text-gray-600"></span>
@@ -65,7 +65,7 @@ export const Dashboard: React.FC = () => {
           </div>
           <h2 className="font-medium text-sm text-gray-600">Jumlah Panduan</h2>
           <div className="mt-1">
-            {data?.guide_product ? (
+            {data?.guide_product !== undefined ? (
               <>
                 <span className="font-bold text-4xl">{data?.guide_product}</span>
                 <span className="text-sm font-medium ml-2 text-gray-600"></span>
