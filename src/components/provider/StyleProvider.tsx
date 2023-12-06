@@ -12,6 +12,7 @@ import '@mantine/dropzone/styles.css';
 import '@mantine/tiptap/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
+import '@mantine/carousel/styles.css';
 import 'swiper/css';
 
 const theme: MantineThemeOverride = {

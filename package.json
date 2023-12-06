@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
+    "@mantine/carousel": "^7.3.0",
     "@mantine/core": "^7.2.1",
     "@mantine/dates": "^7.2.1",
     "@mantine/dropzone": "^7.2.1",
@@ -33,6 +34,7 @@
     "@tiptap/starter-kit": "^2.1.12",
     "axios": "^0.27.2",
     "dayjs": "^1.11.7",
+    "embla-carousel-react": "^7.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.4",

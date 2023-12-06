@@ -5,3 +5,4 @@ export * from './Modalities';
 export * from './Products';
 export * from './ProductCreate';
 export * from './ProductUpdate';
+export * from './ProductDetail';

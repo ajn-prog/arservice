@@ -20,7 +20,7 @@ export type Product = {
   product_code: string | null;
   name: string;
   description: string;
-  price: number;
+  price?: number;
   thumbnail: null | string;
   catalogue_link: string;
   type: ProductType;

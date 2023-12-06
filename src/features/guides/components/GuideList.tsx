@@ -116,7 +116,7 @@ export const GuideList: React.FC<Props> = (props) => {
                 </p>
               </Link>
 
-              <Authorization role={['Admin', 'Superadmin']}>
+              <Authorization role={['-Customer']}>
                 <div className="grid grid-cols-2 gap-2 mt-4">
                   <Button
                     component={Link}
@@ -149,11 +149,11 @@ export const GuideList: React.FC<Props> = (props) => {
         <div className="col-span-12 flex flex-col items-center justify-center py-24 mx-auto max-w-md">
           <p className="text-lg font-bold mb-4 text-center">
             Belum ada panduan untuk produk ini
-            <Authorization role={['Admin', 'Superadmin']}>
+            <Authorization role={['-Customer']}>
               , tekan tombol dibawah untuk menambahkan
             </Authorization>
           </p>
-          <Authorization role={['Admin', 'Superadmin']}>
+          <Authorization role={['-Customer']}>
             <Button component={Link} to="/guide/create" leftSection={<IconPlus size={16} />}>
               Tambah Panduan
             </Button>
