@@ -2,9 +2,11 @@ import { Button, Card, FileInput, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconPhoto, IconPlus } from '@tabler/icons-react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { PictureList } from '@/features/file';
+import { urlToFile } from '@/utils/file';
 
 import { useCreateProduct, useUpdateProduct } from '../api';
 import { Product, ProductPreventiveDTO } from '../types';
@@ -26,6 +28,7 @@ export const ProductPreventiveForm: React.FC<Props> = ({ product }) => {
       product_code: product?.product_code ?? '',
       type: 'preventive',
       images: [],
+      description: product?.description ?? '',
       thumbnail: undefined,
     },
   });
@@ -85,11 +88,29 @@ export const ProductPreventiveForm: React.FC<Props> = ({ product }) => {
     }
   });
 
+  useEffect(() => {
+    if (!product?.images || product.images.length == 0) return;
+
+    const promises = product.images.map(async ({ image }) => {
+      const file = await urlToFile(image);
+      return file;
+    });
+
+    Promise.all(promises)
+      .then((results) => {
+        form.setFieldValue('images', results);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.images]);
+
   return (
     <Card component="form" onSubmit={handleSubmit} shadow="lg">
       <Card.Section p="lg" withBorder>
         <h2 className="font-semibold text-base">
-          Tambah Data Produk <span className="text-primary-600">(Service dan Sparespart)</span>
+          Edit Data Produk <span className="text-primary-600">(Service dan Sparespart)</span>
         </h2>
       </Card.Section>
 

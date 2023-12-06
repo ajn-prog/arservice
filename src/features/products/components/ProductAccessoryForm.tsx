@@ -3,10 +3,12 @@ import { DateInput } from '@mantine/dates';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconCalendar, IconPhoto, IconPlus } from '@tabler/icons-react';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { PictureList } from '@/features/file';
 import { dayjs } from '@/lib/dayjs';
+import { urlToFile } from '@/utils/file';
 
 import { useCreateProduct, useUpdateProduct } from '../api';
 import { Product, ProductAccessoryDTO } from '../types';
@@ -33,8 +35,8 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
       type: 'accessories',
       images: [],
       unit_product_id: product?.unit_product_id.toString() ?? '',
-      is_consumable: 'true',
-      price: '',
+      is_consumable: product?.is_consumable ? '1' : '0',
+      price: product?.price ? product?.price : '',
       thumbnail: undefined,
     },
   });
@@ -94,11 +96,29 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
     }
   });
 
+  useEffect(() => {
+    if (!product?.images || product.images.length == 0) return;
+
+    const promises = product.images.map(async ({ image }) => {
+      const file = await urlToFile(image);
+      return file;
+    });
+
+    Promise.all(promises)
+      .then((results) => {
+        form.setFieldValue('images', results);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.images]);
+
   return (
     <Card component="form" onSubmit={handleSubmit} shadow="lg">
       <Card.Section p="lg" withBorder>
         <h2 className="font-semibold text-base">
-          Tambah Data Produk <span className="text-primary-600">(Accessory)</span>
+          Edit Data Produk <span className="text-primary-600">(Accessory)</span>
         </h2>
       </Card.Section>
 
@@ -123,6 +143,7 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
             className="col-span-12 md:col-span-3"
             popoverProps={{ withinPortal: true }}
             rightSection={<IconCalendar size={16} color="gray" />}
+            valueFormat="D MMMM YYYY"
           />
           <BrandSelect
             {...form.getInputProps('brand_id')}
@@ -153,8 +174,8 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
             <div className="text-sm mb-2">Status</div>
             <Radio.Group {...form.getInputProps('is_consumable')}>
               <div className="flex items-center space-x-4">
-                <Radio label="Consumable" value="true" />
-                <Radio label="Unconsumable" value="false" />
+                <Radio label="Consumable" value="1" />
+                <Radio label="Unconsumable" value="0" />
               </div>
             </Radio.Group>
           </div>

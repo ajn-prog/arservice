@@ -28,7 +28,7 @@ export const ProductUnitForm: React.FC<Props> = ({ product }) => {
       name: product?.name ?? '',
       brand_id: product?.brand_id.toString() ?? '',
       category_product_id: product?.category_product_id.toString() ?? '',
-      date_entry: product?.date_entry ? dayjs(product.date_entry).toDate() : '',
+      date_entry: product?.date_entry ? dayjs(product.date_entry, 'YYYY-MM-DD').toDate() : '',
       modality_product_id: product?.modality_product_id.toString() ?? '',
       product_code: product?.product_code ?? '',
       type: 'main',

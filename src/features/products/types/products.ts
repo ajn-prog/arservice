@@ -61,7 +61,7 @@ export type ProductAccessoryDTO = {
   price?: string | number;
   is_consumable?: string | boolean;
   thumbnail?: File;
-  images?: File[];
+  images?: Array<File | string>;
 };
 
 export type ProductPreventiveDTO = {

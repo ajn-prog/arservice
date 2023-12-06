@@ -1,11 +1,14 @@
 import { Badge, Button, Pagination } from '@mantine/core';
-import { IconShoppingCart } from '@tabler/icons-react';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconEdit, IconShoppingCart, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Authorization } from '@/features/auth';
 import { useCart } from '@/features/tenders';
 
-import { useProducts } from '../api';
+import { useDeleteProduct, useProducts } from '../api';
 import { PRODUCT_TYPES } from '../constants';
 import { ProductQuery } from '../types';
 
@@ -20,7 +23,41 @@ export const ProductList: React.FC<Props> = ({ ...props }) => {
     sort_by: 'created_at',
   });
   const { data, isLoading, isError, isFetching } = useProducts({ params: { ...params, ...props } });
+  const deleteMutation = useDeleteProduct();
   const { addProduct } = useCart();
+
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Produk',
+        children: <div className="text-sm">Apakah anda yakin untuk menghapus produk ini?</div>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Produk berhasil dihapus',
+                  color: 'green',
+                });
+                setParams({ ...params, page: 1 });
+                modals.closeAll();
+              },
+              onError: () => {
+                notifications.show({
+                  message: 'Produk tidak bisa dihapus',
+                  color: 'red',
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
+  }
 
   if (isLoading || isError || isFetching)
     return (
@@ -77,17 +114,44 @@ export const ProductList: React.FC<Props> = ({ ...props }) => {
               </Link>
               {product.brand && <div className="text-sm text-gray-600">{product.brand.name}</div>}
 
-              <div className="space-y-2 mt-2">
-                <Button
-                  fullWidth
-                  size="xs"
-                  variant="outline"
-                  leftSection={<IconShoppingCart size={14} />}
-                  onClick={() => addProduct(product.id)}
-                >
-                  Tambah Keranjang
-                </Button>
-              </div>
+              <Authorization role={['-Customer']}>
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  <Button
+                    component={Link}
+                    to={`/product/${product.id}/update`}
+                    variant="light"
+                    leftSection={<IconEdit size={16} />}
+                    fullWidth
+                    size="xs"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    color="red"
+                    variant="light"
+                    leftSection={<IconTrash size={16} />}
+                    fullWidth
+                    size="xs"
+                    onClick={handleRemove(product.id)}
+                  >
+                    Hapus
+                  </Button>
+                </div>
+              </Authorization>
+
+              <Authorization role={['Customer']}>
+                <div className="space-y-2 mt-2">
+                  <Button
+                    fullWidth
+                    size="xs"
+                    variant="outline"
+                    leftSection={<IconShoppingCart size={14} />}
+                    onClick={() => addProduct(product.id)}
+                  >
+                    Tambah Keranjang
+                  </Button>
+                </div>
+              </Authorization>
             </div>
           </div>
         ))}
