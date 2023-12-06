@@ -11,9 +11,9 @@ import { CLASSES, OWNERSHIP, SECTORS } from '../constants';
 import { AgencyDTO } from '../types';
 
 type RegionSelect = {
-  province: number | string | null;
-  regency: number | string | null;
-  district: number | string | null;
+  province: string | null;
+  regency: string | null;
+  district: string | null;
 };
 
 export const AgencyCreateForm: React.FC = () => {

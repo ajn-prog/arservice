@@ -11,9 +11,9 @@ import { CLASSES, OWNERSHIP, SECTORS } from '../constants';
 import { Agency, AgencyDTO } from '../types';
 
 type RegionSelect = {
-  province: number | string | null;
-  regency: number | string | null;
-  district: number | string | null;
+  province: string | null;
+  regency: string | null;
+  district: string | null;
 };
 
 type Props = {
@@ -40,9 +40,9 @@ export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
   });
 
   const [region, setRegion] = useState<RegionSelect>({
-    province: agency.kecamatan.kabupaten?.province_id || null,
-    regency: agency.kecamatan.kabupaten_id,
-    district: agency.kecamatan.id,
+    province: agency.kecamatan.kabupaten?.province_id.toString() || null,
+    regency: agency.kecamatan.kabupaten_id.toString(),
+    district: agency.kecamatan.id.toString(),
   });
 
   const handleSubmit = form.onSubmit(async (values) => {

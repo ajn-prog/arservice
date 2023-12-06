@@ -17,9 +17,9 @@ import { BiodataDTO } from '..';
 import { useBiodata, useUpdateBiodata } from '../api';
 
 type RegionSelect = {
-  province: number | string | null;
-  regency: number | string | null;
-  district: number | string | null;
+  province: string | null;
+  regency: string | null;
+  district: string | null;
 };
 
 export const BiodataForm: React.FC = () => {
@@ -65,9 +65,9 @@ export const BiodataForm: React.FC = () => {
     });
 
     setRegion({
-      province: data.kecamatan.kabupaten?.province_id || null,
-      regency: data.kecamatan.kabupaten_id || null,
-      district: data.kecamatan_id || null,
+      province: data.kecamatan.kabupaten?.province_id.toString() || null,
+      regency: data.kecamatan.kabupaten_id.toString() || null,
+      district: data.kecamatan_id.toString() || null,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
