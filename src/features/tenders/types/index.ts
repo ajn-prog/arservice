@@ -1,3 +1,4 @@
+import { Agency } from '@/features/agencies';
 import { Product } from '@/features/products';
 import { BaseEntity } from '@/types/entity';
 
@@ -31,6 +32,7 @@ export type Tender = {
   expedition: any;
   status: TenderStatus;
   details: TenderItem[];
+  customer: Agency;
   recipient_address: string;
   recipient_name: string;
   recipient_phone: string;

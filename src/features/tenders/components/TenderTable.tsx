@@ -1,6 +1,7 @@
 import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { IconEdit, IconEye } from '@tabler/icons-react';
+import { notifications } from '@mantine/notifications';
+import { IconEye, IconFileCheck, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Table } from '@/components/elements';
@@ -8,10 +9,11 @@ import { Authorization } from '@/features/auth';
 import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
 
-import { useTenders } from '../api';
+import { useDeleteTender, useTenders } from '../api';
 import { Tender } from '../types';
 
 import { TenderBadge } from './TenderBadge';
+import { TenderDetail } from './TenderDetail';
 import { TenderUpdateForm } from './TenderUpdateForm';
 
 const initialParams: Pagination = {
@@ -33,6 +35,7 @@ type Props = {
 export const TenderTable: React.FC<Props> = ({ toolbar }) => {
   const [params, setParams] = useState(initialParams);
   const { data, isLoading } = useTenders({ params });
+  const deleteMutation = useDeleteTender();
 
   function handleUpdate(tender: Tender) {
     return () => {
@@ -45,6 +48,48 @@ export const TenderTable: React.FC<Props> = ({ toolbar }) => {
             onCancel={() => modals.closeAll()}
           />
         ),
+      });
+    };
+  }
+
+  function handleRemove(id: number) {
+    return () => {
+      modals.openConfirmModal({
+        title: 'Hapus Penawaran',
+        children: <div className="text-sm">Apakah anda yakin untuk menghapus Penawaran ini?</div>,
+        centered: true,
+        closeOnConfirm: false,
+        onConfirm: async () => {
+          await deleteMutation.mutateAsync(
+            { id },
+            {
+              onSuccess: () => {
+                notifications.show({
+                  message: 'Penawaran berhasil dihapus',
+                  color: 'green',
+                });
+                modals.closeAll();
+              },
+              onError: () => {
+                notifications.show({
+                  message: 'Penawaran gagal dihapus',
+                  color: 'red',
+                });
+                modals.closeAll();
+              },
+            }
+          );
+        },
+      });
+    };
+  }
+
+  function handleDetail(tender: Tender) {
+    return () => {
+      modals.open({
+        title: 'Detail Penawaran',
+        size: 'lg',
+        children: <TenderDetail tender={tender} />,
       });
     };
   }
@@ -89,21 +134,37 @@ export const TenderTable: React.FC<Props> = ({ toolbar }) => {
           <td>{dayjs(tender.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>
             <div className="flex items-center space-x-2">
-              <ActionIcon variant="subtle" title="Detail Penawaran" color="gray" radius="lg">
+              <ActionIcon
+                onClick={handleDetail(tender)}
+                variant="subtle"
+                title="Detail Penawaran"
+                color="gray"
+                radius="lg"
+              >
                 <IconEye size={18} />
               </ActionIcon>
+
               <Authorization role={['-Customer']}>
                 {tender.status == 'pending' && (
                   <ActionIcon
                     onClick={handleUpdate(tender)}
                     variant="subtle"
-                    title="Hapus Penawaran"
+                    title="Edit Penawaran"
                     color="primary"
                     radius="lg"
                   >
-                    <IconEdit size={18} />
+                    <IconFileCheck size={18} />
                   </ActionIcon>
                 )}
+                <ActionIcon
+                  onClick={handleRemove(tender.id)}
+                  variant="subtle"
+                  title="Hapus Penawaran"
+                  color="red"
+                  radius="lg"
+                >
+                  <IconTrash size={18} />
+                </ActionIcon>
               </Authorization>
             </div>
           </td>
