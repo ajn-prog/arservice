@@ -1,4 +1,11 @@
-import { Button, LoadingOverlay, PasswordInput, Select, TextInput } from '@mantine/core';
+import {
+  Button,
+  LoadingOverlay,
+  NumberInput,
+  PasswordInput,
+  Select,
+  TextInput,
+} from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { useEffect, useState } from 'react';
@@ -167,8 +174,9 @@ export const BiodataForm: React.FC = () => {
           placeholder="Ex : Jl. Sultan Adam No. 24"
           className="col-span-12 md:col-span-8"
         />
-        <TextInput
+        <NumberInput
           {...form.getInputProps('phone_number')}
+          hideControls
           label="Telepon"
           placeholder="Ex : 085752140605. . ."
           className="col-span-12 md:col-span-4"

@@ -1,4 +1,4 @@
-import { ActionIcon, Button, LoadingOverlay, TextInput } from '@mantine/core';
+import { ActionIcon, Button, LoadingOverlay, NumberInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconPlus, IconX } from '@tabler/icons-react';
@@ -94,9 +94,10 @@ export const ManagementForm: React.FC = () => {
                 placeholder="Ex : Direktur"
                 className="col-span-12 md:col-span-4"
               />
-              <TextInput
+              <NumberInput
                 {...form.getInputProps(`values.${i}.phone`)}
                 required
+                hideControls
                 withAsterisk={false}
                 label="Nomor HP"
                 placeholder="Ex : 085752140606..."
