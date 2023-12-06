@@ -97,17 +97,16 @@ export const GuideList: React.FC<Props> = (props) => {
           <div key={guide.id} className="w-full bg-white rounded-lg overflow-hidden">
             <Link to={`/guide/${guide.id}`}>
               <div className="w-full aspect-video bg-gray-200 relative">
-                {guide.image && (
-                  <img
-                    src={guide.image}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover object-center"
-                  />
-                )}
+                <img
+                  src={guide?.image || '/default_image.png'}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover object-center"
+                />
               </div>
             </Link>
             <div className="p-4">
               <Link to={`/guide/${guide.id}`}>
+                <h2 className="line-clamp-1 text-sm text-primary-600 mb-1">{guide.product.name}</h2>
                 <h2 className="line-clamp-2 text-base font-bold mb-1 hover:underline">
                   {guide.title}
                 </h2>
