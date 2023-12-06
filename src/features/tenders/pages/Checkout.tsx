@@ -1,4 +1,4 @@
-import { Button, Card, TextInput } from '@mantine/core';
+import { Button, Card, NumberInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useLocalStorage } from '@mantine/hooks';
 import { modals } from '@mantine/modals';
@@ -132,7 +132,12 @@ export const Checkout: React.FC = () => {
                   label="Jabatan"
                   placeholder="Ex : Direktur"
                 />
-                <TextInput label="Nomor HP" required placeholder="Ex : 085752140606" />
+                <NumberInput
+                  label="Nomor HP"
+                  hideControls
+                  required
+                  placeholder="Ex : 085752140606"
+                />
               </div>
 
               <div className="border-b border-gray-200 pb-2 mt-4">

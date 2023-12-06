@@ -1,4 +1,4 @@
-import { Button, TextInput, Textarea } from '@mantine/core';
+import { Button, NumberInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
 type Value = {
@@ -27,8 +27,9 @@ export const AddressForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="space-y-2">
-        <TextInput
+        <NumberInput
           {...form.getInputProps('phone')}
+          hideControls
           required
           label="No Telepon"
           placeholder="Masukan No Telepon"
