@@ -61,6 +61,16 @@ export const ProductDetail: React.FC = () => {
     };
   }
 
+  function handlePicture(src: string) {
+    return () => {
+      modals.open({
+        title: 'Detail',
+        children: <img src={src} alt="" />,
+        size: 'xl',
+      });
+    };
+  }
+
   if (isLoading)
     return (
       <div className="mt-48">
@@ -102,7 +112,11 @@ export const ProductDetail: React.FC = () => {
             <Carousel slideSize="33.333333%" slideGap="md" align="start">
               {product.images.map(({ id, image }) => (
                 <Carousel.Slide key={id}>
-                  <div className="bg-gray-200 w-full h-full aspect-square rounded-md relative overflow-hidden">
+                  <div
+                    onClick={handlePicture(image)}
+                    aria-hidden
+                    className="bg-gray-200 w-full h-full aspect-square rounded-md relative overflow-hidden cursor-pointer"
+                  >
                     <img
                       src={image ?? '/default_image.png'}
                       alt=""
