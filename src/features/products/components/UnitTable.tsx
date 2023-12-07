@@ -32,7 +32,6 @@ export const UnitTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Unit',
         children: <Text size="sm">Apakah anda yakin untuk menghapus Unit ini?</Text>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

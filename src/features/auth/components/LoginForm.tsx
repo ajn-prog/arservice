@@ -1,5 +1,6 @@
 import { Button, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import { IconLock, IconMail } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 
@@ -14,8 +15,15 @@ export const LoginForm: React.FC = () => {
     await loginMutation.mutateAsync(
       { data: form.values },
       {
-        onError: ({ response }) => {
-          form.setErrors((response?.data as any).errors);
+        onError: ({ response, message }) => {
+          if (response?.data.errors) {
+            form.setErrors(response.data.errors);
+          } else {
+            notifications.show({
+              message,
+              color: 'red',
+            });
+          }
         },
       }
     );

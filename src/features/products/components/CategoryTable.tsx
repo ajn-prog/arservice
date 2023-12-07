@@ -32,7 +32,6 @@ export const CategoryTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Kategori',
         children: <Text size="sm">Apakah anda yakin untuk menghapus kategori ini?</Text>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

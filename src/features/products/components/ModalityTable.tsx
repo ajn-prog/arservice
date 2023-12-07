@@ -35,7 +35,6 @@ export const ModalityTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Modality',
         children: <Text size="sm">Apakah anda yakin untuk menghapus modality ini?</Text>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

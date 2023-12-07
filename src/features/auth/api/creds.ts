@@ -21,7 +21,12 @@ export async function loadCreds() {
 
   const data = await getCreds();
 
-  if (data.role != 'Superadmin' && data.role != 'Customer' && data.role != 'Logistic') {
+  if (
+    data.role != 'Superadmin' &&
+    data.role != 'Customer' &&
+    data.role != 'Logistic' &&
+    data.role != 'Engineer'
+  ) {
     logout();
     return null;
   }

@@ -47,7 +47,6 @@ export const ComplainDetail: React.FC = () => {
         </div>
       ),
       centered: true,
-      closeOnConfirm: false,
       onConfirm: async () => {
         await callMutation.mutateAsync(
           { data: { id: complain?.id || '', is_open_call: 'true' } },
@@ -77,7 +76,6 @@ export const ComplainDetail: React.FC = () => {
       title: 'Tutup Komplain',
       children: <div className="text-sm">Apakah anda yakin untuk menutup komplain ini?</div>,
       centered: true,
-      closeOnConfirm: false,
       onConfirm: async () => {
         await closeMutation.mutateAsync(
           { id: complain!.id, data: { status: 'close' } },

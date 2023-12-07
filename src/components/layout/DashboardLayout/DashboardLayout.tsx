@@ -60,7 +60,7 @@ const navigations: SidebarNavigation = [
       },
       { title: 'Produk', href: '/product', icon: IconShoppingBag },
       { title: 'Keranjang', href: '/cart', icon: IconShoppingCart, role: ['Customer'] },
-      { title: 'Penawaran', href: '/tender', icon: IconBasket },
+      { title: 'Penawaran', href: '/tender', icon: IconBasket, role: ['Superadmin', 'Customer'] },
       { title: 'Komplain', href: '/complain', icon: IconMessage2 },
       { title: 'Tracking', href: '/tracking', icon: IconTruck },
     ],

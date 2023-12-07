@@ -23,6 +23,10 @@ type LoginResponse = GeneralResponse<{
 
 export async function login({ data }: LoginDTO): Promise<LoginResponse> {
   const res = await axios.post<LoginResponse>('/auth/login', data);
+  const { role } = res.data.data.user;
+
+  if (role != 'Superadmin' && role != 'Customer' && role != 'Logistic' && role != 'Engineer')
+    throw { message: 'Anda tidak memiliki akses kedalam aplikasi ini' };
 
   return res.data;
 }
@@ -34,9 +38,6 @@ type UseLoginOption = {
 export function useLogin({ config }: UseLoginOption = {}) {
   return useMutation(login, {
     onSuccess: ({ data: { access_token, user } }) => {
-      if (user.role != 'Superadmin' && user.role != 'Customer' && user.role != 'Logistic')
-        throw { message: 'akun anda tidak memiliki akses kedalam aplikasi ini' };
-
       queryClient.setQueryData([CREDS_KEY], user);
       storage.setToken(access_token);
     },

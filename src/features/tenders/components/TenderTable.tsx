@@ -58,7 +58,6 @@ export const TenderTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Penawaran',
         children: <div className="text-sm">Apakah anda yakin untuk menghapus Penawaran ini?</div>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

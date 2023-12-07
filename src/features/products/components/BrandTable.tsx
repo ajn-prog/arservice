@@ -32,7 +32,6 @@ export const BrandTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Brand',
         children: <Text size="sm">Apakah anda yakin untuk menghapus Brand ini?</Text>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

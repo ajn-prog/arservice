@@ -32,7 +32,6 @@ export const AgencyTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Instansi',
         children: <div className="text-sm">Apakah anda yakin untuk menghapus instansi ini?</div>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

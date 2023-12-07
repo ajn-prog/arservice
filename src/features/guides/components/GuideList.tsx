@@ -37,7 +37,6 @@ export const GuideList: React.FC<Props> = (props) => {
         modalId: 'guide-delete',
         title: 'Hapus Panduan',
         children: <div className="text-sm">Apakah Anda yakin untuk menghapus panduan ini?</div>,
-        closeOnConfirm: false,
         centered: true,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
