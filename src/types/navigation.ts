@@ -1,10 +1,13 @@
 import { Icon } from '@tabler/icons-react';
 
+import { UserRole } from '@/features/user';
+
 export type SidebarRoute = {
   title: string;
   icon?: Icon | React.FC<React.ComponentProps<'svg'>>;
   href?: string;
   routes?: SidebarRoute[];
+  role?: Array<UserRole | `-${UserRole}`>;
 };
 
 export type SidebarSection = {

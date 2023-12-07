@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AgencySelect } from '@/features/agencies';
+import { Authorization } from '@/features/auth';
 
 import { ComplainTable } from '../components';
 import { ComplainQuery, ComplainStatus } from '../types';
@@ -51,16 +52,18 @@ export const Complains: React.FC = () => {
               }}
             />
           </div>
-          <div className="col-span-6 md:col-span-3 lg:col-span-2">
-            <AgencySelect
-              leftSection={<IconCategory size={16} />}
-              placeholder="Pilih Instansi"
-              value={query.customer_id?.toString() ?? null}
-              onChange={(v) => {
-                setQuery({ ...query, customer_id: v || undefined });
-              }}
-            />
-          </div>
+          <Authorization role={['-Customer']}>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
+              <AgencySelect
+                leftSection={<IconCategory size={16} />}
+                placeholder="Pilih Instansi"
+                value={query.customer_id?.toString() ?? null}
+                onChange={(v) => {
+                  setQuery({ ...query, customer_id: v || undefined });
+                }}
+              />
+            </div>
+          </Authorization>
         </div>
       </section>
 

@@ -3,6 +3,7 @@ import { IconX } from '@tabler/icons-react';
 import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import { useAuth } from '@/features/auth';
 import { SidebarNavigation } from '@/types/navigation';
 
 import { SidebarLink } from './SidebarLink';
@@ -17,6 +18,7 @@ export const Sidebar: React.FC<Props> = ({ navigations }) => {
   const sidebar = useRef<HTMLDivElement>(null);
   const overlay = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
+  const { isPermitted } = useAuth();
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -94,13 +96,15 @@ export const Sidebar: React.FC<Props> = ({ navigations }) => {
               )}
 
               <div className="mt-3 space-y-1">
-                {routes.map((route, index) => {
-                  if (route.routes) {
-                    return <SidebarLinkGroup key={`${route.title}_${index}`} {...route} />;
-                  }
+                {routes
+                  .filter(({ role }) => (role ? isPermitted(role) : true))
+                  .map((route, index) => {
+                    if (route.routes) {
+                      return <SidebarLinkGroup key={`${route.title}_${index}`} {...route} />;
+                    }
 
-                  return <SidebarLink key={`${route.title}_${index}`} {...route} />;
-                })}
+                    return <SidebarLink key={`${route.title}_${index}`} {...route} />;
+                  })}
               </div>
             </div>
           ))}

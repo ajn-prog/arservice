@@ -21,14 +21,16 @@ import { SidebarNavigation } from '@/types/navigation';
 
 import { Header } from './Header';
 
-const adminNavigations: SidebarNavigation = [
+const navigations: SidebarNavigation = [
   {
     title: 'Menu',
     routes: [
-      { title: 'Dashboard', href: '/', icon: IconLayout },
+      { title: 'Dashboard', href: '/', icon: IconLayout, role: ['-Customer'] },
+      { title: 'Profile', href: '/', icon: IconUser, role: ['Customer'] },
       {
         title: 'Data Master',
         icon: IconArchive,
+        role: ['Superadmin'],
         routes: [
           {
             title: 'Data Satuan',
@@ -48,26 +50,16 @@ const adminNavigations: SidebarNavigation = [
           },
         ],
       },
-      { title: 'Panduan', href: '/guide', icon: IconClipboardText },
-      { title: 'Instansi', href: '/agency', icon: IconBuildingCommunity },
-      { title: 'Install Base', href: '/installation', icon: IconTool },
+      { title: 'Install Base', href: '/installation', icon: IconTool, role: ['-Logistic'] },
+      { title: 'Panduan', href: '/guide', icon: IconClipboardText, role: ['-Logistic'] },
+      {
+        title: 'Instansi',
+        href: '/agency',
+        icon: IconBuildingCommunity,
+        role: ['Superadmin', 'Engineer'],
+      },
       { title: 'Produk', href: '/product', icon: IconShoppingBag },
-      { title: 'Penawaran', href: '/tender', icon: IconShoppingCart },
-      { title: 'Komplain', href: '/complain', icon: IconMessage2 },
-      { title: 'Tracking', href: '/tracking', icon: IconTruck },
-    ],
-  },
-];
-
-const customerNavigations: SidebarNavigation = [
-  {
-    title: 'Menu',
-    routes: [
-      { title: 'Profile', href: '/', icon: IconUser },
-      { title: 'Install Base', href: '/installation', icon: IconTool },
-      { title: 'Panduan', href: '/guide', icon: IconClipboardText },
-      { title: 'Produk', href: '/product', icon: IconShoppingBag },
-      { title: 'Keranjang', href: '/cart', icon: IconShoppingCart },
+      { title: 'Keranjang', href: '/cart', icon: IconShoppingCart, role: ['Customer'] },
       { title: 'Penawaran', href: '/tender', icon: IconBasket },
       { title: 'Komplain', href: '/complain', icon: IconMessage2 },
       { title: 'Tracking', href: '/tracking', icon: IconTruck },
@@ -88,7 +80,7 @@ export const DashboardLayout: React.FC = () => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <Sidebar navigations={creds.role == 'Customer' ? customerNavigations : adminNavigations} />
+      <Sidebar navigations={navigations} />
 
       <div
         className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden pb-12"

@@ -34,6 +34,9 @@ type UseLoginOption = {
 export function useLogin({ config }: UseLoginOption = {}) {
   return useMutation(login, {
     onSuccess: ({ data: { access_token, user } }) => {
+      if (user.role != 'Superadmin' && user.role != 'Customer' && user.role != 'Logistic')
+        throw { message: 'akun anda tidak memiliki akses kedalam aplikasi ini' };
+
       queryClient.setQueryData([CREDS_KEY], user);
       storage.setToken(access_token);
     },

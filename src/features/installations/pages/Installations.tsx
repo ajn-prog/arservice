@@ -38,16 +38,18 @@ export const Installations: React.FC = () => {
               onChange={(v) => setQuery({ ...query, search: v.target.value })}
             />
           </div>
-          <div className="col-span-6 md:col-span-3 lg:col-span-2">
-            <AgencySelect
-              leftSection={<IconCategory size={16} />}
-              placeholder="Pilih Instansi"
-              value={query.customer_id?.toString() ?? null}
-              onChange={(v) => {
-                setQuery({ ...query, customer_id: v || undefined });
-              }}
-            />
-          </div>
+          <Authorization role={['-Customer']}>
+            <div className="col-span-6 md:col-span-3 lg:col-span-2">
+              <AgencySelect
+                leftSection={<IconCategory size={16} />}
+                placeholder="Pilih Instansi"
+                value={query.customer_id?.toString() ?? null}
+                onChange={(v) => {
+                  setQuery({ ...query, customer_id: v || undefined });
+                }}
+              />
+            </div>
+          </Authorization>
         </div>
       </section>
 
