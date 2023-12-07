@@ -95,6 +95,7 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
                 title="Detail Komplain"
                 color="gray"
                 size="xs"
+                variant="subtle"
               >
                 <IconEye size={16} />
               </ActionIcon>
@@ -103,6 +104,7 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
                 title="Hapus Komplain"
                 color="red"
                 size="xs"
+                variant="subtle"
               >
                 <IconTrash size={16} />
               </ActionIcon>
