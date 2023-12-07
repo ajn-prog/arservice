@@ -10,7 +10,7 @@ import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
 
 import { useDeleteTender, useTenders } from '../api';
-import { Tender } from '../types';
+import { Tender, TenderQuery } from '../types';
 
 import { TenderBadge } from './TenderBadge';
 import { TenderDetail } from './TenderDetail';
@@ -30,11 +30,11 @@ const types = {
 
 type Props = {
   toolbar?: React.ReactNode;
-};
+} & TenderQuery;
 
-export const TenderTable: React.FC<Props> = ({ toolbar }) => {
+export const TenderTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
-  const { data, isLoading } = useTenders({ params });
+  const { data, isLoading } = useTenders({ params: { ...params, ...props } });
   const deleteMutation = useDeleteTender();
 
   function handleUpdate(tender: Tender) {

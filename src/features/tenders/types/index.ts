@@ -1,5 +1,6 @@
 import { Agency } from '@/features/agencies';
 import { Product } from '@/features/products';
+import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
 export type Cart = {
@@ -38,6 +39,10 @@ export type Tender = {
   recipient_phone: string;
   recipient_position: string;
 } & BaseEntity;
+
+export type TenderQuery = {
+  status?: TenderStatus;
+} & Pagination;
 
 export type TenderUpdateDTO = {
   status: TenderStatus;
