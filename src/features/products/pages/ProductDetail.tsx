@@ -32,7 +32,6 @@ export const ProductDetail: React.FC = () => {
         title: 'Hapus Produk',
         children: <div className="text-sm">Apakah anda yakin untuk menghapus produk ini?</div>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

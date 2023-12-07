@@ -8,18 +8,9 @@ type Props = {
 };
 
 export const Authorization: React.FC<Props> = ({ role, children }) => {
-  const { creds } = useAuth();
+  const { isPermitted } = useAuth();
 
-  function filterRole() {
-    return role.reduce((prev, curr) => {
-      const isExcept = curr.startsWith('-');
-      const role = isExcept ? curr.slice(1) : curr;
-
-      return prev || isExcept ? creds?.role != role : creds?.role == role;
-    }, false);
-  }
-
-  if (!filterRole()) return null;
+  if (!isPermitted(role)) return null;
 
   return <>{children}</>;
 };

@@ -34,7 +34,6 @@ export const InstallationTable: React.FC<Props> = ({ toolbar, ...props }) => {
           <div className="text-sm">Apakah anda yakin untuk menghapus install Base ini?</div>
         ),
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },

@@ -32,7 +32,6 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
         title: 'Hapus Komplain',
         children: <div className="text-sm">Apakah anda yakin untuk menghapus komplain ini?</div>,
         centered: true,
-        closeOnConfirm: false,
         onConfirm: async () => {
           await deleteMutation.mutateAsync(
             { id },
@@ -94,7 +93,8 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
                 to={`/complain/${complain.id}`}
                 title="Detail Komplain"
                 color="gray"
-                size="xs"
+                radius="lg"
+                variant="subtle"
               >
                 <IconEye size={16} />
               </ActionIcon>
@@ -102,7 +102,8 @@ export const ComplainTable: React.FC<Props> = ({ toolbar, ...props }) => {
                 onClick={handleRemove(complain.id)}
                 title="Hapus Komplain"
                 color="red"
-                size="xs"
+                radius="lg"
+                variant="subtle"
               >
                 <IconTrash size={16} />
               </ActionIcon>

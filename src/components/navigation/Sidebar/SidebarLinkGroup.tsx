@@ -2,6 +2,7 @@ import { IconChevronRight, IconStack2 } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import { useAuth } from '@/features/auth';
 import { SidebarRoute } from '@/types/navigation';
 import { clsx } from '@/utils/format';
 
@@ -13,6 +14,7 @@ export const SidebarLinkGroup: React.FC<SidebarRoute> = ({ title, icon, routes }
   const activeRoutes = routes
     ?.filter(({ href }) => new RegExp(`^${href}(?:/|$)`).test(pathname))
     .map(({ href }) => href);
+  const { isPermitted } = useAuth();
   const [collapsed, setCollapsed] = useState(activeRoutes?.length != 0);
   const Icon = icon ?? IconStack2;
 
@@ -75,28 +77,30 @@ export const SidebarLinkGroup: React.FC<SidebarRoute> = ({ title, icon, routes }
         ref={accordion}
         className="overflow-hidden p-0 m-0 list-none transition-all ease-out duration-300 h-0 2xl:h-full sidebar-expanded:!h-full max-h-0 -mb-0.5"
       >
-        {routes?.map(({ title, href }, i) => (
-          <li key={`title_${i}`} className="last:mb-1">
-            <Link
-              to={href ?? '/'}
-              className="hover:text-gray-700 w-full font-normal text-sm px-6 py-2.5 rounded mb-0.5 last:mb-0 hover:bg-gray-50 hover:bg-opacity-80 transition duration-150 truncate flex items-center"
-            >
-              <div className="w-5 h-5 shrink-0 leading-none flex items-center justify-center">
-                <div
-                  className={clsx(
-                    'w-1.5 h-1.5 rounded-full',
-                    activeRoutes?.includes(href)
-                      ? 'ring-2 bg-primary-400 ring-primary-200'
-                      : 'bg-gray-300'
-                  )}
-                ></div>
-              </div>
-              <span className="ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                {title}
-              </span>
-            </Link>
-          </li>
-        ))}
+        {routes
+          ?.filter(({ role }) => (role ? isPermitted(role) : true))
+          .map(({ title, href }, i) => (
+            <li key={`title_${i}`} className="last:mb-1">
+              <Link
+                to={href ?? '/'}
+                className="hover:text-gray-700 w-full font-normal text-sm px-6 py-2.5 rounded mb-0.5 last:mb-0 hover:bg-gray-50 hover:bg-opacity-80 transition duration-150 truncate flex items-center"
+              >
+                <div className="w-5 h-5 shrink-0 leading-none flex items-center justify-center">
+                  <div
+                    className={clsx(
+                      'w-1.5 h-1.5 rounded-full',
+                      activeRoutes?.includes(href)
+                        ? 'ring-2 bg-primary-400 ring-primary-200'
+                        : 'bg-gray-300'
+                    )}
+                  ></div>
+                </div>
+                <span className="ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                  {title}
+                </span>
+              </Link>
+            </li>
+          ))}
       </ul>
     </div>
   );

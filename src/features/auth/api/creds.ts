@@ -6,6 +6,8 @@ import storage from '@/utils/storage';
 
 import { Creds } from '../types';
 
+import { logout } from './logout';
+
 export const CREDS_KEY = 'creds';
 
 export async function getCreds() {
@@ -18,6 +20,17 @@ export async function loadCreds() {
   if (!storage.getToken()) return null;
 
   const data = await getCreds();
+
+  if (
+    data.role != 'Superadmin' &&
+    data.role != 'Customer' &&
+    data.role != 'Logistic' &&
+    data.role != 'Engineer'
+  ) {
+    logout();
+    return null;
+  }
+
   return data;
 }
 
