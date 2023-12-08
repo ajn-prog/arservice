@@ -16,7 +16,7 @@ export const CartMenu: React.FC = () => {
   return (
     <Menu position="bottom-end" width={320}>
       <Menu.Target>
-        <Indicator inline label={carts.length} size={18}>
+        <Indicator inline label={carts.length} size={carts.length > 0 ? 18 : 0}>
           <ActionIcon variant="subtle" size="lg" color="gray" className="text-gray-800" radius="lg">
             <IconShoppingCart style={{ width: '70%', height: '70%' }} stroke={1.4} />
           </ActionIcon>
