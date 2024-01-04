@@ -32,8 +32,8 @@ export type Product = {
   is_consumable: number;
   date_entry: any;
   admin_user_id: any;
-  brand: Brand;
-  category: Category;
+  brand?: Brand;
+  category?: Category;
   unit?: Unit;
   images: ProductImage[];
 } & BaseEntity;

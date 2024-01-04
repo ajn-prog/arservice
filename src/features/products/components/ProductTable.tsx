@@ -93,7 +93,7 @@ export const ProductTable: React.FC<Props> = ({ toolbar, ...props }) => {
         <tr key={product.id}>
           <td>{product.name}</td>
           <td>{types[product.type]}</td>
-          <td>{product.category.name}</td>
+          <td>{product.category?.name ?? '-'}</td>
           <td>{product.brand?.name ?? '-'}</td>
           <td>{dayjs(product.updated_at).format('D MMMM YYYY H:mm')}</td>
           <td>

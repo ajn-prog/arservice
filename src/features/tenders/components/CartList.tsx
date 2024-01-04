@@ -61,7 +61,7 @@ export const CartList: React.FC<Props> = ({ carts, selected, onChange, readOnly 
               <div className="text-primary-600 text-sm">{types[cart.product.type]}</div>
               <div className="text-gray-900 font-semibold">{cart.product.name}</div>
               <div className="text-primary-600 text-sm">
-                {cart.product.brand.name}, {cart.product.category.name}
+                {[cart.product.brand?.name, cart.product.category?.name].join(', ')}
               </div>
             </div>
           </div>
