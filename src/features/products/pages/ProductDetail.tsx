@@ -130,14 +130,19 @@ export const ProductDetail: React.FC = () => {
 
         <article className="col-span-8">
           <section className="mb-5">
-            <h2 className="text-primary-600 font-body text-sm font-bold uppercase">
-              {product.brand.name}
-            </h2>
+            {product.brand && (
+              <h2 className="text-primary-600 font-body text-sm font-bold uppercase">
+                {product.brand.name}
+              </h2>
+            )}
+
             <h1 className="mb-3 text-3xl font-semibold">{product.name}</h1>
 
-            <div className="mt-2 flex space-x-4 text-sm font-semibold uppercase text-gray-600">
-              {product.category.name}
-            </div>
+            {product.category && (
+              <div className="mt-2 flex space-x-4 text-sm font-semibold uppercase text-gray-600">
+                {product.category.name}
+              </div>
+            )}
 
             {product.price && (
               <div className="text-primary-600 mt-2 text-xl font-black">

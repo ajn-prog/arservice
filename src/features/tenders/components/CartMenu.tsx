@@ -34,9 +34,10 @@ export const CartMenu: React.FC = () => {
               {carts.map((cart) => (
                 <div key={cart.id} className="px-4 py-2 flex items-center">
                   <div className="flex-grow">
-                    <Badge size="xs">{cart.product.brand.name}</Badge>
+                    {cart.product.brand && <Badge size="xs">{cart.product.brand.name}</Badge>}
+
                     <div className="text-sm font-medium">{cart.product.name}</div>
-                    <div className="text-xs text-gray-600">{cart.product.category.name}</div>
+                    <div className="text-xs text-gray-600">{cart.product.category?.name}</div>
                   </div>
                   <div className="flex-shrink-0 text-primary-600 text-sm">
                     {types[cart.product.type]}
