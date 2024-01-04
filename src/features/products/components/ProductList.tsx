@@ -104,7 +104,7 @@ export const ProductList: React.FC<Props> = ({ ...props }) => {
               </div>
             </Link>
             <div className="p-4">
-              <Badge className="mb-2">{product.category.name}</Badge>
+              {product.category && <Badge className="mb-2">{product.category.name}</Badge>}
 
               <Link to={`/product/${product.id}`}>
                 <h2 className="line-clamp-2 text-base font-bold mb-1 hover:underline">
