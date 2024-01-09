@@ -1,4 +1,5 @@
 import { District } from '@/features/region';
+import { User } from '@/features/user';
 import { Pagination } from '@/types/api';
 import { BaseEntity } from '@/types/entity';
 
@@ -15,6 +16,7 @@ export type Agency = {
   longitude: number;
   email: string;
   kecamatan: District;
+  user: User;
 } & BaseEntity;
 
 export type AgencyDTO = {

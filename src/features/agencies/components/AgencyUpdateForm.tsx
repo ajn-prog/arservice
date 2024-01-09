@@ -28,7 +28,7 @@ export const AgencyUpdateForm: React.FC<Props> = ({ agency }) => {
       name: agency.name,
       address: agency.address,
       classes: agency.classes,
-      email: agency.email,
+      email: agency.user?.email || '',
       hospital_code: agency.hospital_code,
       latitude: agency.latitude,
       longitude: agency.latitude,

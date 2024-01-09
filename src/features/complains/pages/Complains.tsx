@@ -22,9 +22,11 @@ export const Complains: React.FC = () => {
     <main>
       <div className="mb-4 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-800">Data Komplain</h1>
-        <Button component={Link} to="/complain/create">
-          Tambah
-        </Button>
+        <Authorization role={['Customer']}>
+          <Button component={Link} to="/complain/create">
+            Tambah
+          </Button>
+        </Authorization>
       </div>
 
       <section className="space-y-4 mb-4">

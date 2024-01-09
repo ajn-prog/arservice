@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
+import { Authorization } from '@/features/auth';
 import { dayjs } from '@/lib/dayjs';
 
 import { useAgencies, useDeleteAgency } from '../api';
@@ -83,27 +84,29 @@ export const AgencyTable: React.FC<Props> = ({ toolbar, ...props }) => {
           <td>{agency.kecamatan.kabupaten?.province?.name ?? '-'}</td>
           <td>{dayjs(agency.created_at).format('D MMMM YYYY H:mm')}</td>
           <td>
-            <div className="flex items-center space-x-2">
-              <ActionIcon
-                variant="subtle"
-                component={Link}
-                to={`/agency/${agency.id}`}
-                title="Update Instansi"
-                color="primary"
-                radius="lg"
-              >
-                <IconEdit size={18} />
-              </ActionIcon>
-              <ActionIcon
-                variant="subtle"
-                onClick={handleRemove(agency.id)}
-                title="Hapus Instansi"
-                color="red"
-                radius="lg"
-              >
-                <IconTrash size={18} />
-              </ActionIcon>
-            </div>
+            <Authorization role={['Superadmin']}>
+              <div className="flex items-center space-x-2">
+                <ActionIcon
+                  variant="subtle"
+                  component={Link}
+                  to={`/agency/${agency.id}`}
+                  title="Update Instansi"
+                  color="primary"
+                  radius="lg"
+                >
+                  <IconEdit size={18} />
+                </ActionIcon>
+                <ActionIcon
+                  variant="subtle"
+                  onClick={handleRemove(agency.id)}
+                  title="Hapus Instansi"
+                  color="red"
+                  radius="lg"
+                >
+                  <IconTrash size={18} />
+                </ActionIcon>
+              </div>
+            </Authorization>
           </td>
         </tr>
       )}
