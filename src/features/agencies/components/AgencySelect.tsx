@@ -17,5 +17,14 @@ export const AgencySelect: React.FC<Props> = ({ ...props }) => {
     }));
   }, [data]);
 
-  return <Select {...props} data={agencies} searchable disabled={isLoading} />;
+  return (
+    <Select
+      {...props}
+      data={agencies}
+      searchable
+      disabled={isLoading}
+      clearable
+      nothingFoundMessage="Data tidak ditemukan"
+    />
+  );
 };
