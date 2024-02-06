@@ -1,12 +1,15 @@
 import { SelectProps, Select } from '@mantine/core';
-import { useMemo } from 'react';
+import { useDebouncedValue } from '@mantine/hooks';
+import { useMemo, useState } from 'react';
 
 import { useAgencies } from '../api';
 
 type Props = Omit<SelectProps, 'data'>;
 
 export const AgencySelect: React.FC<Props> = ({ ...props }) => {
-  const { data, isLoading } = useAgencies({ params: { limit: 500000 } });
+  const [search, setSearch] = useState('');
+  const [params] = useDebouncedValue({ limit: 5, search }, 300);
+  const { data, isLoading } = useAgencies({ params });
 
   const agencies = useMemo(() => {
     if (!data) return [];
@@ -25,6 +28,9 @@ export const AgencySelect: React.FC<Props> = ({ ...props }) => {
       disabled={isLoading}
       clearable
       nothingFoundMessage="Data tidak ditemukan"
+      searchValue={search}
+      onSearchChange={(v) => setSearch(v)}
+      filter={({ options }) => options}
     />
   );
 };
