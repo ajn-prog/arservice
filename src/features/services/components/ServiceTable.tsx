@@ -1,7 +1,8 @@
 import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { IconCheck, IconEye } from '@tabler/icons-react';
+import { IconCheck, IconEye, IconPrinter } from '@tabler/icons-react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Table } from '@/components/elements';
 import { dayjs } from '@/lib/dayjs';
@@ -99,6 +100,17 @@ export const ServiceTable: React.FC<Props> = ({ toolbar, ...props }) => {
                 onClick={handleDetail(service)}
               >
                 <IconEye size={18} />
+              </ActionIcon>
+              <ActionIcon
+                variant="subtle"
+                title="Print Service"
+                color="primary"
+                radius="lg"
+                component={Link}
+                to={`/service/${service.id}`}
+                target="_blank"
+              >
+                <IconPrinter size={18} />
               </ActionIcon>
               {service.service_files.length == 0 && (
                 <ActionIcon

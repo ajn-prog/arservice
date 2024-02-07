@@ -49,7 +49,7 @@ const { ProductDetail } = lazyImport(() => import('@/features/products'), 'Produ
 
 const { Services } = lazyImport(() => import('@/features/services'), 'Services');
 const { ServiceCreate } = lazyImport(() => import('@/features/services'), 'ServiceCreate');
-const { ServiceUpdate } = lazyImport(() => import('@/features/services'), 'ServiceUpdate');
+const { ServicePrint } = lazyImport(() => import('@/features/services'), 'ServicePrint');
 
 const { Tracking } = lazyImport(() => import('@/features/tracking'), 'Tracking');
 
@@ -95,7 +95,7 @@ export const AppRoutes: React.FC = () => {
 
         <Route path="/service" element={<Services />} />
         <Route path="/service/create" element={<ServiceCreate />} />
-        <Route path="/service/:id" element={<ServiceUpdate />} />
+        <Route path="/service/:id" element={<ServicePrint />} />
 
         <Route path="/tracking" element={<Tracking />} />
 
