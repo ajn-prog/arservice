@@ -62,7 +62,7 @@ export const InstallationDetail: React.FC = () => {
             <div className="">
               <div className="text-xs text-gray-600">Teknisi</div>
               <div className="font-bold text-sm text-gray-900">
-                {data.technical_contract.engineers.map(({ name }) => name).join(', ')}
+                {data.technical_contract?.engineers.map(({ name }) => name).join(', ')}
               </div>
             </div>
             <div className="">
