@@ -6,9 +6,16 @@ import { GeneralResponse } from '@/types/api';
 
 import { InstallationItem } from '../types';
 
-export async function getItems() {
+export type ItemQuery = {
+  product?: number | string;
+  brand?: number | string;
+  customer?: number | string;
+};
+
+export async function getItems({ params }: { params?: ItemQuery }) {
   const res = await axios.get<GeneralResponse<InstallationItem[]>>(
-    '/ar-service/install-base/items'
+    '/ar-service/install-base/items',
+    { params }
   );
 
   return res.data;
@@ -17,14 +24,15 @@ export async function getItems() {
 type QueryFnType = typeof getItems;
 
 type UseItemsOptions = {
+  params?: ItemQuery;
   config?: QueryConfig<QueryFnType>;
 };
 
-export function useItems({ config }: UseItemsOptions = {}) {
+export function useItems({ params, config }: UseItemsOptions) {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     ...config,
-    queryKey: ['installbase-items'],
-    queryFn: () => getItems(),
+    queryKey: ['installbase-items', params],
+    queryFn: () => getItems({ params }),
     keepPreviousData: true,
   });
 }

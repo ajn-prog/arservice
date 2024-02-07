@@ -36,7 +36,10 @@ export const ServiceDetail: React.FC<Props> = ({ service }) => {
       </div>
       <div className="flex items-center justify-between gap-2">
         <div className="text-left text-gray-600">Detail Masalah</div>
-        <div className="text-right text-gray-900">{service.description || '-'}</div>
+        <div
+          className="text-right text-gray-900"
+          dangerouslySetInnerHTML={{ __html: service.description ?? '-' }}
+        ></div>
       </div>
       <div className="flex items-center justify-between gap-2">
         <div className="text-left text-gray-600">File</div>

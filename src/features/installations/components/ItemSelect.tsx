@@ -1,12 +1,12 @@
 import { SelectProps, Select } from '@mantine/core';
 import { useMemo } from 'react';
 
-import { useItems } from '../api';
+import { ItemQuery, useItems } from '../api';
 
-type Props = Omit<SelectProps, 'data'>;
+type Props = Omit<SelectProps, 'data'> & ItemQuery;
 
-export const ItemSelect: React.FC<Props> = ({ ...props }) => {
-  const { data } = useItems();
+export const ItemSelect: React.FC<Props> = ({ brand, product, customer, ...props }) => {
+  const { data } = useItems({ params: { brand, product, customer } });
 
   const installations = useMemo(() => {
     if (!data) return [];

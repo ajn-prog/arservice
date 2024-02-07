@@ -26,7 +26,7 @@ export const InstallationUpdateForm: React.FC<Props> = ({ installation }) => {
     initialValues: {
       title: installation.title,
       customer_id: installation.customer_id.toString(),
-      engineer_ids: installation.technical_contract.engineers.map(({ id }) => id.toString()),
+      engineer_ids: installation.technical_contract?.engineers.map(({ id }) => id.toString()),
       installation_date: dayjs(installation.installation_date, 'YYYY-MM-DD').toDate(),
       note: installation.note || '',
       project_number: installation.project_number,

@@ -94,13 +94,11 @@ export const ProductList: React.FC<Props> = ({ ...props }) => {
                     {PRODUCT_TYPES[product.type]}
                   </Badge>
                 </div>
-                {product.thumbnail && (
-                  <img
-                    src={product.thumbnail}
-                    alt=""
-                    className="absolute w-full h-full inset-0 object-cover object-center"
-                  />
-                )}
+                <img
+                  src={product.thumbnail || '/default_image.png'}
+                  alt=""
+                  className="absolute w-full h-full inset-0 object-cover object-center"
+                />
               </div>
             </Link>
             <div className="p-4">

@@ -1,17 +1,23 @@
 import { Button, Card } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconArrowLeft, IconBrandWhatsapp, IconMessage, IconPhoneCall } from '@tabler/icons-react';
+import {
+  IconArrowLeft,
+  IconBrandWhatsapp,
+  IconMapPin,
+  IconMessage,
+  IconPhoneCall,
+} from '@tabler/icons-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import { LoadingScreen } from '@/components/elements';
-import { useAuth } from '@/features/auth';
+import { Authorization, useAuth } from '@/features/auth';
 import { AttachmentList } from '@/features/file';
 import { dayjs } from '@/lib/dayjs';
 import { clsx } from '@/utils/format';
 
 import { useCloseComplain, useComplain, useOpenCall } from '../api';
-import { ComplainBadge, ComplainReplies, ReplyForm } from '../components';
+import { ComplainBadge, ComplainReplies, ReplyForm, VisitForm } from '../components';
 
 export const ComplainDetail: React.FC = () => {
   const { id } = useParams<'id'>();
@@ -33,6 +39,23 @@ export const ComplainDetail: React.FC = () => {
           complain={complain.id}
           onCancel={() => modals.close('complain-reply')}
           onSuccess={() => modals.close('complain-reply')}
+        />
+      ),
+    });
+  }
+
+  function handleVisit() {
+    if (!complain) return;
+
+    modals.open({
+      modalId: 'complain-visit',
+      title: 'Form Rencana Kunjungan',
+      size: 'xl',
+      children: (
+        <VisitForm
+          complain={complain.id}
+          onCancel={() => modals.close('complain-visit')}
+          onSuccess={() => modals.close('complain-visit')}
         />
       ),
     });
@@ -172,6 +195,11 @@ export const ComplainDetail: React.FC = () => {
         </Card.Section>
         <Card.Section p="lg">
           <div className="flex items-center space-x-2">
+            <Authorization role={['Engineer']}>
+              <Button onClick={handleVisit} leftSection={<IconMapPin size={16} />} color="yellow">
+                Visit
+              </Button>
+            </Authorization>
             <Button onClick={handleReply} leftSection={<IconMessage size={16} />}>
               Reply
             </Button>

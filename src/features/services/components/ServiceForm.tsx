@@ -2,9 +2,11 @@ import { Button, Card, Group, Radio, TextInput, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { IconCheck } from '@tabler/icons-react';
+import { useState } from 'react';
 
 import { AgencySelect } from '@/features/agencies';
 import { ItemSelect } from '@/features/installations';
+import { BrandSelect, ProductSelect } from '@/features/products';
 
 import { useCreateService } from '../api';
 import { Service, ServiceExternalDTO, ServiceInternalDTO } from '../types';
@@ -33,10 +35,14 @@ export const ServiceForm: React.FC<Props> = ({ onCancel, onSuccess }) => {
       product_name: '',
     },
   });
+  const [state, setState] = useState<{ product?: string; brand?: string }>({
+    product: undefined,
+    brand: undefined,
+  });
 
   const handleSubmit = form.onSubmit(async (values) => {
     await createMutation.mutateAsync(
-      { type: values.type_service as any, data: values },
+      { type: values.buying as any, data: values },
       {
         onError({ response }) {
           form.setErrors((response?.data as any).errors);
@@ -105,9 +111,16 @@ export const ServiceForm: React.FC<Props> = ({ onCancel, onSuccess }) => {
               <ItemSelect
                 {...form.getInputProps('installbase_id')}
                 label="Produk"
-                placeholder="Pilih Produk (Isi untuk mencari)"
+                placeholder={
+                  form.values['customer_id']
+                    ? 'Pilih Produk (Isi untuk mencari)'
+                    : 'Harap isi rumah sakit terlebih dahulu'
+                }
                 className="col-span-12 lg:col-span-9"
                 clearable
+                disabled={!form.values['customer_id']}
+                customer={form.values['customer_id']}
+                nothingFoundMessage="Produk tidak ditemukan pada rumah sakit"
               />
               <TextInput
                 {...form.getInputProps('serial_number')}
@@ -118,17 +131,24 @@ export const ServiceForm: React.FC<Props> = ({ onCancel, onSuccess }) => {
             </div>
           ) : (
             <div className="grid grid-cols-12 gap-4">
-              <TextInput
-                {...form.getInputProps('brand_name')}
+              <BrandSelect
                 label="Brand"
                 placeholder="Masukan Brand"
                 className="col-span-12 lg:col-span-4"
+                value={state.brand}
+                onChange={(v) => setState({ ...state, brand: v || undefined })}
+                onSelectChange={(v) => form.setFieldValue('brand_name', v?.name)}
               />
-              <TextInput
-                {...form.getInputProps('product_name')}
+              <ProductSelect
                 label="Produk"
-                placeholder="Masukan Produk"
+                placeholder={state.brand ? 'Masukan Product' : 'Harap isi brand terlebih dahulu'}
                 className="col-span-12 lg:col-span-4"
+                value={state.product}
+                onChange={(v) => setState({ ...state, product: v || undefined })}
+                disabled={!state.brand}
+                brand={state.brand}
+                nothingFoundMessage="Produk tidak ditemukan"
+                onSelectChange={(v) => form.setFieldValue('product_name', v?.name)}
               />
               <TextInput
                 {...form.getInputProps('serial_number')}
