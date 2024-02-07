@@ -60,12 +60,16 @@ export type Complain = {
 
 export type ComplainDTO = {
   installbase_id?: number | string;
-  title: string;
-  status: ComplainStatus;
+  title?: string;
+  status?: ComplainStatus;
   priority?: ComplainPriority;
-  detail: string;
-  placement_space: string;
+  detail?: string;
+  placement_space?: string;
   filename: File[];
+  buying?: 'external' | 'internal';
+  product_name?: string;
+  serial_number?: string;
+  brand_name?: string;
 };
 
 export type ComplainQuery = {

@@ -29,7 +29,10 @@ export async function createComplain({ data }: ComplainRequest) {
     }
   }
 
-  const res = await axios.post<GeneralResponse<Complain>>('/ar-service/complain', formData);
+  const res = await axios.post<GeneralResponse<Complain>>(
+    data.buying == 'internal' ? '/ar-service/complain' : '/ar-service/complain-external',
+    formData
+  );
 
   return res.data;
 }
