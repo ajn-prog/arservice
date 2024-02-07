@@ -6,3 +6,4 @@ export * from './deleteComplain';
 export * from './replyComplain';
 export * from './closeComplain';
 export * from './openCall';
+export * from './rateComplain';
