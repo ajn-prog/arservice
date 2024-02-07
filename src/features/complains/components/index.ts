@@ -3,3 +3,4 @@ export * from './ComplainForm';
 export * from './ComplainBadge';
 export * from './ComplainReplies';
 export * from './ReplyForm';
+export * from './VisitForm';
