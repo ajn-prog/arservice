@@ -28,6 +28,7 @@ axios.interceptors.response.use(
     const prevRequest = error?.config;
     if (error?.response?.status === 401 && !prevRequest?.sent) {
       storage.clearToken();
+      window.location.replace('/login');
       // prevRequest.sent = true
       // const newAccessToken = await refresh()
       // prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`

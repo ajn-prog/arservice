@@ -11,6 +11,7 @@ import {
   IconMessage2,
   IconUser,
   IconBasket,
+  IconSettings,
 } from '@tabler/icons-react';
 import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
@@ -63,6 +64,7 @@ const navigations: SidebarNavigation = [
       { title: 'Penawaran', href: '/tender', icon: IconBasket, role: ['Superadmin', 'Customer'] },
       { title: 'Komplain', href: '/complain', icon: IconMessage2 },
       { title: 'Tracking', href: '/tracking', icon: IconTruck },
+      { title: 'Service', href: '/service', icon: IconSettings, role: ['Superadmin', 'Engineer'] },
     ],
   },
 ];
