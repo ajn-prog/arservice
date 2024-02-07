@@ -25,6 +25,7 @@ export function useDeleteInstallation({ config }: UseDeleteInstallationOptions =
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['installations']);
+      queryClient.invalidateQueries(['installbase-items']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

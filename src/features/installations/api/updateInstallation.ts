@@ -56,6 +56,7 @@ export function useUpdateInstallation({ config }: UseUpdateInstallationOptions =
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['installations']);
       queryClient.invalidateQueries(['installation']);
+      queryClient.invalidateQueries(['installbase-items']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);

@@ -51,6 +51,7 @@ export function useCreateInstallation({ config }: UseCreateInstallationOptions =
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['installations']);
+      queryClient.invalidateQueries(['installbase-items']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);
