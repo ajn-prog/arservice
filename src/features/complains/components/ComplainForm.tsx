@@ -1,13 +1,11 @@
 import { Button, Card, Group, Radio, Select, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { TextEditor } from '@/components/forms';
 import { FileDropzone } from '@/features/file';
 import { ItemSelect } from '@/features/installations';
-import { BrandSelect, ProductSelect } from '@/features/products';
 
 import { useCreateComplain } from '../api';
 import { ComplainDTO } from '../types';
@@ -29,11 +27,6 @@ export const ComplainForm: React.FC = () => {
       product_name: undefined,
       serial_number: undefined,
     },
-  });
-
-  const [state, setState] = useState<{ product?: string; brand?: string }>({
-    product: undefined,
-    brand: undefined,
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
@@ -115,24 +108,17 @@ export const ComplainForm: React.FC = () => {
             />
           ) : (
             <>
-              <BrandSelect
+              <TextInput
+                {...form.getInputProps('brand_name')}
                 label="Brand"
-                placeholder="Masukan Brand"
+                placeholder="Masukan Nama Brand"
                 className="col-span-12 lg:col-span-4"
-                value={state.brand}
-                onChange={(v) => setState({ ...state, brand: v || undefined })}
-                onSelectChange={(v) => form.setFieldValue('brand_name', v?.name)}
               />
-              <ProductSelect
+              <TextInput
+                {...form.getInputProps('product_name')}
                 label="Produk"
-                placeholder={state.brand ? 'Masukan Product' : 'Harap isi brand terlebih dahulu'}
+                placeholder="Masukan Nama Product"
                 className="col-span-12 lg:col-span-4"
-                value={state.product}
-                onChange={(v) => setState({ ...state, product: v || undefined })}
-                disabled={!state.brand}
-                brand={state.brand}
-                nothingFoundMessage="Produk tidak ditemukan"
-                onSelectChange={(v) => form.setFieldValue('product_name', v?.name)}
               />
               <TextInput
                 {...form.getInputProps('serial_number')}
