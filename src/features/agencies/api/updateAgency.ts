@@ -26,7 +26,7 @@ export function useUpdateAgency({ config }: UseUpdateAgencyOptions = {}) {
     ...config,
     onSuccess: (...args) => {
       queryClient.invalidateQueries(['agencies']);
-      queryClient.invalidateQueries(['agency', args[1].id]);
+      queryClient.invalidateQueries(['agency']);
 
       if (config?.onSuccess) {
         config.onSuccess(...args);
