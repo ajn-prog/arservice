@@ -55,15 +55,17 @@ export const ComplainReplies: React.FC<Props> = ({ replies }) => {
 
             <AttachmentList files={reply.complain_files.map(({ filename }) => filename)} />
 
-            <div className="mt-3">
-              <Rating
-                value={reply.rate}
-                readOnly={creds?.role != 'Customer'}
-                onChange={(v) => {
-                  if (!rateMutation.isLoading) handleRate(reply.id, v);
-                }}
-              />
-            </div>
+            {reply.user.roles.map(({ name }) => name).includes('Engineer') && (
+              <div className="mt-3">
+                <Rating
+                  value={reply.rate}
+                  readOnly={creds?.role != 'Customer'}
+                  onChange={(v) => {
+                    if (!rateMutation.isLoading) handleRate(reply.id, v);
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       ))}

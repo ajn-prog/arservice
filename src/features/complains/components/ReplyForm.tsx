@@ -55,6 +55,9 @@ export const ReplyForm: React.FC<Props> = ({ complain, onCancel, onSuccess }) =>
             value={form.values['detail']}
             onChange={(v) => form.setFieldValue('detail', v)}
           />
+          {form.errors['detail'] && (
+            <p className="text-sm text-red-600 mt-1">{form.errors['detail']}</p>
+          )}
         </div>
         <div className="col-span-12">
           <FileDropzone
@@ -64,6 +67,9 @@ export const ReplyForm: React.FC<Props> = ({ complain, onCancel, onSuccess }) =>
             maxFiles={5}
             maxSize={5 * 1024 ** 2}
           />
+          {form.errors['filename'] && (
+            <p className="text-sm text-red-600 mt-1">{form.errors['filename']}</p>
+          )}
         </div>
       </div>
 
