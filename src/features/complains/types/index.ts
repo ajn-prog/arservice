@@ -36,6 +36,7 @@ export type ComplainReply = {
       is_active: string;
       is_open_call: number;
     };
+    roles: { id: number; name: string }[];
   };
 } & BaseEntity;
 
