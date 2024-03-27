@@ -26,7 +26,7 @@ export type Installation = {
   file: string | null;
   created_at: string;
   updated_at: string;
-  customer: Agency;
+  customer?: Agency;
   technical_contract?: Contract;
   items: InstallationItem[];
 } & BaseEntity;

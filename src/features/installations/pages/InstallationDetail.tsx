@@ -53,7 +53,7 @@ export const InstallationDetail: React.FC = () => {
             </div>
             <div className="">
               <div className="text-xs text-gray-600">Instansi</div>
-              <div className="font-bold text-sm text-gray-900">{data.customer.name}</div>
+              <div className="font-bold text-sm text-gray-900">{data.customer?.name ?? '-'}</div>
             </div>
             <div className="">
               <div className="text-xs text-gray-600">Tanggal Install</div>
