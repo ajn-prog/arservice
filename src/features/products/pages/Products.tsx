@@ -4,18 +4,19 @@ import { IconCategory, IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Authorization } from '@/features/auth';
+import { Authorization, useAuth } from '@/features/auth';
 
 import { BrandSelect, CategorySelect, ProductList } from '../components';
 import { ProductQuery, ProductType } from '../types';
 
 export const Products: React.FC = () => {
+  const { creds } = useAuth();
   const [query, setQuery] = useState<ProductQuery>({
     search: '',
     limit: 10,
     category: undefined,
     brand: undefined,
-    type: 'main',
+    type: creds?.role != 'Customer' ? 'main' : 'accessories',
   });
   const [params] = useDebouncedValue(query, 200);
   const [open, setOpen] = useState(false);
@@ -71,7 +72,9 @@ export const Products: React.FC = () => {
             }}
           >
             <Tabs.List>
-              <Tabs.Tab value="main">Unit</Tabs.Tab>
+              <Authorization role={['-Customer']}>
+                <Tabs.Tab value="main">Unit</Tabs.Tab>
+              </Authorization>
               <Tabs.Tab value="accessories">Accessories</Tabs.Tab>
               <Tabs.Tab value="preventive">Service/Sparepart</Tabs.Tab>
             </Tabs.List>
