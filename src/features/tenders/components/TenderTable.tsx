@@ -1,7 +1,6 @@
 import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { notifications } from '@mantine/notifications';
-import { IconEye, IconFileCheck, IconTrash } from '@tabler/icons-react';
+import { IconEye, IconFileCheck } from '@tabler/icons-react';
 import { useState } from 'react';
 
 import { Table } from '@/components/elements';
@@ -9,7 +8,7 @@ import { Authorization } from '@/features/auth';
 import { dayjs } from '@/lib/dayjs';
 import { Pagination } from '@/types/api';
 
-import { useDeleteTender, useTenders } from '../api';
+import { useTenders } from '../api';
 import { Tender, TenderQuery } from '../types';
 
 import { TenderBadge } from './TenderBadge';
@@ -35,7 +34,6 @@ type Props = {
 export const TenderTable: React.FC<Props> = ({ toolbar, ...props }) => {
   const [params, setParams] = useState(initialParams);
   const { data, isLoading } = useTenders({ params: { ...params, ...props } });
-  const deleteMutation = useDeleteTender();
 
   function handleUpdate(tender: Tender) {
     return () => {
@@ -48,37 +46,6 @@ export const TenderTable: React.FC<Props> = ({ toolbar, ...props }) => {
             onCancel={() => modals.closeAll()}
           />
         ),
-      });
-    };
-  }
-
-  function handleRemove(id: number) {
-    return () => {
-      modals.openConfirmModal({
-        title: 'Hapus Penawaran',
-        children: <div className="text-sm">Apakah anda yakin untuk menghapus Penawaran ini?</div>,
-        centered: true,
-        onConfirm: async () => {
-          await deleteMutation.mutateAsync(
-            { id },
-            {
-              onSuccess: () => {
-                notifications.show({
-                  message: 'Penawaran berhasil dihapus',
-                  color: 'green',
-                });
-                modals.closeAll();
-              },
-              onError: () => {
-                notifications.show({
-                  message: 'Penawaran gagal dihapus',
-                  color: 'red',
-                });
-                modals.closeAll();
-              },
-            }
-          );
-        },
       });
     };
   }
@@ -155,7 +122,7 @@ export const TenderTable: React.FC<Props> = ({ toolbar, ...props }) => {
                     <IconFileCheck size={18} />
                   </ActionIcon>
                 )}
-                <ActionIcon
+                {/* <ActionIcon
                   onClick={handleRemove(tender.id)}
                   variant="subtle"
                   title="Hapus Penawaran"
@@ -163,7 +130,7 @@ export const TenderTable: React.FC<Props> = ({ toolbar, ...props }) => {
                   radius="lg"
                 >
                   <IconTrash size={18} />
-                </ActionIcon>
+                </ActionIcon> */}
               </Authorization>
             </div>
           </td>
