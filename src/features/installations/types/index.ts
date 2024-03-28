@@ -18,7 +18,7 @@ export type InstallationItem = {
 
 export type Installation = {
   technical_contract_id: number;
-  customer_id: number;
+  customer_id?: number;
   installation_date: string;
   project_number: string;
   note: string;

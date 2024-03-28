@@ -25,7 +25,7 @@ export const InstallationUpdateForm: React.FC<Props> = ({ installation }) => {
   const form = useForm<InstallationDTO>({
     initialValues: {
       title: installation.title,
-      customer_id: installation.customer_id.toString(),
+      customer_id: installation.customer_id?.toString() ?? undefined,
       engineer_ids: installation.technical_contract?.engineers.map(({ id }) => id.toString()),
       installation_date: dayjs(installation.installation_date, 'YYYY-MM-DD').toDate(),
       note: installation.note || '',
