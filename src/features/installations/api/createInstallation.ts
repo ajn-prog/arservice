@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { axios } from '@/lib/axios';
+import { dayjs } from '@/lib/dayjs';
 import { MutationConfig, queryClient } from '@/lib/react-query';
 import { GeneralResponse } from '@/types/api';
 
@@ -29,7 +30,7 @@ export async function createInstallation({ data }: InstallationRequest) {
         });
       }
     } else if (value instanceof Date) {
-      formData.append(key, value.toJSON());
+      formData.append(key, dayjs(value).utc(true).toJSON());
     } else if (value instanceof File) {
       formData.append(key, value, value.name);
     } else {
