@@ -29,7 +29,7 @@ export const ProductAccessoryForm: React.FC<Props> = ({ product }) => {
     initialValues: {
       name: product?.name ?? '',
       brand_id: product?.brand_id.toString() ?? '',
-      category_product_id: product?.category_product_id.toString() ?? '',
+      category_product_id: product?.category_product_id?.toString() ?? '',
       date_entry: product?.date_entry ? dayjs(product.date_entry).toDate() : '',
       product_code: product?.product_code ?? '',
       type: 'accessories',
