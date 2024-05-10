@@ -14,7 +14,7 @@ export type ProductImage = {
 
 export type Product = {
   brand_id: number;
-  category_product_id: number;
+  category_product_id?: number;
   unit_product_id: number;
   modality_product_id: number;
   product_code: string | null;

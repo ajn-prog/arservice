@@ -24,7 +24,7 @@ export const ProductPreventiveForm: React.FC<Props> = ({ product }) => {
   const form = useForm<ProductPreventiveDTO>({
     initialValues: {
       name: product?.name ?? '',
-      category_product_id: product?.category_product_id.toString() ?? '',
+      category_product_id: product?.category_product_id?.toString() ?? '',
       product_code: product?.product_code ?? '',
       type: 'preventive',
       images: [],
